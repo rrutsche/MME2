@@ -6,21 +6,28 @@ package de.rutscheschobel.shareyourfilter.main
 	import flash.filesystem.File;
 	import flash.system.Capabilities;
 	
+	import mx.containers.Canvas;
 	import mx.controls.Alert;
 	import mx.controls.Image;
 	import mx.core.Application;
 	import mx.core.WindowedApplication;
 
-	public class Main extends WindowedApplication
-	{
+	public class Main extends WindowedApplication{
+		
+		public var imageContainer:Canvas;
 		public function Main()
 		{
 		}
 		
-		private function init():void{
+		public function init():void{
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER,onDragEnter);
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP,onDrop);
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_EXIT,onDragExit);
+			addStageElements();
+		}
+		
+		private function addStageElements():void{
+			this.addChild(imageContainer);
 		}
 		
 		public function onDragEnter(event:NativeDragEvent):void{
@@ -35,6 +42,12 @@ package de.rutscheschobel.shareyourfilter.main
 						addImage(file.nativePath);
 						break;
 					case "jpg" :
+						addImage(file.nativePath);
+						break;
+					case "jpeg" :
+						addImage(file.nativePath);
+						break;
+					case "JPG" :
 						addImage(file.nativePath);
 						break;
 					case "gif" :
@@ -52,12 +65,14 @@ package de.rutscheschobel.shareyourfilter.main
 		
 		private function addImage(nativePath:String):void{
 			var img:Image = new Image();
+			img.width = imageContainer.width;
+			img.height = imageContainer.height;
 			if(Capabilities.os.search("Mac") >= 0){
 				img.source = "file://" + nativePath;
 			} else {
 				img.source = nativePath;
 			}
-			this.addChild(img);
+			imageContainer.addChild(img);
 		}
 	}
 }

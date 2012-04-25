@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mainapp:Main xmlns:mainapp="de.rutscheschobel.shareyourfilter.main.*"
-						xmlns:mx="http://www.adobe.com/2006/mxml"
-						creationComplete="init()" layout="vertical">
-	
-	<mx:Label text="Drag an Image from File System here..."/>
+			  xmlns:mx="http://www.adobe.com/2006/mxml"
+			  width="800" height="600" creationComplete="init()" layout="vertical">
+
+	<mx:Canvas id="imageContainer" x="144" width="512" height="408" dropShadowVisible="true">
+	</mx:Canvas>
 </mainapp:Main>
