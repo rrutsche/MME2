@@ -4,12 +4,14 @@ package de.rutscheschobel.shareyourfilter.main
 	import flash.desktop.NativeDragManager;
 	import flash.events.NativeDragEvent;
 	import flash.filesystem.File;
-	import flash.system.Capabilities;	
+	import flash.system.Capabilities;
+	
 	import mx.controls.Alert;
 	import mx.controls.Image;
 	import mx.core.Application;
+	import mx.core.WindowedApplication;
 
-	public class Main extends Application
+	public class Main extends WindowedApplication
 	{
 		public function Main()
 		{
