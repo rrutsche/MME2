@@ -20,9 +20,6 @@
     <application path="test.mxml">
       <airExcludes/>
     </application>
-    <application path="ShareYourFilters.mxml">
-      <airExcludes/>
-    </application>
   </applications>
   <modules/>
   <buildCSSFiles/>
