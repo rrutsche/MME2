@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mainapp:Main xmlns:mainapp="de.rutscheschobel.shareyourfilter.main.*"
 			  xmlns:mx="http://www.adobe.com/2006/mxml"
-			  width="800" height="600" creationComplete="init()" layout="vertical">
+			  width="800" height="600" backgroundColor="#838383" creationComplete="init()"
+			  layout="absolute" xmlns:view="de.rutscheschobel.shareyourfilter.view.*">
+	
 
-	<mx:Canvas id="imageContainer" x="144" width="512" height="408" dropShadowVisible="true">
-	</mx:Canvas>
+	
 </mainapp:Main>
