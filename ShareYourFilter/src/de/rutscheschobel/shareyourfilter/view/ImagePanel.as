@@ -1,5 +1,6 @@
 package de.rutscheschobel.shareyourfilter.view
 {
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.system.Capabilities;
 	
@@ -41,24 +42,20 @@ package de.rutscheschobel.shareyourfilter.view
 		
 		public function addImage(nativePath:String):void{
 			var img:Image = new Image();
-			scalePanel(img);
-			img.width = canvas.width;
-			img.height = canvas.height;
 			if(Capabilities.os.search("Mac") >= 0){
 				img.source = "file://" + nativePath;
 			} else {
 				img.source = nativePath;
 			}
 			this.title = nativePath;
+			this.width = 500;
+			this.height = 500;
+			canvas.width = this.getLayoutBoundsWidth();
+			canvas.height = this.getLayoutBoundsHeight();
+			img.width = canvas.width;
+			img.height = canvas.height;
 			canvas.addChild(img);
-		}
-		
-		private function scalePanel(img:Image):void{
-			var ratio:int = img.width/img.height;
-			this.width = 400;
-			this.height = 400;
-			canvas.width = this.width;
-			canvas.height = this.height;
+			this.setLayoutBoundsPosition(300,200,true);
 		}
 		
 	}

@@ -12,12 +12,14 @@ package de.rutscheschobel.shareyourfilter.main
 	import mx.containers.Panel;
 	import mx.controls.Alert;
 	import mx.controls.Image;
+	import mx.controls.MenuBar;
 	import mx.core.Application;
 	import mx.core.WindowedApplication;
 
 	public class Main extends WindowedApplication{
 		
 		public var imagePanel:ImagePanel;
+		public var menuBar:MenuBar;
 		
 		public function Main(){
 			
@@ -27,12 +29,14 @@ package de.rutscheschobel.shareyourfilter.main
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER,onDragEnter);
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP,onDrop);
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_EXIT,onDragExit);
+			addStageElements();
 		}
 		
-		private function addImagePanel(filePath:String):void{
-			imagePanel = new ImagePanel(filePath);
-			this.addChild(imagePanel);
+		private function addStageElements():void{
+			menuBar = new MenuBar();
 		}
+		
+		
 		
 		public function onDragEnter(event:NativeDragEvent):void{
 			NativeDragManager.acceptDragDrop(this);
@@ -40,28 +44,16 @@ package de.rutscheschobel.shareyourfilter.main
 		
 		public function onDrop(event:NativeDragEvent):void{
 			
+			var pattern:RegExp = /jpg|jpeg|JPG|gif|png/;
 			var dropfiles:Array = event.clipboard.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array;
-			for each (var file:File in dropfiles){
-				switch (file.extension){ 
-					case "png" :
-						addImagePanel(file.nativePath);
-						break;
-					case "jpg" :
-						addImagePanel(file.nativePath);
-						break;
-					case "jpeg" :
-						addImagePanel(file.nativePath);
-						break;
-					case "JPG" :
-						addImagePanel(file.nativePath);
-						break;
-					case "gif" :
-						addImagePanel(file.nativePath);
-						break;
-					default:
-						Alert.show("Unmapped Extension");
+			if(pattern.test(dropfiles[0].extension)){
+				if(imagePanel != null){
+					this.removeChild(imagePanel);
 				}
-			} 
+				imagePanel = ApplicationManager.getInstance().getImagePanel(dropfiles[0].nativePath);
+				
+				this.addChild(imagePanel);
+			}
 		}
 		
 		public function onDragExit(event:NativeDragEvent):void{

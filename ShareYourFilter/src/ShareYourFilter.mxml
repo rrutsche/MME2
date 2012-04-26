@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mainapp:Main xmlns:mainapp="de.rutscheschobel.shareyourfilter.main.*"
 			  xmlns:mx="http://www.adobe.com/2006/mxml"
-			  width="800" height="600" backgroundColor="#838383" creationComplete="init()"
+			  width="900" height="600" backgroundColor="#838383" creationComplete="init()"
 			  layout="absolute" xmlns:view="de.rutscheschobel.shareyourfilter.view.*">
+	<mx:MenuBar id="menuBar" left="0" right="0" top="0"></mx:MenuBar>
 	
 
 	
