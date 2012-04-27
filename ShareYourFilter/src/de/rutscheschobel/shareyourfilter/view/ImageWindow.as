@@ -6,38 +6,29 @@ package de.rutscheschobel.shareyourfilter.view
 	
 	import mx.containers.Canvas;
 	import mx.containers.Panel;
+	import mx.containers.TitleWindow;
 	import mx.controls.Alert;
 	import mx.controls.Image;
 	import mx.events.FlexEvent;
 
-	public class ImagePanel extends Panel{
+	public class ImageWindow extends AbstractWindow{
 		
 		public var canvas:Canvas;
 		public var filePath:String;
 		
-		public function ImagePanel(filePath:String){
+		public function ImageWindow(filePath:String){
 			this.filePath = filePath;
 			addEventListener(FlexEvent.CREATION_COMPLETE, init);
 		}
 		
 		private function init(event:FlexEvent):void{
-			this.titleBar.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-			this.titleBar.addEventListener(MouseEvent.MIDDLE_MOUSE_UP, onMouseUp);
 			addCanvas();
 			addImage(filePath);			
 		}
 		
-		private function onMouseDown(event:MouseEvent):void{
-			this.startDragging(event);
-		}
-		
-		private function onMouseUp(event:MouseEvent):void{
-			this.stopDragging();
-		}
-		
 		private function addCanvas():void{
 			canvas = new Canvas();
-			this.addChild(canvas);
+			this.addElement(canvas);
 		}
 		
 		public function addImage(nativePath:String):void{
@@ -48,12 +39,9 @@ package de.rutscheschobel.shareyourfilter.view
 				img.source = nativePath;
 			}
 			this.title = nativePath;
-			this.width = 500;
-			this.height = 500;
-			canvas.width = this.getLayoutBoundsWidth();
-			canvas.height = this.getLayoutBoundsHeight();
-			img.width = canvas.width;
-			img.height = canvas.height;
+			img.maxWidth = 500;
+			img.maxHeight = 500;
+			
 			canvas.addChild(img);
 			this.setLayoutBoundsPosition(300,200,true);
 		}
