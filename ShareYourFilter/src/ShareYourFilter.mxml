@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mainapp:Main xmlns:mainapp="de.rutscheschobel.shareyourfilter.main.*"
+			  xmlns:view="de.rutscheschobel.shareyourfilter.view.*" 
+			  xmlns:resources="de.rutscheschobel.shareyourfilter.view.resources.*"
 			  xmlns:mx="http://www.adobe.com/2006/mxml"
 			  xmlns:s="library://ns.adobe.com/flex/spark"
 			  width="900" height="600" backgroundColor="#838383" creationComplete="init()"
-			  layout="absolute" xmlns:view="de.rutscheschobel.shareyourfilter.view.*">
+			  layout="absolute" >
 	<mx:MenuBar id="menuBar" left="0" right="0" top="0" labelField="@label">
 		<mx:XMLList>
 			<menuitem label="File" id="menuFile">
@@ -26,7 +28,12 @@
 			</menuitem>
 		</mx:XMLList>
 	</mx:MenuBar>
-	<view:FileWindow id="fileWindow" x="94" y="102" width="400" height="252" visible="false">
+	
+	<view:FileWindow id="fileWindow" x="177" y="140" width="400" height="252" visible="false">
+		<view:controlBarContent>
+			<mx:Button id="fileOpenOK" label="OK"/>
+			<mx:Button id="fileOpenCancel" label="Cancel"/>
+		</view:controlBarContent>
 		<mx:FileSystemTree left="0" right="0" top="0" bottom="0"/>
 	</view:FileWindow>
 	
