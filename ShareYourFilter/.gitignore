@@ -1,7 +1,5 @@
-.DS_Store
+/bin-debug/
 .actionScriptProperties
 .flexProperties
 .project
 .settings/*
-bin-debug/*
-bin-debug/

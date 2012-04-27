@@ -1,5 +1,6 @@
 package de.rutscheschobel.shareyourfilter.main
 {
+	import de.rutscheschobel.shareyourfilter.view.FileWindow;
 	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
 	
 	import flash.desktop.ClipboardFormats;
@@ -22,6 +23,7 @@ package de.rutscheschobel.shareyourfilter.main
 	public class Main extends WindowedApplication{
 		
 		public var imageWindow:ImageWindow;
+		public var fileWindow:FileWindow;
 		public var menuBar:MenuBar;
 		
 		public function Main(){
@@ -36,7 +38,6 @@ package de.rutscheschobel.shareyourfilter.main
 		}
 		
 		private function addStageElements():void{
-			menuBar = new MenuBar();
 		}		
 		
 		public function onDragEnter(event:NativeDragEvent):void{

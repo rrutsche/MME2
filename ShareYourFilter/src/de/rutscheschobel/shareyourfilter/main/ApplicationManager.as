@@ -1,6 +1,6 @@
 package de.rutscheschobel.shareyourfilter.main
 {
-	import de.rutscheschobel.shareyourfilter.view.FilterWindow;
+	import de.rutscheschobel.shareyourfilter.view.FileWindow;
 	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
 	
 	import mx.controls.Alert;
@@ -8,7 +8,7 @@ package de.rutscheschobel.shareyourfilter.main
 	public class ApplicationManager{
 		
 		private var imagePanel:ImageWindow;
-		private var filterWindow:FilterWindow;
+		private var filterWindow:FileWindow;
 		
 		public function ApplicationManager(){
 		}
@@ -26,9 +26,9 @@ package de.rutscheschobel.shareyourfilter.main
 			return imagePanel;
 		}
 		
-		public function getFilterWindow():FilterWindow{
+		public function getFilterWindow():FileWindow{
 			if(filterWindow == null){
-				filterWindow = new FilterWindow();
+				filterWindow = new FileWindow();
 			}
 			return filterWindow; 
 		}
