@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mainapp:Main xmlns:mainapp="de.rutscheschobel.shareyourfilter.main.*"
 			  xmlns:mx="http://www.adobe.com/2006/mxml"
+			  xmlns:s="library://ns.adobe.com/flex/spark"
 			  width="900" height="600" backgroundColor="#838383" creationComplete="init()"
 			  layout="absolute" xmlns:view="de.rutscheschobel.shareyourfilter.view.*">
 	<mx:MenuBar id="menuBar" left="0" right="0" top="0" labelField="@label">
 		<mx:XMLList>
-			<menuitem label="File">
-				<menuitem label="Open"/>
-				<menuitem label="Save" enabled="false"/>
-				<menuitem label="Close"/>
+			<menuitem label="File" id="menuFile">
+				<menuitem label="Open" id="menuOpen"/>
+				<menuitem label="Save" id="menuSave" enabled="false"/>
+				<menuitem label="Close" id="menuClose"/>
 			</menuitem>
-			<menuitem label="Edit"/>
-			<menuitem label="Window">
+			<menuitem label="Edit" id="menuEdit"/>
+			<menuitem label="Window" id="menuWindow">
 				<menuitem label="View1" 
 						  type="radio" groupName="one"/>
 				<menuitem label="View2" 
@@ -25,6 +26,5 @@
 			</menuitem>
 		</mx:XMLList>
 	</mx:MenuBar>
-
 	
 </mainapp:Main>

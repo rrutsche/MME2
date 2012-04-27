@@ -1,9 +1,10 @@
 package de.rutscheschobel.shareyourfilter.main
 {
-	import de.rutscheschobel.shareyourfilter.view.ImagePanel;
+	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
 	
 	import flash.desktop.ClipboardFormats;
 	import flash.desktop.NativeDragManager;
+	import flash.events.MouseEvent;
 	import flash.events.NativeDragEvent;
 	import flash.filesystem.File;
 	import flash.system.Capabilities;
@@ -15,10 +16,12 @@ package de.rutscheschobel.shareyourfilter.main
 	import mx.controls.MenuBar;
 	import mx.core.Application;
 	import mx.core.WindowedApplication;
+	
+	import spark.components.TitleWindow;
 
 	public class Main extends WindowedApplication{
 		
-		public var imagePanel:ImagePanel;
+		public var imageWindow:ImageWindow;
 		public var menuBar:MenuBar;
 		
 		public function Main(){
@@ -34,9 +37,7 @@ package de.rutscheschobel.shareyourfilter.main
 		
 		private function addStageElements():void{
 			menuBar = new MenuBar();
-		}
-		
-		
+		}		
 		
 		public function onDragEnter(event:NativeDragEvent):void{
 			NativeDragManager.acceptDragDrop(this);
@@ -47,12 +48,12 @@ package de.rutscheschobel.shareyourfilter.main
 			var pattern:RegExp = /jpg|jpeg|JPG|gif|png/;
 			var dropfiles:Array = event.clipboard.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array;
 			if(pattern.test(dropfiles[0].extension)){
-				if(imagePanel != null){
-					this.removeChild(imagePanel);
+				if(imageWindow != null){
+					this.removeChild(imageWindow);
 				}
-				imagePanel = ApplicationManager.getInstance().getImagePanel(dropfiles[0].nativePath);
+				imageWindow = ApplicationManager.getInstance().getImagePanel(dropfiles[0].nativePath);
 				
-				this.addChild(imagePanel);
+				this.addChild(imageWindow);
 			}
 		}
 		

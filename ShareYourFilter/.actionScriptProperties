@@ -17,9 +17,6 @@
     <application path="ShareYourFilter.mxml">
       <airExcludes/>
     </application>
-    <application path="test.mxml">
-      <airExcludes/>
-    </application>
   </applications>
   <modules/>
   <buildCSSFiles/>

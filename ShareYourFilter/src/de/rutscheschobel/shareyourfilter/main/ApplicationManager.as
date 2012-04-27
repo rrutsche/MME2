@@ -1,13 +1,14 @@
 package de.rutscheschobel.shareyourfilter.main
 {
-	import de.rutscheschobel.shareyourfilter.view.ImagePanel;
+	import de.rutscheschobel.shareyourfilter.view.FilterWindow;
+	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
 	
 	import mx.controls.Alert;
 
 	public class ApplicationManager{
 		
-		public var imagePanel:ImagePanel;
-		public var application:Main;
+		private var imagePanel:ImageWindow;
+		private var filterWindow:FilterWindow;
 		
 		public function ApplicationManager(){
 		}
@@ -20,9 +21,16 @@ package de.rutscheschobel.shareyourfilter.main
 			return ApplicationManager.instance;
 		}
 		
-		public function getImagePanel(filePath:String):ImagePanel{
-			imagePanel = new ImagePanel(filePath);
+		public function getImagePanel(filePath:String):ImageWindow{
+			imagePanel = new ImageWindow(filePath);
 			return imagePanel;
+		}
+		
+		public function getFilterWindow():FilterWindow{
+			if(filterWindow == null){
+				filterWindow = new FilterWindow();
+			}
+			return filterWindow; 
 		}
 	}
 }
