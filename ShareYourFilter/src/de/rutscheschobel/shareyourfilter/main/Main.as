@@ -17,6 +17,7 @@ package de.rutscheschobel.shareyourfilter.main
 	import mx.controls.MenuBar;
 	import mx.core.Application;
 	import mx.core.WindowedApplication;
+	import mx.events.MenuEvent;
 	
 	import spark.components.TitleWindow;
 
@@ -34,12 +35,14 @@ package de.rutscheschobel.shareyourfilter.main
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER,onDragEnter);
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP,onDrop);
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_EXIT,onDragExit);
-			menuBar.menuBarItems.
-			addStageElements();
+			menuBar.addEventListener(MenuEvent.ITEM_CLICK, menuItemClickHandler);
 		}
 		
-		private function addStageElements():void{
-		}		
+		private function menuItemClickHandler(event:MenuEvent):void{
+			if(event.item.@id == "menuOpen"){
+				fileWindow.visible = true;
+			}
+		}
 		
 		public function onDragEnter(event:NativeDragEvent):void{
 			NativeDragManager.acceptDragDrop(this);

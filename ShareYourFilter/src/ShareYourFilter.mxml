@@ -26,7 +26,7 @@
 			</menuitem>
 		</mx:XMLList>
 	</mx:MenuBar>
-	<view:FileWindow id="fileWindow" x="94" y="102" width="213" height="252" visible="false">
+	<view:FileWindow id="fileWindow" x="94" y="102" width="400" height="252" visible="false">
 		<mx:FileSystemTree left="0" right="0" top="0" bottom="0"/>
 	</view:FileWindow>
 	
