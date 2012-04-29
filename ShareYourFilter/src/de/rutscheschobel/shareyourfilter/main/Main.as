@@ -35,7 +35,6 @@ package de.rutscheschobel.shareyourfilter.main
 		public function init():void{
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER,onDragEnter);
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP,onDrop);
-			this.addEventListener(NativeDragEvent.NATIVE_DRAG_EXIT,onDragExit);
 			menuBar.addEventListener(MenuEvent.ITEM_CLICK, menuItemClickHandler);
 			bmp = new BmpFilter();
 		}
@@ -64,11 +63,6 @@ package de.rutscheschobel.shareyourfilter.main
 //				bmp.makeImageRed(dropfiles[0]);
 			}
 		}
-		
-		public function onDragExit(event:NativeDragEvent):void{
-			trace("Drag exit event.");
-		}
-		
 		
 	}
 }
