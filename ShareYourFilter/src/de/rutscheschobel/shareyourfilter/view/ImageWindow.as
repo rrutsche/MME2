@@ -15,6 +15,7 @@ package de.rutscheschobel.shareyourfilter.view
 		
 		public var canvas:Canvas;
 		public var filePath:String;
+		private var image:Image;
 		
 		public function ImageWindow(filePath:String){
 			this.filePath = filePath;
@@ -33,6 +34,7 @@ package de.rutscheschobel.shareyourfilter.view
 		
 		public function addImage(nativePath:String):void{
 			var img:Image = new Image();
+			image = img;
 			if(Capabilities.os.search("Mac") >= 0){
 				img.source = "file://" + nativePath;
 			} else {
@@ -44,6 +46,13 @@ package de.rutscheschobel.shareyourfilter.view
 			
 			canvas.addChild(img);
 			this.setLayoutBoundsPosition(300,200,true);
+		}
+		
+		public function getImage():Image{
+			if(image != null){
+				return image;
+			}		
+			return null;
 		}
 		
 	}

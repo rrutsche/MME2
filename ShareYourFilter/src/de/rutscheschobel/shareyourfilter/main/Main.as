@@ -26,6 +26,7 @@ package de.rutscheschobel.shareyourfilter.main
 		public var imageWindow:ImageWindow;
 		public var fileWindow:FileWindow;
 		public var menuBar:MenuBar;
+		public var bmp:BmpFilter; 
 		
 		public function Main(){
 			
@@ -36,6 +37,7 @@ package de.rutscheschobel.shareyourfilter.main
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP,onDrop);
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_EXIT,onDragExit);
 			menuBar.addEventListener(MenuEvent.ITEM_CLICK, menuItemClickHandler);
+			bmp = new BmpFilter();
 		}
 		
 		private function menuItemClickHandler(event:MenuEvent):void{
@@ -59,6 +61,7 @@ package de.rutscheschobel.shareyourfilter.main
 				imageWindow = ApplicationManager.getInstance().getImagePanel(dropfiles[0].nativePath);
 				
 				this.addChild(imageWindow);
+//				bmp.makeImageRed(dropfiles[0]);
 			}
 		}
 		
