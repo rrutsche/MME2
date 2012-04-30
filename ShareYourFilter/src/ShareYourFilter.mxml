@@ -30,10 +30,9 @@
 	</mx:MenuBar>
 	
 	<view:FileWindow id="fileWindow" x="177" y="140" width="400" height="252" visible="false">
-		<view:controlBarContent>
-			<mx:Button id="fileOpenOK" label="OK"/>
-			<mx:Button id="fileOpenCancel" label="Cancel"/>
-		</view:controlBarContent>
+			<s:Button id="fileOpenOK" label="OK"/>
+			<s:Button id="fileOpenCancel" label="Cancel"/>
+		
 		<mx:FileSystemTree left="0" right="0" top="0" bottom="0"/>
 	</view:FileWindow>
 	

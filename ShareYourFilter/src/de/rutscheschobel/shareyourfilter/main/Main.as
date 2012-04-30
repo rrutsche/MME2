@@ -1,5 +1,4 @@
-package de.rutscheschobel.shareyourfilter.main
-{
+package de.rutscheschobel.shareyourfilter.main{
 	import de.rutscheschobel.shareyourfilter.view.FileWindow;
 	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
 	
@@ -19,6 +18,7 @@ package de.rutscheschobel.shareyourfilter.main
 	import mx.core.WindowedApplication;
 	import mx.events.MenuEvent;
 	
+	import spark.components.Button;
 	import spark.components.TitleWindow;
 
 	public class Main extends WindowedApplication{
@@ -56,10 +56,11 @@ package de.rutscheschobel.shareyourfilter.main
 					this.removeChild(imageWindow);
 				}
 				imageWindow = ApplicationManager.getInstance().getImagePanel(dropfiles[0].nativePath);
-				
 				this.addChild(imageWindow);
+			}else{
+				Alert.show("File format not supported.");
 			}
 		}
-		
 	}
+		
 }
