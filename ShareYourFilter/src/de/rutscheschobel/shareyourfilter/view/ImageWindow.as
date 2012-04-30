@@ -1,7 +1,13 @@
 package de.rutscheschobel.shareyourfilter.view
 {
+	import de.rutscheschobel.shareyourfilter.main.ApplicationManager;
+	
+	import flash.display.Bitmap;
+	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.filesystem.File;
+	import flash.net.URLRequest;
 	import flash.system.Capabilities;
 	
 	import mx.containers.Canvas;
@@ -16,6 +22,8 @@ package de.rutscheschobel.shareyourfilter.view
 		public var canvas:Canvas;
 		public var filePath:String;
 		private var image:Image;
+		private var bitmap:Bitmap;
+		private var loader:Loader;
 		
 		public function ImageWindow(filePath:String){
 			this.filePath = filePath;
@@ -33,26 +41,24 @@ package de.rutscheschobel.shareyourfilter.view
 		}
 		
 		public function addImage(nativePath:String):void{
-			var img:Image = new Image();
-			image = img;
-			if(Capabilities.os.search("Mac") >= 0){
-				img.source = "file://" + nativePath;
-			} else {
-				img.source = nativePath;
+			var file:File = ApplicationManager.getInstance().imageFile;
+			loader = new Loader();
+			if(file != null){
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, setBitmapContent);
+				loader.load(new URLRequest(encodeURI(file.nativePath)));
 			}
-			this.title = nativePath;
-			img.maxWidth = 500;
-			img.maxHeight = 500;
-			
-			canvas.addChild(img);
-			this.setLayoutBoundsPosition(300,200,true);
+			this.title = nativePath;			
 		}
 		
-		public function getImage():Image{
-			if(image != null){
-				return image;
-			}		
-			return null;
+		private function setBitmapContent(e:Event):void{
+			bitmap = Bitmap(loader.content); 
+			image = new Image();
+			var ratio:Number = bitmap.width / bitmap.height;
+			image.maxWidth = 500;
+			image.maxHeight = 500 / ratio;
+			image.source = bitmap;
+			canvas.addChild(image);
+			this.setLayoutBoundsPosition(300,200,true);
 		}
 		
 	}

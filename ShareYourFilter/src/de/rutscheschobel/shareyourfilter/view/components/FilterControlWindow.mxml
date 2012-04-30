@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view:FilterControlWindow xmlns:view="de.rutscheschobel.shareyourfilter.view.*"
+		 xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="160" height="300" backgroundColor="#CCCCCC" contentBackgroundColor="#CCCCCC"
+		 title="Filter Window">
+	<s:VGroup left="10" right="10" top="10" bottom="10" contentBackgroundColor="#CCCCCC">
+		<s:Label id="filterBrightness" paddingLeft="0" paddingTop="10" text="Brightness"/>
+		<s:HSlider id="filterBrightnessSlider" liveDragging="true" maximum="100.0" minimum="-100.0"
+				   value="0"/>
+		<s:Label id="filterContrast" paddingTop="10" text="Contrast"/>
+		<s:HSlider id="filterContrastSlider" liveDragging="true" maximum="100.0" minimum="-100.0"
+				   value="0.0"/>
+		<s:Label id="filterSaturation" paddingTop="10" text="Saturation"/>
+		<s:HSlider id="filterSaturationSlider" liveDragging="true" maximum="100" minimum="-100"
+				   value="0"/>
+	</s:VGroup>
+</view:FilterControlWindow>

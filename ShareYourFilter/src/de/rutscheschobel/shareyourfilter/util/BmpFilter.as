@@ -30,7 +30,7 @@ package de.rutscheschobel.shareyourfilter.util
 		}
 		
 		public function makeImageBW():void{
-			var file:File = ApplicationManager.getInstance().getImageFile();
+			var file:File = ApplicationManager.getInstance().imageFile;
 			if(file != null && pattern.test(file.extension)){
 				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onCompleteBW);
 				loader.load(new URLRequest(encodeURI(file.nativePath)));

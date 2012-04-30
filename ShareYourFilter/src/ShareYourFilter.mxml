@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mainapp:Main xmlns:mainapp="de.rutscheschobel.shareyourfilter.main.*"
 			  xmlns:view="de.rutscheschobel.shareyourfilter.view.*" 
-			  xmlns:resources="de.rutscheschobel.shareyourfilter.view.resources.*"
+			  xmlns:viewcompontents="de.rutscheschobel.shareyourfilter.view.components.*" 
 			  xmlns:mx="http://www.adobe.com/2006/mxml"
 			  xmlns:s="library://ns.adobe.com/flex/spark"
-			  width="900" height="600" backgroundColor="#838383" creationComplete="init()"
+			  width="1000" height="700" backgroundColor="#838383" creationComplete="init()"
 			  layout="absolute" >
 	<mx:MenuBar id="menuBar" left="0" right="0" top="0" labelField="@label">
 		<mx:XMLList>
@@ -15,13 +15,8 @@
 			</menuitem>
 			<menuitem label="Edit" id="menuEdit"/>
 			<menuitem label="Window" id="menuWindow">
-				<menuitem label="View1" 
-						  type="radio" groupName="one"/>
-				<menuitem label="View2" 
-						  type="radio" groupName="one"
-						  selected="true"/>
-				<menuitem label="View3" 
-						  type="radio" groupName="one"/>
+				<menuitem label="Filter Control Window" id="filterControlWindow" type="check"/>
+				<menuitem label="Image Window" id="imageWindow" type="check"/>
 			</menuitem>
 			<menuitem label="Help">
 				
@@ -29,16 +24,14 @@
 		</mx:XMLList>
 	</mx:MenuBar>
 	
+	<viewcompontents:FilterControlWindow right="10" top="30" id="filterControlWindow"/>
+	
 	<view:FileWindow id="fileWindow" x="177" y="140" width="400" height="252" visible="false">
 			<s:Button id="fileOpenOK" label="OK"/>
 			<s:Button id="fileOpenCancel" label="Cancel"/>
-		
 		<mx:FileSystemTree id="fileTree" left="0" right="0" top="0" bottom="0"/>
 	</view:FileWindow>
 	
-	<view:HistogramWindow id="histogram" x="652" y="43" width="195" height="133">
-		
-	</view:HistogramWindow>
 	
 	
 </mainapp:Main>

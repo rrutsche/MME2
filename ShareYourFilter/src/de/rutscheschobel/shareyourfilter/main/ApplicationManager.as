@@ -3,6 +3,7 @@ package de.rutscheschobel.shareyourfilter.main
 	import de.rutscheschobel.shareyourfilter.view.FileWindow;
 	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
 	
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Loader;
 	import flash.events.Event;
@@ -15,9 +16,9 @@ package de.rutscheschobel.shareyourfilter.main
 
 	public class ApplicationManager{
 		
-		private var imagePanel:ImageWindow;
-		private var imageFile:File;
-		private var imageBitmapData:BitmapData;
+		private var _imageWindow:ImageWindow;
+		private var _imageFile:File;
+		private var _bitmap:Bitmap;
 		
 		public function ApplicationManager(){
 		}
@@ -30,31 +31,29 @@ package de.rutscheschobel.shareyourfilter.main
 			return ApplicationManager.instance;
 		}
 		
-		public function getImagePanel():ImageWindow{
-			if(imageFile != null){
-				imagePanel = new ImageWindow(imageFile.nativePath);	
+		public function get imageWindow():ImageWindow{
+			if(_imageFile != null){
+				_imageWindow = new ImageWindow(_imageFile.nativePath);	
 			}			
-			return imagePanel;
+			return _imageWindow;
 		}
+
+		public function get bitmap():Bitmap{
+			return _bitmap;
+		}
+
+		public function set bitmap(value:Bitmap):void{
+			_bitmap = value;
+		}
+
+		public function get imageFile():File{
+			return _imageFile;
+		}
+
+		public function set imageFile(value:File):void{
+			_imageFile = value;
+		}
+
 		
-		public function setImageFile(filePath:String):void{
-			if(imageFile == null){
-				imageFile = new File();
-			}
-			imageFile = new File(filePath);
-		}
-		
-		public function getImageFile():File{
-			return imageFile;
-		}
-		
-		public function getImageBitmapData():BitmapData{
-			var loader:Loader = new Loader();
-			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, function():void{
-				
-			});
-			loader.load(new URLRequest(encodeURI(imageFile.nativePath)));
-			return imageBitmapData;
-		}
 	}
 }

@@ -1,7 +1,6 @@
 package de.rutscheschobel.shareyourfilter.main{
 	import de.rutscheschobel.shareyourfilter.util.BmpFilter;
 	import de.rutscheschobel.shareyourfilter.view.FileWindow;
-	import de.rutscheschobel.shareyourfilter.view.HistogramWindow;
 	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
 	
 	import flash.desktop.ClipboardFormats;
@@ -29,7 +28,6 @@ package de.rutscheschobel.shareyourfilter.main{
 	public class Main extends WindowedApplication{
 		
 		public var imageWindow:ImageWindow;
-		public var histogram:HistogramWindow;
 		public var fileWindow:FileWindow;
 		public var menuBar:MenuBar;
 		public var bmp:BmpFilter; 
@@ -64,7 +62,7 @@ package de.rutscheschobel.shareyourfilter.main{
 			
 			var pattern:RegExp = /jpg|jpeg|JPG|gif|png/;
 			var dropfiles:Array = event.clipboard.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array;
-			if(pattern.test(dropfiles[0].extension)){
+			if(dropfiles[0] != null && pattern.test(dropfiles[0].extension)){
 				setImage(dropfiles[0]);
 			}else{
 				Alert.show("File format not supported.");
@@ -72,18 +70,18 @@ package de.rutscheschobel.shareyourfilter.main{
 		}
 		
 		public function onFileClick(event:FileEvent):void{
-			trace(event.file.nativePath);
 			fileWindow.visible = false;
-			setImage(event.file);
+			if(event.file != null){
+				setImage(event.file);
+			}
 		}
 		
 		private function setImage(file:File):void{
 			if(imageWindow != null){
 				this.removeChild(imageWindow);
 			}
-			ApplicationManager.getInstance().setImageFile(file.nativePath);
-			imageWindow = ApplicationManager.getInstance().getImagePanel();
-			//histogram.addImage(ApplicationManager.getInstance().getImageFile().nativePath);
+			ApplicationManager.getInstance().imageFile = file;
+			imageWindow = ApplicationManager.getInstance().imageWindow;
 			if(imageWindow != null){
 				this.addChild(imageWindow);
 				obj = file;	
