@@ -21,6 +21,7 @@ package de.rutscheschobel.shareyourfilter.main{
 	
 	import spark.components.Button;
 	import spark.components.TitleWindow;
+	import de.rutscheschobel.shareyourfilter.util.BmpFilter;
 
 	public class Main extends WindowedApplication{
 		
@@ -45,7 +46,7 @@ package de.rutscheschobel.shareyourfilter.main{
 			if(event.item.@id == "menuOpen"){
 				fileWindow.visible = true;
 			}else if(event.item.@id == "menuSave" && obj != null){
-				bmp.makeImageRed(File(obj));
+				bmp.makeImageRed();
 			}
 		}
 		
@@ -61,11 +62,14 @@ package de.rutscheschobel.shareyourfilter.main{
 				if(imageWindow != null){
 					this.removeChild(imageWindow);
 				}
-				imageWindow = ApplicationManager.getInstance().getImagePanel(dropfiles[0].nativePath);
-				this.addChild(imageWindow);
+				ApplicationManager.getInstance().setImageFile(dropfiles[0].nativePath);
+				imageWindow = ApplicationManager.getInstance().getImagePanel();
+				if(imageWindow != null){
+					this.addChild(imageWindow);
+					obj = dropfiles[0];	
+				}
 			}else{
 				Alert.show("File format not supported.");
-				obj = dropfiles[0];
 			}
 		}
 	}

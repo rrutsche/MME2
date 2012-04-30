@@ -3,12 +3,15 @@ package de.rutscheschobel.shareyourfilter.main
 	import de.rutscheschobel.shareyourfilter.view.FileWindow;
 	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
 	
+	import flash.filesystem.File;
+	
 	import mx.controls.Alert;
 
 	public class ApplicationManager{
 		
 		private var imagePanel:ImageWindow;
 		private var filterWindow:FileWindow;
+		private var imageFile:File;
 		
 		public function ApplicationManager(){
 		}
@@ -21,8 +24,10 @@ package de.rutscheschobel.shareyourfilter.main
 			return ApplicationManager.instance;
 		}
 		
-		public function getImagePanel(filePath:String):ImageWindow{
-			imagePanel = new ImageWindow(filePath);
+		public function getImagePanel():ImageWindow{
+			if(imageFile != null){
+				imagePanel = new ImageWindow(imageFile.nativePath);	
+			}			
 			return imagePanel;
 		}
 		
@@ -31,6 +36,17 @@ package de.rutscheschobel.shareyourfilter.main
 				filterWindow = new FileWindow();
 			}
 			return filterWindow; 
+		}
+		
+		public function setImageFile(filePath:String):void{
+			if(imageFile == null){
+				imageFile = new File();
+			}
+			imageFile = new File(filePath);
+		}
+		
+		public function getImageFile():File{
+			return imageFile;
 		}
 	}
 }
