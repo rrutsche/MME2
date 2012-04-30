@@ -10,7 +10,7 @@
 		<mx:XMLList>
 			<menuitem label="File" id="menuFile">
 				<menuitem label="Open" id="menuOpen"/>
-				<menuitem label="Save" id="menuSave" enabled="false"/>
+				<menuitem label="Save" id="menuSave"/>
 				<menuitem label="Close" id="menuClose"/>
 			</menuitem>
 			<menuitem label="Edit" id="menuEdit"/>

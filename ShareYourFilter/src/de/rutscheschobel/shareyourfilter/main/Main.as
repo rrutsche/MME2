@@ -16,6 +16,7 @@ package de.rutscheschobel.shareyourfilter.main{
 	import mx.controls.MenuBar;
 	import mx.core.Application;
 	import mx.core.WindowedApplication;
+	import mx.core.mx_internal;
 	import mx.events.MenuEvent;
 	
 	import spark.components.Button;
@@ -26,6 +27,8 @@ package de.rutscheschobel.shareyourfilter.main{
 		public var imageWindow:ImageWindow;
 		public var fileWindow:FileWindow;
 		public var menuBar:MenuBar;
+		public var bmp:BmpFilter; 
+		public var obj:Object;
 		
 		public function Main(){
 			
@@ -35,11 +38,14 @@ package de.rutscheschobel.shareyourfilter.main{
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER,onDragEnter);
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP,onDrop);
 			menuBar.addEventListener(MenuEvent.ITEM_CLICK, menuItemClickHandler);
+			bmp = new BmpFilter();
 		}
 		
 		private function menuItemClickHandler(event:MenuEvent):void{
 			if(event.item.@id == "menuOpen"){
 				fileWindow.visible = true;
+			}else if(event.item.@id == "menuSave" && obj != null){
+				bmp.makeImageRed(File(obj));
 			}
 		}
 		
@@ -59,6 +65,7 @@ package de.rutscheschobel.shareyourfilter.main{
 				this.addChild(imageWindow);
 			}else{
 				Alert.show("File format not supported.");
+				obj = dropfiles[0];
 			}
 		}
 	}
