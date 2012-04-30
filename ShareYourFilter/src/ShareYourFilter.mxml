@@ -33,7 +33,7 @@
 			<s:Button id="fileOpenOK" label="OK"/>
 			<s:Button id="fileOpenCancel" label="Cancel"/>
 		
-		<mx:FileSystemTree left="0" right="0" top="0" bottom="0"/>
+		<mx:FileSystemTree id="fileTree" left="0" right="0" top="0" bottom="0"/>
 	</view:FileWindow>
 	
 	
