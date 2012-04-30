@@ -46,7 +46,7 @@ package de.rutscheschobel.shareyourfilter.main{
 			if(event.item.@id == "menuOpen"){
 				fileWindow.visible = true;
 			}else if(event.item.@id == "menuSave" && obj != null){
-				bmp.makeImageRed();
+				bmp.makeImageBW();
 			}
 		}
 		

@@ -1,5 +1,7 @@
 package de.rutscheschobel.shareyourfilter.util
 {
+	import de.rutscheschobel.shareyourfilter.main.ApplicationManager;
+	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Loader;
@@ -16,7 +18,6 @@ package de.rutscheschobel.shareyourfilter.util
 	import mx.controls.Alert;
 	import mx.formatters.DateFormatter;
 	import mx.graphics.codec.JPEGEncoder;
-	import de.rutscheschobel.shareyourfilter.main.ApplicationManager;
 	
 	public class BmpFilter
 	{
@@ -25,33 +26,34 @@ package de.rutscheschobel.shareyourfilter.util
 		private var bitmapData:BitmapData;
 		private var loader:Loader = new Loader;
 		private var image:Bitmap;
-		var newPixel = 0x000000;
 		
 		public function BmpFilter()
 		{
 		}
 		
-		public function makeImageRed():void{
+		public function makeImageBW():void{
 			var file:File = ApplicationManager.getInstance().getImageFile();
 			if(file != null && pattern.test(file.extension)){
-				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onCompleteRed);
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onCompleteBW);
 				loader.load(new URLRequest(encodeURI(file.nativePath)));
 			}
 		}
 		
-		private function onCompleteRed(e:Event):void{
+		private function onCompleteBW(e:Event):void{
+			var rgb:Array;
 			image = Bitmap(loader.content); 
 			var bitmap:BitmapData = image.bitmapData;
+//			bitmap.noise(2,127,199,7,false);
+			bitmap.perlinNoise(97,87,6,17,true,true,2,false,null);
 			for(var h:int = 0; h<bitmap.height; h++){
 				for(var w:int = 0; w<bitmap.width; w++){
-					var r:int = (bitmap.getPixel(w,h) & 0x00ff0000) >> 16;
-					var g:int = (bitmap.getPixel(w,h) & 0x0000ff00) >> 8;
-					var b:int = bitmap.getPixel(w,h) & 0x000000ff;
-					var brightness:int = (r + g + b) / 3;
-					var hex = brightness << 16 ^ brightness << 8 ^ brightness;
-					bitmap.lock();
-					bitmap.setPixel(w,h,hex);
-					bitmap.unlock();
+					
+//					rgb = getRGB(bitmap.getPixel(w,h));
+//					var brightness:int = (rgb[0] + rgb[1] + rgb[2]) / 3;
+//					var hex = brightness << 16 ^ brightness << 8 ^ brightness;
+//					bitmap.lock();
+//					bitmap.setPixel(w,h,hex);
+//					bitmap.unlock();
 				}
 			}
 			saveImageAsJpg(bitmap);
@@ -64,7 +66,17 @@ package de.rutscheschobel.shareyourfilter.util
 			var jpg:JPEGEncoder = new JPEGEncoder();
 			var ba:ByteArray = jpg.encode(bitmapData);
 			fileReference.save(ba,'NewRenderedJPG.jpg');
-		}	
+		}
 		
+		private function getRGB(pixel:int):Array{
+			var back:Array = new Array;
+			var r:int = (pixel & 0x00ff0000) >> 16;
+			var g:int = (pixel & 0x0000ff00) >> 8;
+			var b:int =  pixel & 0x000000ff;
+			back[0] = r;
+			back[1] = g;
+			back[2] = b;
+			return back;
+		}
 	}
 }
