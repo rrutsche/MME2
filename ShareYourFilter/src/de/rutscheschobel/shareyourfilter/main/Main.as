@@ -17,6 +17,7 @@ package de.rutscheschobel.shareyourfilter.main
 	import mx.controls.MenuBar;
 	import mx.core.Application;
 	import mx.core.WindowedApplication;
+	import mx.core.mx_internal;
 	import mx.events.MenuEvent;
 	
 	import spark.components.TitleWindow;
@@ -27,6 +28,7 @@ package de.rutscheschobel.shareyourfilter.main
 		public var fileWindow:FileWindow;
 		public var menuBar:MenuBar;
 		public var bmp:BmpFilter; 
+		public var obj:Object;
 		
 		public function Main(){
 			
@@ -42,6 +44,8 @@ package de.rutscheschobel.shareyourfilter.main
 		private function menuItemClickHandler(event:MenuEvent):void{
 			if(event.item.@id == "menuOpen"){
 				fileWindow.visible = true;
+			}else if(event.item.@id == "menuSave" && obj != null){
+				bmp.makeImageRed(File(obj));
 			}
 		}
 		
@@ -60,7 +64,7 @@ package de.rutscheschobel.shareyourfilter.main
 				imageWindow = ApplicationManager.getInstance().getImagePanel(dropfiles[0].nativePath);
 				
 				this.addChild(imageWindow);
-//				bmp.makeImageRed(dropfiles[0]);
+				obj = dropfiles[0];
 			}
 		}
 		
