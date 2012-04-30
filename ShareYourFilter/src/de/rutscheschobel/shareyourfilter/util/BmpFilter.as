@@ -1,7 +1,5 @@
 package de.rutscheschobel.shareyourfilter.util
 {
-	import de.rutscheschobel.shareyourfilter.main.ApplicationManager;
-	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Loader;
@@ -10,9 +8,7 @@ package de.rutscheschobel.shareyourfilter.util
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
-	import flash.filters.BevelFilter;
 	import flash.geom.Matrix;
-	import flash.geom.Point;
 	import flash.net.FileReference;
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
@@ -20,6 +16,7 @@ package de.rutscheschobel.shareyourfilter.util
 	import mx.controls.Alert;
 	import mx.formatters.DateFormatter;
 	import mx.graphics.codec.JPEGEncoder;
+	import de.rutscheschobel.shareyourfilter.main.ApplicationManager;
 	
 	public class BmpFilter
 	{
@@ -28,10 +25,8 @@ package de.rutscheschobel.shareyourfilter.util
 		private var bitmapData:BitmapData;
 		private var loader:Loader = new Loader;
 		private var image:Bitmap;
-		var newPixel = 0x000000;
 		
-		public function BmpFilter()
-		{
+		public function BmpFilter(){
 		}
 		
 		public function makeImageRed():void{
@@ -61,12 +56,6 @@ package de.rutscheschobel.shareyourfilter.util
 		}
 		
 		private function saveImageAsJpg(bdata:BitmapData):void{
-			
-			//creates a bevel filter (parameters: distance,angle,highlightColor,highlightAlpha,shadowColor,shadowAlpha,blurX,blurY,strength,quality,type,knockout ) all as type number expect 'type' (as string) and 'knockout' (as boolean)
-			var filter:BevelFilter = new BevelFilter(5, 45, 0xFFFF00, .8, 0x0000FF, .8, 20, 20, 1, 3, "inner", false);
-			
-			//apply the bevel filter to the bitmapdata
-			bdata.applyFilter(bdata, bdata.rect, new Point(0, 0), filter);
 			var bitmapData:BitmapData = new BitmapData(bdata.width, bdata.height);
 			bitmapData.draw(bdata,new Matrix());
 			var bitmap : Bitmap = new Bitmap(bitmapData);

@@ -3,15 +3,21 @@ package de.rutscheschobel.shareyourfilter.main
 	import de.rutscheschobel.shareyourfilter.view.FileWindow;
 	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
 	
+	import flash.display.BitmapData;
+	import flash.display.Loader;
+	import flash.events.Event;
 	import flash.filesystem.File;
+	import flash.net.URLRequest;
+	import flash.system.Capabilities;
 	
 	import mx.controls.Alert;
+	import mx.controls.Image;
 
 	public class ApplicationManager{
 		
 		private var imagePanel:ImageWindow;
-		private var filterWindow:FileWindow;
 		private var imageFile:File;
+		private var imageBitmapData:BitmapData;
 		
 		public function ApplicationManager(){
 		}
@@ -31,13 +37,6 @@ package de.rutscheschobel.shareyourfilter.main
 			return imagePanel;
 		}
 		
-		public function getFilterWindow():FileWindow{
-			if(filterWindow == null){
-				filterWindow = new FileWindow();
-			}
-			return filterWindow; 
-		}
-		
 		public function setImageFile(filePath:String):void{
 			if(imageFile == null){
 				imageFile = new File();
@@ -47,6 +46,15 @@ package de.rutscheschobel.shareyourfilter.main
 		
 		public function getImageFile():File{
 			return imageFile;
+		}
+		
+		public function getImageBitmapData():BitmapData{
+			var loader:Loader = new Loader();
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, function():void{
+				
+			});
+			loader.load(new URLRequest(encodeURI(imageFile.nativePath)));
+			return imageBitmapData;
 		}
 	}
 }

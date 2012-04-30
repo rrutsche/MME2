@@ -36,5 +36,9 @@
 		<mx:FileSystemTree id="fileTree" left="0" right="0" top="0" bottom="0"/>
 	</view:FileWindow>
 	
+	<view:HistogramWindow id="histogram" x="652" y="43" width="195" height="133">
+		
+	</view:HistogramWindow>
+	
 	
 </mainapp:Main>

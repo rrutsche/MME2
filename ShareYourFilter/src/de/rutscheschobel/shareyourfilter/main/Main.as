@@ -1,6 +1,7 @@
 package de.rutscheschobel.shareyourfilter.main{
 	import de.rutscheschobel.shareyourfilter.util.BmpFilter;
 	import de.rutscheschobel.shareyourfilter.view.FileWindow;
+	import de.rutscheschobel.shareyourfilter.view.HistogramWindow;
 	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
 	
 	import flash.desktop.ClipboardFormats;
@@ -28,6 +29,7 @@ package de.rutscheschobel.shareyourfilter.main{
 	public class Main extends WindowedApplication{
 		
 		public var imageWindow:ImageWindow;
+		public var histogram:HistogramWindow;
 		public var fileWindow:FileWindow;
 		public var menuBar:MenuBar;
 		public var bmp:BmpFilter; 
@@ -81,6 +83,7 @@ package de.rutscheschobel.shareyourfilter.main{
 			}
 			ApplicationManager.getInstance().setImageFile(file.nativePath);
 			imageWindow = ApplicationManager.getInstance().getImagePanel();
+			//histogram.addImage(ApplicationManager.getInstance().getImageFile().nativePath);
 			if(imageWindow != null){
 				this.addChild(imageWindow);
 				obj = file;	
