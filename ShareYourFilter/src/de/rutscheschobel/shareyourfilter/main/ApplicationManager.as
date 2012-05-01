@@ -8,17 +8,22 @@ package de.rutscheschobel.shareyourfilter.main
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.filesystem.File;
+	import flash.geom.Matrix;
+	import flash.net.FileReference;
 	import flash.net.URLRequest;
 	import flash.system.Capabilities;
+	import flash.utils.ByteArray;
 	
 	import mx.controls.Alert;
 	import mx.controls.Image;
+	import mx.graphics.codec.JPEGEncoder;
 
 	public class ApplicationManager{
 		
 		private var _imageWindow:ImageWindow;
 		private var _imageFile:File;
 		private var _bitmap:Bitmap;
+		private var _fileReference:FileReference = new FileReference();
 		
 		public function ApplicationManager(){
 		}
@@ -54,6 +59,13 @@ package de.rutscheschobel.shareyourfilter.main
 			_imageFile = value;
 		}
 
-		
+		public function saveImage():void{
+			var bitmapData:BitmapData = new BitmapData(_bitmap.bitmapData.width, _bitmap.bitmapData.height);
+			bitmapData.draw(_bitmap.bitmapData,new Matrix());
+			var bitmap : Bitmap = new Bitmap(bitmapData);
+			var jpg:JPEGEncoder = new JPEGEncoder();
+			var ba:ByteArray = jpg.encode(bitmapData);
+			_fileReference.save(ba,imageFile.name);
+		}
 	}
 }

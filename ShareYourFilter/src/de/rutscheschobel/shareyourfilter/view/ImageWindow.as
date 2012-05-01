@@ -52,6 +52,7 @@ package de.rutscheschobel.shareyourfilter.view
 		
 		private function setBitmapContent(e:Event):void{
 			bitmap = Bitmap(loader.content); 
+			ApplicationManager.getInstance().bitmap = bitmap;
 			image = new Image();
 			var ratio:Number = bitmap.width / bitmap.height;
 			image.maxWidth = 500;
