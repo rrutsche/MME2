@@ -77,7 +77,7 @@ package de.rutscheschobel.shareyourfilter.main
 			var png:PNGEncoder = new PNGEncoder();
 			var jpg:JPEGEncoder = new JPEGEncoder();
 			var ba:ByteArray = png.encode(bitmapData);
-			_fileReference.save(ba,imageFile.name);
+			_fileReference.save(ba,"untitled.png");
 		}
 
 		

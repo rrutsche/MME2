@@ -22,8 +22,10 @@ package de.rutscheschobel.shareyourfilter.main{
 	import mx.events.FileEvent;
 	import mx.events.MenuEvent;
 	import mx.events.SliderEvent;
+	import mx.events.StateChangeEvent;
 	
 	import spark.components.Button;
+	import spark.components.CheckBox;
 	import spark.components.HSlider;
 	import spark.components.TitleWindow;
 
@@ -39,6 +41,7 @@ package de.rutscheschobel.shareyourfilter.main{
 		public var filterBrightnessSlider:HSlider;
 		public var filterContrastSlider:HSlider;
 		public var filterSaturationSlider:HSlider;
+		public var filterNegativeCheckBox:CheckBox;
 		public var filter:BasicFilter;
 		
 		public function Main(){
@@ -50,6 +53,7 @@ package de.rutscheschobel.shareyourfilter.main{
 			filterBrightnessSlider.addEventListener(Event.CHANGE, onBrightnessFilterControlChange);
 			filterContrastSlider.addEventListener(Event.CHANGE, onContrastFilterControlChange);
 			filterSaturationSlider.addEventListener(Event.CHANGE, onSaturationFilterControlChange);
+			filterNegativeCheckBox.addEventListener(MouseEvent.CLICK, onNegativeFilterControlChange);
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER,onDragEnter);
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP,onDrop);
 			menuBar.addEventListener(MenuEvent.ITEM_CLICK, menuItemClickHandler);
@@ -73,6 +77,10 @@ package de.rutscheschobel.shareyourfilter.main{
 		private function onContrastFilterControlChange(event:Event):void{
 			filter.setContrast((event.target as HSlider).value);
 		}
+		private function onNegativeFilterControlChange(event:MouseEvent):void{
+			filter.setNegative(filterNegativeCheckBox.selected);
+		}
+		
 		
 		private function onSaturationFilterControlChange(event:Event):void{
 			filter.setSaturation((event.target as HSlider).value);

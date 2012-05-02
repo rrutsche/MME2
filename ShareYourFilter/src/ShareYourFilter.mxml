@@ -47,6 +47,12 @@
 			<s:Label id="filterSaturation" paddingTop="10" text="Saturation"/>
 			<s:HSlider id="filterSaturationSlider" liveDragging="true" maximum="300" minimum="0"
 					   value="100"/>
+			<mx:HRule width="100"/>
+			<s:HGroup>
+				<s:Label id="filterNegative" paddingLeft="0" paddingTop="5" text="Negative"/>
+				<s:CheckBox id="filterNegativeCheckBox"/>
+			</s:HGroup>
+			
 		</s:VGroup>
 	</view:FilterControlWindow>
 	

@@ -19,6 +19,7 @@ package de.rutscheschobel.shareyourfilter.util{
 		private var _brightnessArray:Array; // = new Array();
 		private var cmfContrast:ColorMatrixFilter;
 		private var cmfSaturation:ColorMatrixFilter;
+		private var cmfNegative:ColorMatrixFilter;
 		
 		public function BasicFilter(){
 		}
@@ -67,6 +68,18 @@ package de.rutscheschobel.shareyourfilter.util{
 			}
 		}
 		
+		public function setNegative(value:Boolean):void{
+			_bitmap = ApplicationManager.getInstance().bitmap;
+			if(value){
+				trace("true");
+				cmfNegative = new ColorMatrixFilter([-1, 0, 0, 0, 255, 0, -1, 0, 0, 255, 0, 0, -1, 0, 255, 0, 0, 0, 1, 0]);	
+			}else{
+				trace("false");
+				cmfNegative = new ColorMatrixFilter([1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0]);	
+			}
+			applyFilter();
+		}
+		
 		private function applyFilter():void{
 			_filtersArray = new Array();
 			if(cmfSaturation != null){
@@ -74,6 +87,9 @@ package de.rutscheschobel.shareyourfilter.util{
 			}
 			if(cmfContrast != null){
 				_filtersArray.push(cmfContrast);
+			}
+			if(cmfNegative != null){
+				_filtersArray.push(cmfNegative);
 			}
 			_bitmap.filters = _filtersArray;
 			
