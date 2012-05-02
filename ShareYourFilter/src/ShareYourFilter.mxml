@@ -45,8 +45,8 @@
 			<s:HSlider id="filterContrastSlider" liveDragging="true" maximum="100" minimum="0"
 					   stepSize="1" value="50"/>
 			<s:Label id="filterSaturation" paddingTop="10" text="Saturation"/>
-			<s:HSlider id="filterSaturationSlider" liveDragging="true" maximum="100" minimum="-100"
-					   value="0"/>
+			<s:HSlider id="filterSaturationSlider" liveDragging="true" maximum="300" minimum="0"
+					   value="100"/>
 		</s:VGroup>
 	</view:FilterControlWindow>
 	

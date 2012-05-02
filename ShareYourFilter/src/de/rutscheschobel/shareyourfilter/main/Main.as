@@ -38,6 +38,7 @@ package de.rutscheschobel.shareyourfilter.main{
 		public var filterControlWindow:FilterControlWindow;
 		public var filterBrightnessSlider:HSlider;
 		public var filterContrastSlider:HSlider;
+		public var filterSaturationSlider:HSlider;
 		public var filter:BasicFilter;
 		
 		public function Main(){
@@ -48,6 +49,7 @@ package de.rutscheschobel.shareyourfilter.main{
 			fileTree.addEventListener(FileEvent.FILE_CHOOSE, onFileClick);
 			filterBrightnessSlider.addEventListener(Event.CHANGE, onBrightnessFilterControlChange);
 			filterContrastSlider.addEventListener(Event.CHANGE, onContrastFilterControlChange);
+			filterSaturationSlider.addEventListener(Event.CHANGE, onSaturationFilterControlChange);
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER,onDragEnter);
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP,onDrop);
 			menuBar.addEventListener(MenuEvent.ITEM_CLICK, menuItemClickHandler);
@@ -70,6 +72,10 @@ package de.rutscheschobel.shareyourfilter.main{
 		}
 		private function onContrastFilterControlChange(event:Event):void{
 			filter.setContrast((event.target as HSlider).value);
+		}
+		
+		private function onSaturationFilterControlChange(event:Event):void{
+			filter.setSaturation((event.target as HSlider).value);
 		}
 		
 		/*
