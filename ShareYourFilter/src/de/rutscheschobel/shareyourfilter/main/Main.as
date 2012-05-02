@@ -38,8 +38,7 @@ package de.rutscheschobel.shareyourfilter.main{
 		public var filterControlWindow:FilterControlWindow;
 		public var filterBrightnessSlider:HSlider;
 		public var filterContrastSlider:HSlider;
-		public var brightnessFilter:BrightnessFilter;
-		public var contrastFilter:ContrastFilter;
+		public var filter:BasicFilter;
 		
 		public function Main(){
 			
@@ -53,8 +52,7 @@ package de.rutscheschobel.shareyourfilter.main{
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP,onDrop);
 			menuBar.addEventListener(MenuEvent.ITEM_CLICK, menuItemClickHandler);
 			bmp = new BmpFilter();
-			brightnessFilter = new BrightnessFilter();
-			contrastFilter = new ContrastFilter();
+			filter = new BasicFilter();
 		}
 		
 		private function menuItemClickHandler(event:MenuEvent):void{
@@ -68,10 +66,10 @@ package de.rutscheschobel.shareyourfilter.main{
 		 * FILTER CONTROL
 		 */
 		private function onBrightnessFilterControlChange(event:Event):void{
-			brightnessFilter.setFilter((event.target as HSlider).value);
+			filter.setBrightness((event.target as HSlider).value);
 		}
 		private function onContrastFilterControlChange(event:Event):void{
-			contrastFilter.setFilter((event.target as HSlider).value);
+			filter.setContrast((event.target as HSlider).value);
 		}
 		
 		/*
