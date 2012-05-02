@@ -28,24 +28,25 @@
 		</mx:XMLList>
 	</mx:MenuBar>
 	
+	<viewcompontents:FilterControlWindow/>
+	
 	<view:FileWindow id="fileWindow" x="177" y="140" width="400" height="252" visible="false">
-			<s:Button id="fileOpenOK" label="OK"/>
-			<s:Button id="fileOpenCancel" label="Cancel"/>
+		<s:Button id="fileOpenOK" label="OK"/>
+		<s:Button id="fileOpenCancel" label="Cancel"/>
 		<mx:FileSystemTree id="fileTree" left="0" right="0" top="0" bottom="0"/>
 	</view:FileWindow>
 	
-	<view:FilterControlWindow 	right="10" top="30" id="filterControlWindow"
-								width="160" height="300" backgroundColor="#CCCCCC" contentBackgroundColor="#CCCCCC"
-							  	title="Filter Window">
+	<view:FilterControlWindow right="10" top="30" id="filterControlWindow" width="160" height="300" 
+							  backgroundColor="#CCCCCC" contentBackgroundColor="#CCCCCC" title="Filter Window">
 		<s:VGroup left="10" right="10" top="10" bottom="10" contentBackgroundColor="#CCCCCC">
 			<s:Label id="filterBrightness" paddingLeft="0" paddingTop="10" text="Brightness"/>
-			<s:HSlider id="filterBrightnessSlider" liveDragging="false" maximum="100.0" minimum="-100.0"
+			<s:HSlider id="filterBrightnessSlider" liveDragging="true" maximum="100.0" minimum="-100.0"
 					   value="0"/>
 			<s:Label id="filterContrast" paddingTop="10" text="Contrast"/>
-			<s:HSlider id="filterContrastSlider" liveDragging="false" maximum="100" minimum="0"
+			<s:HSlider id="filterContrastSlider" liveDragging="true" maximum="100" minimum="0"
 					   stepSize="1" value="50"/>
 			<s:Label id="filterSaturation" paddingTop="10" text="Saturation"/>
-			<s:HSlider id="filterSaturationSlider" liveDragging="false" maximum="100" minimum="-100"
+			<s:HSlider id="filterSaturationSlider" liveDragging="true" maximum="100" minimum="-100"
 					   value="0"/>
 		</s:VGroup>
 	</view:FilterControlWindow>
