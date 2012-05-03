@@ -48,6 +48,7 @@ package de.rutscheschobel.shareyourfilter.main{
 			menuBar.addEventListener(MenuEvent.ITEM_CLICK, menuItemClickHandler);
 		}
 		
+		
 		private function menuItemClickHandler(event:MenuEvent):void{
 			if(event.item.@id == "menuOpen"){
 				fileWindow.visible = true;

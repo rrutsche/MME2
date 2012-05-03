@@ -1,12 +1,16 @@
 package de.rutscheschobel.shareyourfilter.main
 {
+	import de.rutscheschobel.shareyourfilter.event.JPEGAsyncCompleteEvent;
+	import de.rutscheschobel.shareyourfilter.util.JPEGAsyncEncoder;
 	import de.rutscheschobel.shareyourfilter.view.FileWindow;
 	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
+	import de.rutscheschobel.shareyourfilter.view.components.ProgressBox;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Loader;
 	import flash.events.Event;
+	import flash.events.ProgressEvent;
 	import flash.filesystem.File;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
@@ -27,6 +31,8 @@ package de.rutscheschobel.shareyourfilter.main
 		private var _bitmap:Bitmap;
 		private var _colorTransform:ColorTransform;
 		private var _fileReference:FileReference = new FileReference();
+		private var progress:ProgressBox;
+		private var encoder:JPEGAsyncEncoder;
 		
 		public function ApplicationManager(){
 		}
@@ -74,10 +80,26 @@ package de.rutscheschobel.shareyourfilter.main
 			var bitmapData:BitmapData = new BitmapData(_bitmap.bitmapData.width, _bitmap.bitmapData.height);
 			bitmapData.draw(_bitmap,new Matrix(), _bitmap.transform.colorTransform);
 			var bitmap : Bitmap = new Bitmap(bitmapData);
-			var png:PNGEncoder = new PNGEncoder();
-			var jpg:JPEGEncoder = new JPEGEncoder();
-			var ba:ByteArray = png.encode(bitmapData);
-			_fileReference.save(ba,"untitled.png");
+			encoder = new JPEGAsyncEncoder(90);
+
+			encoder.PixelsPerIteration = 600;
+			encoder.addEventListener(JPEGAsyncCompleteEvent.JPEGASYNC_COMPLETE, onEncodeDone);
+			encoder.addEventListener(ProgressEvent.PROGRESS, encodeProgress);
+			encoder.encode(bitmapData);
+			//var png:PNGEncoder = new PNGEncoder();
+			//var jpg:JPEGEncoder = new JPEGEncoder();
+			//var ba:ByteArray = png.encode(bitmapData);
+			//_fileReference.save(ba,"untitled.png");
+		}
+		
+		private function encodeProgress(event:ProgressEvent):void {
+			var percentage:String = ((event.bytesLoaded / event.bytesTotal)*100) + "%";
+		}
+		
+		private function onEncodeDone(event:JPEGAsyncCompleteEvent):void {
+			trace("encoding complete");
+			var ba:ByteArray = event.ImageData;
+			_fileReference.save(ba,"untitled.jpg");
 		}
 
 		
