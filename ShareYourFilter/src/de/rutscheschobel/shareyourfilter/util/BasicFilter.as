@@ -26,6 +26,7 @@ package de.rutscheschobel.shareyourfilter.util{
 		private var cmfNegative:ColorMatrixFilter;
 		private var cmfRandom:ColorMatrixFilter;
 		private var cmfBlur:ColorMatrixFilter;
+		private var cf:ConvolutionFilter;
 		
 		public function BasicFilter(){
 		}
@@ -75,14 +76,19 @@ package de.rutscheschobel.shareyourfilter.util{
 		}
 			
 		public function setBlur(value:Number):void{
+			var value1:int = value/10;
 			_bitmap = ApplicationManager.getInstance().bitmap;
-			var blurArray:Array = new Array();
+//			var blurArray:Array = new Array();
 			if(_bitmap != null){
 				_blur = new BlurFilter();
-				_blur.blurX = value/10;
-				_blur.blurY = value/10;
-				blurArray.push([_blur]);
-				cmfBlur = new ColorMatrixFilter(blurArray);
+//				_blur.blurX = value/10;
+//				_blur.blurY = value/10;
+//				blurArray.push([_blur]);
+//				cmfBlur = new ColorMatrixFilter(blurArray);
+				var filters:Array = new Array(); 
+//				cf = new ConvolutionFilter(6,6,new Array(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),40);
+				cf = new ConvolutionFilter(6,6,new Array(value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value),value*40);
+				filters.push( cf );
 				applyFilter();
 			}
 		}
@@ -122,7 +128,8 @@ package de.rutscheschobel.shareyourfilter.util{
 				_filtersArray.push(cmfRandom);
 			}
 			if(_blur != null){
-				_filtersArray.push(cmfBlur);
+//				_filtersArray.push(cmfBlur);
+				_filtersArray.push(cf);
 			}
 			_bitmap.filters = _filtersArray;
 		}

@@ -16,8 +16,8 @@
 		<s:HSlider id="filterSaturationSlider" liveDragging="true" maximum="300" minimum="0"
 				   value="100"/>
 		<s:Label id="filterBlur" paddingTop="10" text="Blur"/>
-		<s:HSlider id="filterBlurSlider" liveDragging="true" maximum="100" minimum="1"
-				   value="0"/>
+		<s:HSlider id="filterBlurSlider" liveDragging="true" maximum="10" minimum="1"
+				   value="1"/>
 		<mx:HRule width="100"/>
 		<s:HGroup>
 			<s:Label id="filterNegative" paddingLeft="0" paddingTop="5" text="Negative"/>
