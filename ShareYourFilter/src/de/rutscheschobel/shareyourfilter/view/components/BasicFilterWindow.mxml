@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view:BasicFilterControlWindow 	xmlns:view="de.rutscheschobel.shareyourfilter.view.*"
+							xmlns:fx="http://ns.adobe.com/mxml/2009"
+							xmlns:s="library://ns.adobe.com/flex/spark"
+							xmlns:mx="library://ns.adobe.com/flex/mx"
+							right="10" top="30" width="160" height="218" 
+						  backgroundColor="#CCCCCC" contentBackgroundColor="#CCCCCC" title="Basic Filter">
+	<s:VGroup left="10" right="10" top="10" bottom="10" contentBackgroundColor="#CCCCCC">
+		<s:Label id="filterBrightness" paddingLeft="0" paddingTop="10" text="Brightness"/>
+		<s:HSlider id="filterBrightnessSlider" liveDragging="true" maximum="100.0" minimum="-100.0"
+				   value="0"/>
+		<s:Label id="filterContrast" paddingTop="10" text="Contrast"/>
+		<s:HSlider id="filterContrastSlider" liveDragging="true" maximum="100" minimum="0"
+				   stepSize="1" value="50"/>
+		<s:Label id="filterSaturation" paddingTop="10" text="Saturation"/>
+		<s:HSlider id="filterSaturationSlider" liveDragging="true" maximum="300" minimum="0"
+				   value="100"/>
+		<mx:HRule width="100"/>
+		<s:HGroup>
+			<s:Label id="filterNegative" paddingLeft="0" paddingTop="5" text="Negative"/>
+			<s:CheckBox id="filterNegativeCheckBox"/>
+		</s:HGroup>
+		
+	</s:VGroup>
+</view:BasicFilterControlWindow>
