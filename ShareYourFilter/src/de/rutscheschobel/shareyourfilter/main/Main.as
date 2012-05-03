@@ -34,14 +34,8 @@ package de.rutscheschobel.shareyourfilter.main{
 		public var imageWindow:ImageWindow;
 		public var fileWindow:FileWindow;
 		public var menuBar:MenuBar;
-		public var bmp:BmpFilter; 
 		public var fileTree:FileSystemTree;
-		public var filterControlWindow:BasicFilterControlWindow;
-		public var filterBrightnessSlider:HSlider;
-		public var filterContrastSlider:HSlider;
-		public var filterSaturationSlider:HSlider;
-		public var filterNegativeCheckBox:CheckBox;
-		public var filter:BasicFilter;
+		public var basicFilterControlWindow:BasicFilterControlWindow;
 		
 		public function Main(){
 			
@@ -49,15 +43,9 @@ package de.rutscheschobel.shareyourfilter.main{
 		
 		public function init():void{
 			fileTree.addEventListener(FileEvent.FILE_CHOOSE, onFileClick);
-			filterBrightnessSlider.addEventListener(Event.CHANGE, onBrightnessFilterControlChange);
-			filterContrastSlider.addEventListener(Event.CHANGE, onContrastFilterControlChange);
-			filterSaturationSlider.addEventListener(Event.CHANGE, onSaturationFilterControlChange);
-			filterNegativeCheckBox.addEventListener(MouseEvent.CLICK, onNegativeFilterControlChange);
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER,onDragEnter);
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP,onDrop);
 			menuBar.addEventListener(MenuEvent.ITEM_CLICK, menuItemClickHandler);
-			bmp = new BmpFilter();
-			filter = new BasicFilter();
 		}
 		
 		private function menuItemClickHandler(event:MenuEvent):void{
@@ -66,23 +54,6 @@ package de.rutscheschobel.shareyourfilter.main{
 			}else if(event.item.@id == "menuSave"){
 				ApplicationManager.getInstance().saveImage();
 			}
-		}
-		/*
-		 * FILTER CONTROL
-		 */
-		private function onBrightnessFilterControlChange(event:Event):void{
-			filter.setBrightness((event.target as HSlider).value);
-		}
-		private function onContrastFilterControlChange(event:Event):void{
-			filter.setContrast((event.target as HSlider).value);
-		}
-		private function onNegativeFilterControlChange(event:MouseEvent):void{
-			filter.setNegative(filterNegativeCheckBox.selected);
-		}
-		
-		
-		private function onSaturationFilterControlChange(event:Event):void{
-			filter.setSaturation((event.target as HSlider).value);
 		}
 		
 		/*

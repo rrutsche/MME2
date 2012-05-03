@@ -11,12 +11,12 @@ package de.rutscheschobel.shareyourfilter.view{
 		public var fileOpenOK:Button;
 		public var fileOpenCancel:Button;
 		
+		
 		public function FileWindow(){
 			addEventListener(FlexEvent.CREATION_COMPLETE, init);
 		}
 		
 		private function init(event:FlexEvent):void{
-			this.title = "Open File";
 			//fileOpenCancel.addEventListener(MouseEvent.CLICK, closeWindow);
 		}
 		

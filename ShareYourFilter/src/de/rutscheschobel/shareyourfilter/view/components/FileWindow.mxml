@@ -3,8 +3,9 @@
 			xmlns:view="de.rutscheschobel.shareyourfilter.view.*"
 			xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 	xmlns:s="library://ns.adobe.com/flex/spark" 
-		 	xmlns:mx="library://ns.adobe.com/flex/mx" width="350" height="300">
+		 	xmlns:mx="library://ns.adobe.com/flex/mx"
+			x="177" y="140" width="400" height="252" visible="false">
 	<s:Button id="fileOpenOK" label="OK"/>
 	<s:Button id="fileOpenCancel" label="Cancel"/>
 	<mx:FileSystemTree id="fileTree" left="0" right="0" top="0" bottom="0"/>
-</view:FileWindow>
+</view:FileWindow>  
