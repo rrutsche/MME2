@@ -35,7 +35,7 @@
 		<mx:FileSystemTree id="fileTree" left="0" right="0" top="0" bottom="0"/>
 	</view:FileWindow>
 	
-	<view:FilterControlWindow right="10" top="30" id="filterControlWindow" width="160" height="300" 
+	<view:BasicFilterControlWindow right="10" top="30" id="filterControlWindow" width="160" height="300" 
 							  backgroundColor="#CCCCCC" contentBackgroundColor="#CCCCCC" title="Filter Window">
 		<s:VGroup left="10" right="10" top="10" bottom="10" contentBackgroundColor="#CCCCCC">
 			<s:Label id="filterBrightness" paddingLeft="0" paddingTop="10" text="Brightness"/>
@@ -54,6 +54,6 @@
 			</s:HGroup>
 			
 		</s:VGroup>
-	</view:FilterControlWindow>
+	</view:BasicFilterControlWindow>
 	
 </mainapp:Main>

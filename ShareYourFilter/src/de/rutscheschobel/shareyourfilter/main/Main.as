@@ -35,9 +35,8 @@ package de.rutscheschobel.shareyourfilter.main{
 		public var fileWindow:FileWindow;
 		public var menuBar:MenuBar;
 		public var bmp:BmpFilter; 
-		public var obj:Object;
 		public var fileTree:FileSystemTree;
-		public var filterControlWindow:FilterControlWindow;
+		public var filterControlWindow:BasicFilterControlWindow;
 		public var filterBrightnessSlider:HSlider;
 		public var filterContrastSlider:HSlider;
 		public var filterSaturationSlider:HSlider;
@@ -64,7 +63,7 @@ package de.rutscheschobel.shareyourfilter.main{
 		private function menuItemClickHandler(event:MenuEvent):void{
 			if(event.item.@id == "menuOpen"){
 				fileWindow.visible = true;
-			}else if(event.item.@id == "menuSave" && obj != null){
+			}else if(event.item.@id == "menuSave"){
 				ApplicationManager.getInstance().saveImage();
 			}
 		}
@@ -122,7 +121,6 @@ package de.rutscheschobel.shareyourfilter.main{
 			imageWindow = ApplicationManager.getInstance().imageWindow;
 			if(imageWindow != null){
 				this.addChild(imageWindow);
-				obj = file;	
 			}	
 		}
 	}
