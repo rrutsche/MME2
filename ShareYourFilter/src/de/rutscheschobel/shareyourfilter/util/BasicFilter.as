@@ -3,7 +3,10 @@ package de.rutscheschobel.shareyourfilter.util{
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.filters.BitmapFilterQuality;
+	import flash.filters.BlurFilter;
 	import flash.filters.ColorMatrixFilter;
+	import flash.filters.GlowFilter;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
 	import flash.net.FileReference;
@@ -66,6 +69,15 @@ package de.rutscheschobel.shareyourfilter.util{
 				cmfSaturation = new ColorMatrixFilter([a, b, c, 0, 0, d, e, f, 0, 0, g, h, i, 0 ,0, 0, 0, 0, 1, 0]);
 				applyFilter();
 			}
+		}
+		
+		public function setBlur(value:Number):void{
+			_bitmap = ApplicationManager.getInstance().bitmap;
+			var blur:BlurFilter = new BlurFilter();
+			blur.blurX = value;
+			blur.blurY = value;
+			blur.quality = BitmapFilterQuality.MEDIUM;
+			_bitmap.filters = [blur];
 		}
 		
 		public function setNegative(value:Boolean):void{

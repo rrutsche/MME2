@@ -71,6 +71,7 @@ package de.rutscheschobel.shareyourfilter.main{
 		 * FILTER CONTROL
 		 */
 		private function onBrightnessFilterControlChange(event:Event):void{
+			filter.setBlur((event.target as HSlider).value);
 			filter.setBrightness((event.target as HSlider).value);
 		}
 		private function onContrastFilterControlChange(event:Event):void{
@@ -79,8 +80,6 @@ package de.rutscheschobel.shareyourfilter.main{
 		private function onNegativeFilterControlChange(event:MouseEvent):void{
 			filter.setNegative(filterNegativeCheckBox.selected);
 		}
-		
-		
 		private function onSaturationFilterControlChange(event:Event):void{
 			filter.setSaturation((event.target as HSlider).value);
 		}
