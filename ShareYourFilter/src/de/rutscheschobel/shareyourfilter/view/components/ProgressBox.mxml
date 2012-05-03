@@ -2,6 +2,6 @@
 <mx:Box xmlns:mx="http://www.adobe.com/2006/mxml"
 		width="230" height="50" alpha=".7" backgroundColor="#F4F4F4" cornerRadius="4"
 		horizontalAlign="center" mouseDown="{this.startDrag()}" mouseUp="{this.stopDrag()}"
-		verticalAlign="middle">
+		verticalAlign="middle" visible="true">
 	<mx:ProgressBar id="progBar" label="0% Complete" mode="manual"/>
 </mx:Box>

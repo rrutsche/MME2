@@ -16,6 +16,7 @@ package de.rutscheschobel.shareyourfilter.view
 	import mx.controls.Alert;
 	import mx.controls.Image;
 	import mx.events.FlexEvent;
+	import mx.managers.PopUpManager;
 
 	public class ImageWindow extends AbstractWindow{
 		

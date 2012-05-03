@@ -1,33 +1,21 @@
 package de.rutscheschobel.shareyourfilter.main{
 	import de.rutscheschobel.shareyourfilter.util.*;
 	import de.rutscheschobel.shareyourfilter.view.*;
+	import de.rutscheschobel.shareyourfilter.view.components.ProgressBox;
 	
 	import flash.desktop.ClipboardFormats;
 	import flash.desktop.NativeDragManager;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
 	import flash.events.NativeDragEvent;
+	import flash.events.ProgressEvent;
 	import flash.filesystem.File;
-	import flash.system.Capabilities;
 	
-	import mx.containers.Canvas;
-	import mx.containers.Panel;
 	import mx.controls.Alert;
 	import mx.controls.FileSystemTree;
-	import mx.controls.Image;
 	import mx.controls.MenuBar;
-	import mx.core.Application;
 	import mx.core.WindowedApplication;
-	import mx.core.mx_internal;
 	import mx.events.FileEvent;
 	import mx.events.MenuEvent;
-	import mx.events.SliderEvent;
-	import mx.events.StateChangeEvent;
-	
-	import spark.components.Button;
-	import spark.components.CheckBox;
-	import spark.components.HSlider;
-	import spark.components.TitleWindow;
+	import mx.managers.PopUpManager;
 
 	public class Main extends WindowedApplication{
 		
@@ -36,6 +24,7 @@ package de.rutscheschobel.shareyourfilter.main{
 		public var menuBar:MenuBar;
 		public var fileTree:FileSystemTree;
 		public var basicFilterControlWindow:BasicFilterControlWindow;
+		public var progressBox:ProgressBox;
 		
 		public function Main(){
 			
@@ -54,6 +43,7 @@ package de.rutscheschobel.shareyourfilter.main{
 				fileWindow.visible = true;
 			}else if(event.item.@id == "menuSave"){
 				ApplicationManager.getInstance().saveImage();
+				setProgressBox();
 			}
 		}
 		
@@ -94,6 +84,20 @@ package de.rutscheschobel.shareyourfilter.main{
 			if(imageWindow != null){
 				this.addChild(imageWindow);
 			}	
+		}
+		
+		private function setProgressBox():void{
+			progressBox = PopUpManager.createPopUp(this, ProgressBox) as ProgressBox;
+			PopUpManager.centerPopUp(progressBox);
+			ApplicationManager.getInstance().encoder.addEventListener(ProgressEvent.PROGRESS, encodeProgress);
+		}
+		
+		private function encodeProgress(event:ProgressEvent):void {
+			progressBox.progBar.setProgress(event.bytesLoaded, event.bytesTotal);
+			progressBox.progBar.label = (event.bytesLoaded / event.bytesTotal * 100).toFixed() + "%" + " Complete";
+			if(event.bytesLoaded / event.bytesTotal * 100 >= 100){
+				PopUpManager.removePopUp(progressBox);
+			}
 		}
 	}
 		

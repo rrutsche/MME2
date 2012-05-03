@@ -3,6 +3,7 @@ package de.rutscheschobel.shareyourfilter.view{
 	
 	import mx.controls.Alert;
 	import mx.events.FlexEvent;
+	import mx.managers.PopUpManager;
 	
 	import spark.components.TitleWindow;
 	import spark.events.TitleWindowBoundsEvent;
