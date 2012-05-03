@@ -2,10 +2,9 @@ package de.rutscheschobel.shareyourfilter.util{
 	import de.rutscheschobel.shareyourfilter.main.ApplicationManager;
 	
 	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.filters.BitmapFilterQuality;
 	import flash.filters.BlurFilter;
 	import flash.filters.ColorMatrixFilter;
+	import flash.filters.ConvolutionFilter;
 	import flash.filters.GlowFilter;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
@@ -20,11 +19,14 @@ package de.rutscheschobel.shareyourfilter.util{
 		private var _colorTransform:ColorTransform;
 		private var _filtersArray:Array;
 		private var _brightnessArray:Array;
+		private var _blur:BlurFilter;
 		private var randomBack:Array;		
 		private var cmfContrast:ColorMatrixFilter;
 		private var cmfSaturation:ColorMatrixFilter;
 		private var cmfNegative:ColorMatrixFilter;
 		private var cmfRandom:ColorMatrixFilter;
+		private var cmfBlur:ColorMatrixFilter;
+		private var cf:ConvolutionFilter;
 		
 		public function BasicFilter(){
 		}
@@ -74,24 +76,21 @@ package de.rutscheschobel.shareyourfilter.util{
 		}
 			
 		public function setBlur(value:Number):void{
+			var value1:int = value/10;
 			_bitmap = ApplicationManager.getInstance().bitmap;
+//			var blurArray:Array = new Array();
 			if(_bitmap != null){
-//				var blur:BlurFilter = new BlurFilter();
-//				blur.blurX = value/10;
-//				blur.blurY = value/10;
-//				blur.quality = BitmapFilterQuality.LOW;
-//				_bitmap.filters = [blur];
-				
-				
+				_blur = new BlurFilter();
+//				_blur.blurX = value/10;
+//				_blur.blurY = value/10;
+//				blurArray.push([_blur]);
+//				cmfBlur = new ColorMatrixFilter(blurArray);
+				var filters:Array = new Array(); 
+//				cf = new ConvolutionFilter(6,6,new Array(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),40);
+				cf = new ConvolutionFilter(6,6,new Array(value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value),value*40);
+				filters.push( cf );
+				applyFilter();
 			}
-		}
-		
-		public function generateRandomNumberArray():Array{
-			var random:Array = [Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), 
-				Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), 
-				Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), 
-				Math.random(), Math.random(), Math.random(), Math.random(), Math.random()];
-			return random;
 		}
 		
 		public function setRandom(random:Array):void{
@@ -128,8 +127,19 @@ package de.rutscheschobel.shareyourfilter.util{
 			if(cmfRandom != null){
 				_filtersArray.push(cmfRandom);
 			}
+			if(_blur != null){
+//				_filtersArray.push(cmfBlur);
+				_filtersArray.push(cf);
+			}
 			_bitmap.filters = _filtersArray;
-			
+		}
+		
+		public function generateRandomNumberArray():Array{
+			var random:Array = [Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), 
+								Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), 
+								Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), 
+								Math.random(), Math.random(), Math.random(), Math.random(), Math.random()];
+			return random;
 		}
 		
 	}
