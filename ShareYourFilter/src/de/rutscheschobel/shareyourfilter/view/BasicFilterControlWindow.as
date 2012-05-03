@@ -77,7 +77,7 @@ package de.rutscheschobel.shareyourfilter.view
 			var newFilterValueObject:FilterValueObject = new FilterValueObject();
 			newFilterValueObject.random = randomArray;
 			if(history.length > 9){
-				history.removeItemAt(0);
+				history.removeItemAt(1);
 				history.addItem(newFilterValueObject);
 				stepInHistory = 9;
 			}else{
