@@ -34,5 +34,5 @@
 		<s:Button id="fileOpenCancel" label="Cancel"/>
 		<mx:FileSystemTree id="fileTree" left="0" right="0" top="0" bottom="0"/>
 	</view:FileWindow>
-	<viewcompontents:BasicFilterControlWindow />
+	<viewcompontents:BasicFilterControlWindow  height="338"/>
 </mainapp:Main>

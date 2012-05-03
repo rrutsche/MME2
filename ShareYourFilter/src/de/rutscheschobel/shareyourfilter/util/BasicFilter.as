@@ -19,10 +19,12 @@ package de.rutscheschobel.shareyourfilter.util{
 		private var _bitmap:Bitmap;
 		private var _colorTransform:ColorTransform;
 		private var _filtersArray:Array;
-		private var _brightnessArray:Array; // = new Array();
+		private var _brightnessArray:Array;
+		private var randomBack:Array;		
 		private var cmfContrast:ColorMatrixFilter;
 		private var cmfSaturation:ColorMatrixFilter;
 		private var cmfNegative:ColorMatrixFilter;
+		private var cmfRandom:ColorMatrixFilter;
 		
 		public function BasicFilter(){
 		}
@@ -70,14 +72,34 @@ package de.rutscheschobel.shareyourfilter.util{
 				applyFilter();
 			}
 		}
-		
+			
 		public function setBlur(value:Number):void{
 			_bitmap = ApplicationManager.getInstance().bitmap;
-			var blur:BlurFilter = new BlurFilter();
-			blur.blurX = value;
-			blur.blurY = value;
-			blur.quality = BitmapFilterQuality.MEDIUM;
-			_bitmap.filters = [blur];
+			if(_bitmap != null){
+//				var blur:BlurFilter = new BlurFilter();
+//				blur.blurX = value/10;
+//				blur.blurY = value/10;
+//				blur.quality = BitmapFilterQuality.LOW;
+//				_bitmap.filters = [blur];
+				
+				
+			}
+		}
+		
+		public function generateRandomNumberArray():Array{
+			var random:Array = [Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), 
+				Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), 
+				Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), 
+				Math.random(), Math.random(), Math.random(), Math.random(), Math.random()];
+			return random;
+		}
+		
+		public function setRandom(random:Array):void{
+			_bitmap = ApplicationManager.getInstance().bitmap;
+			if(_bitmap != null){
+				cmfRandom = new ColorMatrixFilter(random);
+				applyFilter();
+			}
 		}
 		
 		public function setNegative(value:Boolean):void{
@@ -102,6 +124,9 @@ package de.rutscheschobel.shareyourfilter.util{
 			}
 			if(cmfNegative != null){
 				_filtersArray.push(cmfNegative);
+			}
+			if(cmfRandom != null){
+				_filtersArray.push(cmfRandom);
 			}
 			_bitmap.filters = _filtersArray;
 			
