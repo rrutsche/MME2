@@ -4,8 +4,6 @@ package de.rutscheschobel.shareyourfilter.util{
 	import flash.display.Bitmap;
 	import flash.filters.BlurFilter;
 	import flash.filters.ColorMatrixFilter;
-	import flash.filters.ConvolutionFilter;
-	import flash.filters.GlowFilter;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
 	import flash.net.FileReference;
@@ -25,8 +23,9 @@ package de.rutscheschobel.shareyourfilter.util{
 		private var cmfSaturation:ColorMatrixFilter;
 		private var cmfNegative:ColorMatrixFilter;
 		private var cmfRandom:ColorMatrixFilter;
-		private var cmfBlur:ColorMatrixFilter;
-		private var cf:ConvolutionFilter;
+		private var cmfRed:ColorMatrixFilter;
+		private var cmfGreen:ColorMatrixFilter;
+		private var cmfBlue:ColorMatrixFilter;
 		
 		public function BasicFilter(){
 		}
@@ -75,30 +74,45 @@ package de.rutscheschobel.shareyourfilter.util{
 			}
 		}
 			
-		public function setBlur(value:Number):void{
-			var value1:int = value/10;
-			_bitmap = ApplicationManager.getInstance().bitmap;
-//			var blurArray:Array = new Array();
-			if(_bitmap != null){
-				_blur = new BlurFilter();
-//				_blur.blurX = value/10;
-//				_blur.blurY = value/10;
-//				blurArray.push([_blur]);
-//				cmfBlur = new ColorMatrixFilter(blurArray);
-				var filters:Array = new Array(); 
-//				cf = new ConvolutionFilter(6,6,new Array(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),40);
-				cf = new ConvolutionFilter(6,6,new Array(value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value),value*40);
-				filters.push( cf );
-				applyFilter();
-			}
-		}
-		
 		public function setRandom(random:Array):void{
 			_bitmap = ApplicationManager.getInstance().bitmap;
 			if(_bitmap != null){
 				cmfRandom = new ColorMatrixFilter(random);
 				applyFilter();
 			}
+		}
+		
+		public function setRed(value:Number):void{
+			_bitmap = ApplicationManager.getInstance().bitmap;
+			if(_bitmap != null){
+				cmfRed = new ColorMatrixFilter([value/10, 0, 0, 0, 0, 
+												0, 1, 0, 0, 0, 
+												0, 0, 1, 0, 0, 
+												0, 0, 0, 1, 0]);
+			}
+			applyFilter();
+		}
+		
+		public function setGreen(value:Number):void{
+			_bitmap = ApplicationManager.getInstance().bitmap;
+			if(_bitmap != null){
+				cmfGreen = new ColorMatrixFilter([1, 0, 0, 0, 0, 
+												0, value/10, 0, 0, 0, 
+												0, 0, 1, 0, 0, 
+												0, 0, 0, 1, 0]);
+			}
+			applyFilter();
+		}
+		
+		public function setBlue(value:Number):void{
+			_bitmap = ApplicationManager.getInstance().bitmap;
+			if(_bitmap != null){
+				cmfBlue = new ColorMatrixFilter([1, 0, 0, 0, 0, 
+												0, 1, 0, 0, 0, 
+												0, 0, value/10, 0, 0, 
+												0, 0, 0, 1, 0]);
+			}
+			applyFilter();
 		}
 		
 		public function setNegative(value:Boolean):void{
@@ -129,7 +143,17 @@ package de.rutscheschobel.shareyourfilter.util{
 			}
 			if(_blur != null){
 //				_filtersArray.push(cmfBlur);
-				_filtersArray.push(cf);
+				trace("blur");
+				_filtersArray.push(cmfRed);
+			}
+			if(cmfRed != null){
+				_filtersArray.push(cmfRed);
+			}
+			if(cmfGreen != null){
+				_filtersArray.push(cmfGreen);
+			}
+			if(cmfBlue != null){
+				_filtersArray.push(cmfBlue);
 			}
 			_bitmap.filters = _filtersArray;
 		}

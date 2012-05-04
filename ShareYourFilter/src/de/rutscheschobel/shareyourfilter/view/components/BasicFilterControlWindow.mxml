@@ -8,6 +8,7 @@
 							   contentBackgroundColor="#CCCCCC" title="Basic Filter">
 	<s:VGroup left="10" right="10" top="10" bottom="10" contentBackgroundAlpha="0.0"
 			  contentBackgroundColor="#CCCCCC">
+		<s:Button id="filterDefaultButton" width="127" label="Remove Filters"/>
 		<s:Label id="filterBrightness" paddingLeft="0" paddingTop="10" text="Brightness"/>
 		<s:HSlider id="filterBrightnessSlider" liveDragging="true" maximum="100.0" minimum="-100.0"
 				   value="0"/>
@@ -17,9 +18,15 @@
 		<s:Label id="filterSaturation" paddingTop="10" text="Saturation"/>
 		<s:HSlider id="filterSaturationSlider" liveDragging="true" maximum="300" minimum="0"
 				   value="100"/>
-		<s:Label id="filterBlur" paddingTop="10" text="Blur"/>
-		<s:HSlider id="filterBlurSlider" liveDragging="true" maximum="10" minimum="1"
-				   value="1"/>
+		<s:Label id="filterRed" paddingTop="10" text="Red"/>
+		<s:HSlider id="filterRedSlider" liveDragging="true" maximum="20" minimum="0" snapInterval="0.1"
+				   value="10"/>
+		<s:Label id="filterGreen" paddingTop="10" text="Green"/>
+		<s:HSlider id="filterGreenSlider" liveDragging="true" maximum="20" minimum="0" snapInterval="0.1"
+				   value="10"/>
+		<s:Label id="filterBlue" paddingTop="10" text="Blue"/>
+		<s:HSlider id="filterBlueSlider" liveDragging="true" maximum="20" minimum="0" snapInterval="0.1"
+				   value="10"/>
 		<mx:HRule width="100"/>
 		<s:HGroup>
 			<s:Label id="filterNegative" paddingLeft="0" paddingTop="5" text="Negative"/>

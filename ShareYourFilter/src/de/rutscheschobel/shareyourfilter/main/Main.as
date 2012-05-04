@@ -1,6 +1,7 @@
 package de.rutscheschobel.shareyourfilter.main{
 	import de.rutscheschobel.shareyourfilter.util.*;
 	import de.rutscheschobel.shareyourfilter.view.*;
+	import de.rutscheschobel.shareyourfilter.view.components.BasicFilterControlWindow;
 	import de.rutscheschobel.shareyourfilter.view.components.ProgressBox;
 	
 	import flash.desktop.ClipboardFormats;
@@ -23,7 +24,6 @@ package de.rutscheschobel.shareyourfilter.main{
 		public var fileWindow:FileWindow;
 		public var menuBar:MenuBar;
 		public var fileTree:FileSystemTree;
-		public var basicFilterControlWindow:BasicFilterControlWindow;
 		public var progressBox:ProgressBox;
 		
 		public function Main(){
