@@ -4,7 +4,7 @@
 			  xmlns:viewcompontents="de.rutscheschobel.shareyourfilter.view.components.*" 
 			  xmlns:mx="http://www.adobe.com/2006/mxml"
 			  xmlns:s="library://ns.adobe.com/flex/spark"
-			  width="1000" height="700" backgroundColor="#838383" creationComplete="init()"
+			  width="1000" height="550" backgroundColor="#838383" creationComplete="init()"
 			  layout="absolute" >
 	<mx:MenuBar id="menuBar" left="0" right="0" top="0" labelField="@label">
 		<mx:XMLList>
