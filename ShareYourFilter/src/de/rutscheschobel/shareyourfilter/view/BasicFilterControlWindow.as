@@ -80,7 +80,7 @@ package de.rutscheschobel.shareyourfilter.view
 		private function onRandomFilterBackControlChange(event:Event):void{
 			if(ApplicationManager.getInstance().bitmap == null) history.removeAll();
 			if(history.length > 0 && stepInHistory > 0){
-				var oldValue = history.getItemAt(stepInHistory-1);
+				var oldValue:Object = history.getItemAt(stepInHistory-1);
 				
 				filter.setBrightness(FilterValueObject(oldValue).brightness);
 				filter.setContrast(FilterValueObject(oldValue).contrast);

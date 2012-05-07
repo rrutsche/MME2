@@ -39,6 +39,7 @@ package de.rutscheschobel.shareyourfilter.main
 		
 		public function get imageWindow():ImageWindow{
 			if(_imageFile != null){
+				PopUpManager.removePopUp(_imageWindow);
 				_imageWindow = new ImageWindow(_imageFile.nativePath);	
 			}			
 			return _imageWindow;

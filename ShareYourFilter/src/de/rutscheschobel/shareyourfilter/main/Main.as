@@ -5,6 +5,7 @@ package de.rutscheschobel.shareyourfilter.main{
 	import de.rutscheschobel.shareyourfilter.view.components.ProgressBox;
 	
 	import flash.desktop.ClipboardFormats;
+	import flash.desktop.NativeApplication;
 	import flash.desktop.NativeDragManager;
 	import flash.events.NativeDragEvent;
 	import flash.events.ProgressEvent;
@@ -44,6 +45,8 @@ package de.rutscheschobel.shareyourfilter.main{
 			}else if(event.item.@id == "menuSave"){
 				ApplicationManager.getInstance().saveImage();
 				setProgressBox();
+			}else if(event.item.@id == "menuClose"){
+				NativeApplication.nativeApplication.exit();
 			}
 		}
 		
@@ -76,9 +79,6 @@ package de.rutscheschobel.shareyourfilter.main{
 			creates a new imagewindow with an image
 		*/
 		private function setImage(file:File):void{
-			if(imageWindow != null){
-				this.removeChild(imageWindow);
-			}
 			ApplicationManager.getInstance().imageFile = file;
 			imageWindow = ApplicationManager.getInstance().imageWindow;
 			if(imageWindow != null){

@@ -33,7 +33,7 @@ package de.rutscheschobel.shareyourfilter.view
 		
 		private function init(event:FlexEvent):void{
 			addCanvas();
-			addImage(filePath);			
+			addImage(filePath);	
 		}
 		
 		private function addCanvas():void{
@@ -56,11 +56,14 @@ package de.rutscheschobel.shareyourfilter.view
 			ApplicationManager.getInstance().bitmap = bitmap;
 			image = new Image();
 			var ratio:Number = bitmap.width / bitmap.height;
-			image.maxWidth = 500;
-			image.maxHeight = 500 / ratio;
+			image.width = this.parent.width/2;
+			image.height = image.width / ratio;
 			image.source = bitmap;
+			this.width = image.width;
+			this.height = image.height;
 			canvas.addChild(image);
-			this.setLayoutBoundsPosition(300,200,true);
+			PopUpManager.addPopUp(this, this.parent, false);
+			PopUpManager.centerPopUp(this);
 		}
 		
 	}
