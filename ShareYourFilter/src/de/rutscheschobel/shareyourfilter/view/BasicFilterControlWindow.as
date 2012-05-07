@@ -61,15 +61,15 @@ package de.rutscheschobel.shareyourfilter.view
 		* FILTER CONTROL
 		*/
 		private function onDefaultChange(event:Event):void{
-			var oldValue = history.getItemAt(0);
-			filter.setBrightness(FilterValueObject(oldValue).brightness);
-			filter.setContrast(FilterValueObject(oldValue).contrast);
-			filter.setSaturation(FilterValueObject(oldValue).saturation);
-			filter.setNegative(FilterValueObject(oldValue).negative);
-			filter.setRandom(FilterValueObject(oldValue).random);
-			filter.setRed(FilterValueObject(oldValue).red);
-			filter.setGreen(FilterValueObject(oldValue).green);
-			filter.setBlue(FilterValueObject(oldValue).blue);
+			var oldValue:FilterValueObject = history.getItemAt(0) as FilterValueObject;
+			filter.setBrightness(oldValue.brightness);
+			filter.setContrast(oldValue.contrast);
+			filter.setSaturation(oldValue.saturation);
+			filter.setNegative(oldValue.negative);
+			filter.setRandom(oldValue.random);
+			filter.setRed(oldValue.red);
+			filter.setGreen(oldValue.green);
+			filter.setBlue(oldValue.blue);
 			
 			filterBrightnessSlider.value = 0;
 			filterContrastSlider.value = 50;

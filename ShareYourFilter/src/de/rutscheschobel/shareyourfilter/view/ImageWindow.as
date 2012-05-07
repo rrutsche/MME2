@@ -55,9 +55,19 @@ package de.rutscheschobel.shareyourfilter.view
 			bitmap = Bitmap(loader.content); 
 			ApplicationManager.getInstance().bitmap = bitmap;
 			image = new Image();
-			var ratio:Number = bitmap.width / bitmap.height;
-			image.width = this.parent.width/2;
-			image.height = image.width / ratio;
+			var ratioX:Number = 1;
+			var ratioY:Number = 1;
+			var maxValue:int;
+			if(bitmap.width > bitmap.height){
+				ratioY = bitmap.width / bitmap.height;
+				maxValue =  this.parent.width * .6;
+			}else{
+				ratioX =  bitmap.height / bitmap.width;
+				maxValue =  this.parent.height * .8;
+			}
+			
+			image.width = maxValue / ratioX;
+			image.height = maxValue / ratioY;
 			image.source = bitmap;
 			this.width = image.width;
 			this.height = image.height;
