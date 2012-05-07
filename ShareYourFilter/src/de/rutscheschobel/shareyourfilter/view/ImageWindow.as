@@ -22,9 +22,9 @@ package de.rutscheschobel.shareyourfilter.view
 		
 		public var canvas:Canvas;
 		public var filePath:String;
-		private var image:Image;
-		private var bitmap:Bitmap;
-		private var loader:Loader;
+		private var _image:Image;
+		private var _bitmap:Bitmap;
+		private var _loader:Loader;
 		
 		public function ImageWindow(filePath:String){
 			this.filePath = filePath;
@@ -32,6 +32,7 @@ package de.rutscheschobel.shareyourfilter.view
 		}
 		
 		private function init(event:FlexEvent):void{
+			//this.parent.addEventListener(Event.RESIZE, onApplicationResize);
 			addCanvas();
 			addImage(filePath);	
 		}
@@ -43,37 +44,44 @@ package de.rutscheschobel.shareyourfilter.view
 		
 		public function addImage(nativePath:String):void{
 			var file:File = ApplicationManager.getInstance().imageFile;
-			loader = new Loader();
+			_loader = new Loader();
 			if(file != null){
-				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, setBitmapContent);
-				loader.load(new URLRequest(encodeURI(file.nativePath)));
+				_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, setBitmapContent);
+				_loader.load(new URLRequest(encodeURI(file.nativePath)));
 			}
 			this.title = nativePath;			
 		}
 		
 		private function setBitmapContent(e:Event):void{
-			bitmap = Bitmap(loader.content); 
-			ApplicationManager.getInstance().bitmap = bitmap;
-			image = new Image();
+			_bitmap = Bitmap(_loader.content); 
+			ApplicationManager.getInstance().bitmap = _bitmap;
+			_image = new Image();
+			_image.source = _bitmap;
+			setWindowSize();
+			canvas.addChild(_image);
+			PopUpManager.addPopUp(this, this.parent, false);
+			PopUpManager.centerPopUp(this);
+		}
+		
+		private function setWindowSize():void {
 			var ratioX:Number = 1;
 			var ratioY:Number = 1;
 			var maxValue:int;
-			if(bitmap.width > bitmap.height){
-				ratioY = bitmap.width / bitmap.height;
+			if(_bitmap.width > _bitmap.height){
+				ratioY = _bitmap.width / _bitmap.height;
 				maxValue =  this.parent.width * .6;
 			}else{
-				ratioX =  bitmap.height / bitmap.width;
+				ratioX =  _bitmap.height / _bitmap.width;
 				maxValue =  this.parent.height * .8;
 			}
-			
-			image.width = maxValue / ratioX;
-			image.height = maxValue / ratioY;
-			image.source = bitmap;
-			this.width = image.width;
-			this.height = image.height;
-			canvas.addChild(image);
-			PopUpManager.addPopUp(this, this.parent, false);
-			PopUpManager.centerPopUp(this);
+			_image.width = maxValue / ratioX;
+			_image.height = maxValue / ratioY;
+			this.width = _image.width;
+			this.height = _image.height;
+		}
+		
+		private function onApplicationResize(event:Event):void {
+			setWindowSize();
 		}
 		
 	}
