@@ -61,6 +61,16 @@ package de.rutscheschobel.shareyourfilter.view
 		* FILTER CONTROL
 		*/
 		private function onDefaultChange(event:Event):void{
+			var oldValue = history.getItemAt(0);
+			filter.setBrightness(FilterValueObject(oldValue).brightness);
+			filter.setContrast(FilterValueObject(oldValue).contrast);
+			filter.setSaturation(FilterValueObject(oldValue).saturation);
+			filter.setNegative(FilterValueObject(oldValue).negative);
+			filter.setRandom(FilterValueObject(oldValue).random);
+			filter.setRed(FilterValueObject(oldValue).red);
+			filter.setGreen(FilterValueObject(oldValue).green);
+			filter.setBlue(FilterValueObject(oldValue).blue);
+			
 			filterBrightnessSlider.value = 0;
 			filterContrastSlider.value = 50;
 			filterSaturationSlider.value = 100;
@@ -68,13 +78,16 @@ package de.rutscheschobel.shareyourfilter.view
 			filterGreenSlider.value = 10;
 			filterBlueSlider.value = 10;
 			filterNegativeCheckBox.selected = false;
-			filter.setBrightness(0);
-			filter.setContrast(50);
-			filter.setSaturation(100);
-			filter.setRed(10);
-			filter.setGreen(10);
-			filter.setBlue(10);
-			filter.setNegative(false);
+			if(history.length > 0){
+				var index:int = history.length-1;
+				while(history.length > 1){
+					trace("lenght of history is: "+history.length);
+					history.removeItemAt(index);
+					index--;
+				}
+				stepInHistory = 0;
+			}
+			trace("onDefaultChange... history.length: "+history.length);
 		}
 		
 		private function onRandomFilterBackControlChange(event:Event):void{
@@ -93,8 +106,9 @@ package de.rutscheschobel.shareyourfilter.view
 					stepInHistory--;
 				} 
 			}
-			trace("history.length: "+history.length);
-			trace("stepInHistory: "+stepInHistory);
+			trace("onRandomFilterBackControlChange... history.length: "+history.length);
+//			trace("history.length: "+history.length);
+//			trace("stepInHistory: "+stepInHistory);
 		}
 		
 		private function onRandomFilterControlChange(event:Event):void{
@@ -110,8 +124,9 @@ package de.rutscheschobel.shareyourfilter.view
 				stepInHistory++;
 			}
 			filter.setRandom(randomArray);
-			trace("history.length: "+history.length);
-			trace("stepInHistory: "+stepInHistory);
+			trace("onRandomFilterControlChange... history.length: "+history.length);
+//			trace("history.length: "+history.length);
+//			trace("stepInHistory: "+stepInHistory);
 		}
 		private function onRedFilterControlChange(event:Event):void{
 			filter.setRed((event.target as HSlider).value);
