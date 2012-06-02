@@ -3,12 +3,9 @@ package de.rutscheschobel.shareyourfilter.main
 	import de.rutscheschobel.shareyourfilter.event.JPEGAsyncCompleteEvent;
 	import de.rutscheschobel.shareyourfilter.util.JPEGAsyncEncoder;
 	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
-	import de.rutscheschobel.shareyourfilter.view.components.ProgressBox;
 	
-	import flash.desktop.NativeApplication;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.events.ProgressEvent;
 	import flash.filesystem.File;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;

@@ -2,6 +2,8 @@ package de.rutscheschobel.shareyourfilter.util
 {
 	public class FilterValueObject
 	{
+		private var _id:Number;
+		private var _name:String;
 		private var _brightness:Number ;
 		private var _saturation:Number ;
 		private var _contrast:Number;
@@ -102,6 +104,35 @@ package de.rutscheschobel.shareyourfilter.util
 		{
 			_random = value;
 		}
+
+		public function get name():String
+		{
+			return _name;
+		}
+
+		public function set name(value:String):void
+		{
+			_name = value;
+		}
+		
+		public function get id():Number
+		{
+			return _id;
+		}
+		
+		public function set id(value:Number):void
+		{
+			_id = value;
+		}
+		
+		public function toString():String {
+			return "Filter: "+"id: "+id+",name: "+name+",brightness: "+brightness+",contrast: "+contrast+
+				",saturation: "+saturation+",red: "+red+",green: "+green+",blue: "+
+				blue+",negative: "+negative;
+		}
+
+		
+
 
 	}
 }

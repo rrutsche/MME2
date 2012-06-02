@@ -1,4 +1,5 @@
 package de.rutscheschobel.shareyourfilter.main{
+	import de.rutscheschobel.shareyourfilter.service.HttpRESTService;
 	import de.rutscheschobel.shareyourfilter.util.*;
 	import de.rutscheschobel.shareyourfilter.view.*;
 	import de.rutscheschobel.shareyourfilter.view.components.BasicFilterControlWindow;
@@ -26,6 +27,7 @@ package de.rutscheschobel.shareyourfilter.main{
 		public var menuBar:MenuBar;
 		public var fileTree:FileSystemTree;
 		public var progressBox:ProgressBox;
+		public var request:HttpRESTService;
 		
 		public function Main(){
 			
@@ -36,6 +38,8 @@ package de.rutscheschobel.shareyourfilter.main{
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER,onDragEnter);
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP,onDrop);
 			menuBar.addEventListener(MenuEvent.ITEM_CLICK, menuItemClickHandler);
+			request = new HttpRESTService("http://localhost:8080/de.rutscheschobel.syf.rest/rest/filters");
+			request.get();
 		}
 		
 		
