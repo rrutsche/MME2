@@ -2,11 +2,13 @@ package de.rutscheschobel.shareyourfilter.service
 {
 	import de.rutscheschobel.shareyourfilter.util.FilterValueObject;
 	
+	import flash.utils.ByteArray;
+	
 	import mx.controls.Alert;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
-
+	
 	public class HttpRESTService
 	{
 		
@@ -49,5 +51,41 @@ package de.rutscheschobel.shareyourfilter.service
 			
 			service.send();        
 		}
+		
+		public function create(filter:FilterValueObject) : void {
+			var service: HTTPService = new HTTPService();
+			service.contentType = "application/json";
+			service.method = "POST";
+			service.resultFormat = "text";
+			service.url = _uri;
+			service.useProxy = false;
+			
+			service.addEventListener( FaultEvent.FAULT , function(event:FaultEvent):void {
+				trace( event.message.toString() );
+			} );    
+			
+			service.addEventListener( ResultEvent.RESULT , function(event:ResultEvent):void {
+				var response: Object = JSON.parse( event.message.body.toString() );
+				for(var s:String in response){
+					trace(s+": "+response[s]);
+				}
+			} );
+			
+			var json:String = JSON.stringify( filter );
+			trace(json);
+			var jsonData:ByteArray = new ByteArray();
+			jsonData.writeUTFBytes(json);
+			jsonData.position = 0;
+			var contentType:String = "application/json";
+			
+			//client.post(uri, jsonData, contentType);
+			
+			service.send( jsonData );
+			
+			
+			
+		}
+		
+		
 	}
 }
