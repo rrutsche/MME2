@@ -36,4 +36,6 @@
 	</view:FileWindow>
 	<viewcompontents:BasicFilterControlWindow  height="455"/>
 	
+	<viewcompontents:FilterList x="8" y="67"/>
+	
 </mainapp:Main>

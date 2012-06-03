@@ -7,6 +7,7 @@ package de.rutscheschobel.shareyourfilter.service
 	import flash.events.ErrorEvent;
 	import flash.utils.ByteArray;
 	
+	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
@@ -40,7 +41,7 @@ package de.rutscheschobel.shareyourfilter.service
 				// For string data
 				var stringData:String = event.readUTFBytes();
 				var message: Object = JSON.parse( stringData );
-				var filters:Array = new Array();
+				var filters:ArrayCollection = new ArrayCollection();
 				
 				for( var s:String in message.filters ) {
 					var filter:FilterValueObject = new FilterValueObject();
@@ -54,9 +55,10 @@ package de.rutscheschobel.shareyourfilter.service
 					filter.blue = message.filters[s].blue;
 					filter.negative = message.filters[s].negative;
 					filter.random = message.filters[s].random;
-					filters.push(filter);
+					filters.addItem( filter );
 					trace(filter.toString());
 				}
+				ServiceManager.getInstance().filterList = filters;
 			};
 			var uri:URI = new URI(uri);
 			client.get(uri);
