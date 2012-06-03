@@ -3,6 +3,7 @@ package de.rutscheschobel.shareyourfilter.service {
 
 	public class ServiceManager {
 		
+		[Bindable]
 		private var _filterList:ArrayCollection = new ArrayCollection();
 		private var _service:HttpRESTService;
 		private static const _uri:String = "http://localhost:8080/de.rutscheschobel.syf.rest/rest/filters/";

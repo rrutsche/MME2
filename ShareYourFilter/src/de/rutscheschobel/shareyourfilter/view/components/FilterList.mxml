@@ -6,12 +6,9 @@
 					   width="208" height="300" backgroundAlpha="0.5" backgroundColor="#CCCCCC"
 					   contentBackgroundAlpha="0.5" contentBackgroundColor="#CCCCCC"
 					   title="Filterlist">
-	<fx:Declarations>
-		<!-- Platzieren Sie nichtvisuelle Elemente (z. B. Dienste, Wertobjekte) hier -->
-	</fx:Declarations>
 	<view:controlBarContent>
 		<s:Button id="update" label="update"/>
 	</view:controlBarContent>
-	<s:List left="0" right="0" top="0" bottom="0" contentBackgroundAlpha="0.0"
-			dataProvider="{filterList}"></s:List>
+	<s:List id="filterList" left="0" right="0" top="0" bottom="0" contentBackgroundAlpha="0.0"
+			dataProvider="{filterCollection}"></s:List>
 </view:FilterListWindow>

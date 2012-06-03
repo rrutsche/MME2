@@ -1,5 +1,6 @@
 package de.rutscheschobel.shareyourfilter.main{
 	import de.rutscheschobel.shareyourfilter.service.HttpRESTService;
+	import de.rutscheschobel.shareyourfilter.service.ServiceManager;
 	import de.rutscheschobel.shareyourfilter.util.*;
 	import de.rutscheschobel.shareyourfilter.view.*;
 	import de.rutscheschobel.shareyourfilter.view.components.BasicFilterControlWindow;
@@ -101,6 +102,7 @@ package de.rutscheschobel.shareyourfilter.main{
 			imageWindow = ApplicationManager.getInstance().imageWindow;
 			if(imageWindow != null){
 				this.addChild(imageWindow);
+				ServiceManager.getInstance().updateFilterList();
 			}	
 		}
 		

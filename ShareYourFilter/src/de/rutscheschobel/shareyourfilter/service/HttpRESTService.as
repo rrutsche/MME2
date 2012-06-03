@@ -56,7 +56,6 @@ package de.rutscheschobel.shareyourfilter.service
 					filter.negative = message.filters[s].negative;
 					filter.random = message.filters[s].random;
 					filters.addItem( filter );
-					trace(filter.toString());
 				}
 				ServiceManager.getInstance().filterList = filters;
 			};
