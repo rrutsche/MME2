@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view:UploadPopUp	xmlns:view="de.rutscheschobel.shareyourfilter.view.*"
+					xmlns:fx="http://ns.adobe.com/mxml/2009"
+					xmlns:s="library://ns.adobe.com/flex/spark"
+					xmlns:mx="library://ns.adobe.com/flex/mx"
+					right="10" top="30" width="160" height="200" backgroundAlpha="0.5"
+					backgroundColor="#CCCCCC" contentBackgroundAlpha="1.0"
+					contentBackgroundColor="#CCCCCC" title="Upload Filter">
+	
+	
+	<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			 xmlns:s="library://ns.adobe.com/flex/spark" 
+			 xmlns:mx="library://ns.adobe.com/flex/mx" width="316" height="188">
+		<s:Button x="32" y="24" label="submit" id="submitFilterButton"/>
+		<s:Label x="33" y="60" text="name your filter" width="150" height="22" id="uploadLabel"/>
+		<s:TextInput x="33" y="82" width="251" height="35"/>
+	</s:Group>
+</view:UploadPopUp>

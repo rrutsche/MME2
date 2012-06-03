@@ -1,6 +1,7 @@
 package de.rutscheschobel.shareyourfilter.view
 {
 	import de.rutscheschobel.shareyourfilter.main.ApplicationManager;
+	import de.rutscheschobel.shareyourfilter.service.HttpRESTService;
 	import de.rutscheschobel.shareyourfilter.util.BasicFilter;
 	import de.rutscheschobel.shareyourfilter.util.FilterValueObject;
 	
@@ -9,7 +10,9 @@ package de.rutscheschobel.shareyourfilter.view
 	import flash.events.NativeDragEvent;
 	
 	import mx.collections.ArrayList;
+	import mx.containers.TitleWindow;
 	import mx.events.FlexEvent;
+	import mx.managers.PopUpManager;
 	
 	import spark.components.Button;
 	import spark.components.CheckBox;
@@ -21,6 +24,7 @@ package de.rutscheschobel.shareyourfilter.view
 		public var filterDefaultButton:Button;
 		public var filterRandomButtonBack:Button;
 		public var filterRandomButton:Button;
+		public var filterButtonShare:Button;
 		public var filterBlurSlider:HSlider;
 		public var filterBrightnessSlider:HSlider;
 		public var filterContrastSlider:HSlider;
@@ -32,6 +36,7 @@ package de.rutscheschobel.shareyourfilter.view
 		public var filter:BasicFilter;
 		public var history:ArrayList;
 		public var oldValues:FilterValueObject;
+		public var randomArray:Array
 		
 		public function BasicFilterControlWindow(){
 			super();
@@ -44,6 +49,7 @@ package de.rutscheschobel.shareyourfilter.view
 			history.addItem(oldValues);
 			stepInHistory = history.length - 1;
 			
+			filterButtonShare.addEventListener(MouseEvent.CLICK, onFilterButtonShare);
 			filterRandomButtonBack.addEventListener(MouseEvent.CLICK, onRandomFilterBackControlChange);
 			filterRandomButton.addEventListener(MouseEvent.CLICK, onRandomFilterControlChange);
 			filterBrightnessSlider.addEventListener(Event.CHANGE, onBrightnessFilterControlChange);
@@ -90,6 +96,23 @@ package de.rutscheschobel.shareyourfilter.view
 			trace("onDefaultChange... history.length: "+history.length);
 		}
 		
+		private function onFilterButtonShare(event:Event):void{
+			var newFilter:FilterValueObject = new FilterValueObject();
+				newFilter.name = "HasenFilter";
+				newFilter.brightness = filterBrightnessSlider.value;
+				newFilter.saturation = filterSaturationSlider.value;
+				newFilter.contrast = filterContrastSlider.value;
+				newFilter.red = filterRedSlider.value;
+				newFilter.green = filterGreenSlider.value;
+				newFilter.blue = filterBlueSlider.value;
+				newFilter.negative = filterNegativeCheckBox.selected;
+				newFilter.random = randomArray;
+				var popup:UploadPopUp = new UploadPopUp();
+				PopUpManager.addPopUp(popup,this, true);
+				var rest:HttpRESTService = new HttpRESTService("http://localhost:8080/de.rutscheschobel.syf.rest/rest/filters/");
+				rest.createFilter(newFilter);
+		}
+		
 		private function onRandomFilterBackControlChange(event:Event):void{
 			if(ApplicationManager.getInstance().bitmap == null) history.removeAll();
 			if(history.length > 0 && stepInHistory > 0){
@@ -112,7 +135,7 @@ package de.rutscheschobel.shareyourfilter.view
 		}
 		
 		private function onRandomFilterControlChange(event:Event):void{
-			var randomArray:Array = filter.generateRandomNumberArray();
+			randomArray = filter.generateRandomNumberArray();
 			var newFilterValueObject:FilterValueObject = new FilterValueObject();
 			newFilterValueObject.random = randomArray;
 			if(history.length > 9){
