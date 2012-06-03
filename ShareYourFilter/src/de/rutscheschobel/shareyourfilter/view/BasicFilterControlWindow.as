@@ -107,8 +107,7 @@ package de.rutscheschobel.shareyourfilter.view
 				newFilter.blue = filterBlueSlider.value;
 				newFilter.negative = filterNegativeCheckBox.selected;
 				newFilter.random = randomArray;
-				var popup:UploadPopUp = new UploadPopUp();
-				PopUpManager.addPopUp(popup,this, true);
+				PopUpManager.addPopUp(new UploadPopUp(),this, true);
 				var rest:HttpRESTService = new HttpRESTService("http://localhost:8080/de.rutscheschobel.syf.rest/rest/filters/");
 				rest.createFilter(newFilter);
 		}
