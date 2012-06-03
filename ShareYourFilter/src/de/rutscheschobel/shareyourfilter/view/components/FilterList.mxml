@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view:FilterListWindow xmlns:view="de.rutscheschobel.shareyourfilter.view.*"
+		 xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="208" height="300" title="Filterlist">
+	<fx:Declarations>
+		<!-- Platzieren Sie nichtvisuelle Elemente (z. B. Dienste, Wertobjekte) hier -->
+	</fx:Declarations>
+	<view:controlBarContent>
+		<s:Button label="update" id="update"/>
+	</view:controlBarContent>
+	<s:List left="0" right="0" top="0" bottom="0" dataProvider="{filterList}"></s:List>
+</view:FilterListWindow>

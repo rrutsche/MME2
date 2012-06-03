@@ -126,9 +126,7 @@ package de.rutscheschobel.shareyourfilter.util
 		}
 		
 		public function toString():String {
-			return "Filter: "+"id: "+id+",name: "+name+",brightness: "+brightness+",contrast: "+contrast+
-				",saturation: "+saturation+",red: "+red+",green: "+green+",blue: "+
-				blue+",negative: "+negative+",random: "+random;
+			return name;
 		}
 
 		
