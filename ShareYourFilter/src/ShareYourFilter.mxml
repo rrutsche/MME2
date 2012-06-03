@@ -34,7 +34,7 @@
 		</view:controlBarContent>
 		<mx:FileSystemTree id="fileTree" left="0" right="0" top="0" bottom="0"/>
 	</view:FileWindow>
-	<viewcompontents:BasicFilterControlWindow  height="455"/>
+	<viewcompontents:BasicFilterControlWindow/>
 	
 	<viewcompontents:FilterList x="8" y="67"/>
 	

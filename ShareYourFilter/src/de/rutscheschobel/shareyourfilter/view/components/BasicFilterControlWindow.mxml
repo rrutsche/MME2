@@ -4,7 +4,7 @@
 							   xmlns:s="library://ns.adobe.com/flex/spark"
 							   xmlns:mx="library://ns.adobe.com/flex/mx"
 							   right="10" top="30" width="160" height="468" backgroundAlpha="0.5"
-							   backgroundColor="#CCCCCC" contentBackgroundAlpha="1.0"
+							   backgroundColor="#CCCCCC"
 							   contentBackgroundColor="#CCCCCC" title="Basic Filter">
 	<s:VGroup left="10" right="10" top="10" bottom="10" contentBackgroundAlpha="0.0"
 			  contentBackgroundColor="#CCCCCC">
