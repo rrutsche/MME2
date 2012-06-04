@@ -136,7 +136,9 @@ package de.rutscheschobel.shareyourfilter.view
 				filter.setContrast(FilterValueObject(oldValue).contrast);
 				filter.setSaturation(FilterValueObject(oldValue).saturation);
 				filter.setNegative(FilterValueObject(oldValue).negative);
-				filter.setRandom(FilterValueObject(oldValue).random);
+				filter.setBlue(FilterValueObject(oldValue).blue);
+				filter.setGreen(FilterValueObject(oldValue).green);
+				filter.setRed(FilterValueObject(oldValue).red);
 				
 				if(stepInHistory > 0){
 					history.removeItemAt(stepInHistory);					
@@ -150,15 +152,14 @@ package de.rutscheschobel.shareyourfilter.view
 		
 		private function onRandomFilterControlChange(event:Event):void{
 			filter.setRandomFilter();
-			randomArray = filter.generateRandomNumberArray();
-			var newFilterValueObject:FilterValueObject = new FilterValueObject();
-			newFilterValueObject.random = randomArray;
+			var historyValueObject:FilterValueObject = filter.getFilterValueObject();
+			
 			if(history.length > 9){
 				history.removeItemAt(1);
-				history.addItem(newFilterValueObject);
+				history.addItem(historyValueObject);
 				stepInHistory = 9;
 			}else{
-				history.addItem(newFilterValueObject);
+				history.addItem(historyValueObject);
 				stepInHistory++;
 			}
 			//filter.setRandom(randomArray);
