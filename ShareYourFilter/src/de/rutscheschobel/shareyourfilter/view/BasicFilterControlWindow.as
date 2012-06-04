@@ -6,7 +6,9 @@ package de.rutscheschobel.shareyourfilter.view
 	import de.rutscheschobel.shareyourfilter.service.HttpRESTService;
 	import de.rutscheschobel.shareyourfilter.util.BasicFilter;
 	import de.rutscheschobel.shareyourfilter.util.FilterValueObject;
+	import de.rutscheschobel.shareyourfilter.view.components.UploadFilter;
 	
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.NativeDragEvent;
@@ -14,9 +16,12 @@ package de.rutscheschobel.shareyourfilter.view
 	import mx.collections.ArrayList;
 	import mx.containers.TitleWindow;
 	import mx.controls.Alert;
+	import mx.core.FlexBitmap;
+	import mx.core.FlexGlobals;
 	import mx.events.FlexEvent;
 	import mx.managers.PopUpManager;
 	
+	import spark.components.Application;
 	import spark.components.Button;
 	import spark.components.CheckBox;
 	import spark.components.HSlider;
@@ -102,7 +107,6 @@ package de.rutscheschobel.shareyourfilter.view
 		
 		private function onFilterButtonShare(event:Event):void{
 			var newFilter:FilterValueObject = new FilterValueObject();
-				newFilter.name = "CustomFilter";
 				newFilter.brightness = filterBrightnessSlider.value;
 				newFilter.saturation = filterSaturationSlider.value;
 				newFilter.contrast = filterContrastSlider.value;
@@ -111,9 +115,9 @@ package de.rutscheschobel.shareyourfilter.view
 				newFilter.blue = filterBlueSlider.value;
 				newFilter.negative = filterNegativeCheckBox.selected;
 				newFilter.random = randomArray;
-				PopUpManager.addPopUp(new UploadFilterControl,this, true);
-				var rest:HttpRESTService = new HttpRESTService("http://localhost:8080/de.rutscheschobel.syf.rest/rest/filters/");
-				rest.createFilter(newFilter);
+				var uploadFilterControl:UploadFilter = PopUpManager.createPopUp(FlexGlobals.topLevelApplication as DisplayObject, UploadFilter, true) as UploadFilter;
+				PopUpManager.centerPopUp(uploadFilterControl);
+				uploadFilterControl.setFilterObject(newFilter);
 		}
 		
 		private function onRandomFilterBackControlChange(event:Event):void{
