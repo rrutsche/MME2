@@ -4,15 +4,15 @@ package de.rutscheschobel.shareyourfilter.view
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
-	import mx.controls.TextInput;
 	import mx.events.FlexEvent;
 	
 	import spark.components.Button;
+	import spark.components.TextInput;
 	
 	public class UploadFilterControl extends AbstractWindow
 	{
 		public var uploadFilterButton:Button;
-		public var uploadFilterName:TextInput;
+		public var uploadFilterName:spark.components.TextInput;
 		
 		public function UploadFilterControl()
 		{
