@@ -1,4 +1,5 @@
 package de.rutscheschobel.shareyourfilter.main{
+	import de.rutscheschobel.shareyourfilter.event.FilterValuesChangedEvent;
 	import de.rutscheschobel.shareyourfilter.service.HttpRESTService;
 	import de.rutscheschobel.shareyourfilter.service.ServiceManager;
 	import de.rutscheschobel.shareyourfilter.util.*;
@@ -39,10 +40,12 @@ package de.rutscheschobel.shareyourfilter.main{
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER,onDragEnter);
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP,onDrop);
 			menuBar.addEventListener(MenuEvent.ITEM_CLICK, menuItemClickHandler);
+			this.addEventListener(FilterValuesChangedEvent.ON_COMPLETE, onFilterValuesChanged);
 			
 			request = new HttpRESTService("http://localhost:8080/de.rutscheschobel.syf.rest/rest/filters/");
 			request.readAll();
-			
+			var window:FilterListWindow = PopUpManager.createPopUp(this, FilterListWindow) as FilterListWindow;
+			PopUpManager.centerPopUp(window);
 //			var filter:FilterValueObject = new FilterValueObject();
 //			filter.id = 5;
 //			filter.name = "RandomFilter";
@@ -57,6 +60,9 @@ package de.rutscheschobel.shareyourfilter.main{
 //			request.deleteFilter(filter);
 		}
 		
+		public function onFilterValuesChanged():void {
+			Alert.show("event");
+		}
 		
 		private function menuItemClickHandler(event:MenuEvent):void{
 			if(event.item.@id == "menuOpen"){

@@ -1,6 +1,10 @@
 package de.rutscheschobel.shareyourfilter.view
 {
+	import de.rutscheschobel.shareyourfilter.event.CustomEventDispatcher;
+	import de.rutscheschobel.shareyourfilter.event.FilterValuesChangedEvent;
+	import de.rutscheschobel.shareyourfilter.main.ApplicationManager;
 	import de.rutscheschobel.shareyourfilter.service.ServiceManager;
+	import de.rutscheschobel.shareyourfilter.util.FilterValueObject;
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -34,7 +38,10 @@ package de.rutscheschobel.shareyourfilter.view
 		}
 		
 		private function onFilterClick(event:Event):void {
-			trace(List(event.currentTarget).selectedItem);
+			var filter:FilterValueObject = List(event.currentTarget).selectedItem;
+			ApplicationManager.getInstance().basicFilter.setFilterValueObject(filter);
+			var dispatcher:CustomEventDispatcher = new CustomEventDispatcher();
+			dispatcher.dispatchFilterValuesChangedEvent(new FilterValuesChangedEvent());
 		}
 	}
 }
