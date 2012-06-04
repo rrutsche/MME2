@@ -83,13 +83,7 @@ package de.rutscheschobel.shareyourfilter.view
 		private function onDefaultChange(event:Event):void{
 			var oldValue:FilterValueObject = history.getItemAt(0) as FilterValueObject;
 			filter.setFilterValueObject(oldValue);
-			filterBrightnessSlider.value = defaultValues.brightness;
-			filterContrastSlider.value = defaultValues.contrast;
-			filterSaturationSlider.value = defaultValues.saturation;
-			filterRedSlider.value = defaultValues.red;
-			filterGreenSlider.value = defaultValues.green;
-			filterBlueSlider.value = defaultValues.blue;
-			filterNegativeCheckBox.selected = defaultValues.negative;
+			updateSliderPositions(defaultValues);
 			if(history.length > 0){
 				var index:int = history.length-1;
 				while(history.length > 1){
