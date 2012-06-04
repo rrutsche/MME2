@@ -7,6 +7,7 @@ package de.rutscheschobel.shareyourfilter.event {
 	{
 		// Event types.
 		public static const ON_COMPLETE:String = "FILTER_VALUES_CHANGED";
+		public static const NEW_IMAGE:String = "NEW_IMAGE";
 		public var filter:FilterValueObject;
 		
 		public function FilterValuesChangedEvent(filter:FilterValueObject, type:String = FilterValuesChangedEvent.ON_COMPLETE, bubbles:Boolean = true, cancelable:Boolean = false) 

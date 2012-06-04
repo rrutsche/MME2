@@ -32,9 +32,9 @@ package de.rutscheschobel.shareyourfilter.view
 		}
 		
 		private function init(event:FlexEvent):void{
-			//this.parent.addEventListener(Event.RESIZE, onApplicationResize);
+			this.parent.addEventListener(Event.RESIZE, onApplicationResize);
 			addCanvas();
-			addImage(filePath);	
+			addImage();	
 		}
 		
 		private function addCanvas():void{
@@ -42,14 +42,14 @@ package de.rutscheschobel.shareyourfilter.view
 			this.addElement(canvas);
 		}
 		
-		public function addImage(nativePath:String):void{
+		public function addImage():void{
 			var file:File = ApplicationManager.getInstance().imageFile;
 			_loader = new Loader();
 			if(file != null){
 				_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, setBitmapContent);
 				_loader.load(new URLRequest(encodeURI(file.nativePath)));
 			}
-			this.title = nativePath;			
+			this.title = file.name;			
 		}
 		
 		private function setBitmapContent(e:Event):void{
@@ -57,31 +57,26 @@ package de.rutscheschobel.shareyourfilter.view
 			ApplicationManager.getInstance().bitmap = _bitmap;
 			_image = new Image();
 			_image.source = _bitmap;
-			setWindowSize();
+			setWindowSize(_bitmap);
 			canvas.addChild(_image);
+			
 			PopUpManager.addPopUp(this, this.parent, false);
 			PopUpManager.centerPopUp(this);
 		}
 		
-		private function setWindowSize():void {
-			var ratioX:Number = 1;
-			var ratioY:Number = 1;
-			var maxValue:int;
-			if(_bitmap.width > _bitmap.height){
-				ratioY = _bitmap.width / _bitmap.height;
-				maxValue =  this.parent.width * .6;
-			}else{
-				ratioX =  _bitmap.height / _bitmap.width;
-				maxValue =  this.parent.height * .8;
+		private function setWindowSize(bitmap:Bitmap):void {
+			
+			if(bitmap.width > bitmap.height) {
+				_image.width = parent.width * 0.6;
+				_image.height = (_image.width / bitmap.width ) * bitmap.height;
+			} else {
+				_image.height = parent.height * 0.8;
+				_image.width = (_image.height / bitmap.height) * bitmap.width;
 			}
-			_image.width = maxValue / ratioX;
-			_image.height = maxValue / ratioY;
-			this.width = _image.width;
-			this.height = _image.height;
 		}
 		
 		private function onApplicationResize(event:Event):void {
-			setWindowSize();
+			setWindowSize(ApplicationManager.getInstance().bitmap);
 		}
 		
 	}

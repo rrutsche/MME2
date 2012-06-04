@@ -3,12 +3,13 @@
 					   xmlns:fx="http://ns.adobe.com/mxml/2009"
 					   xmlns:s="library://ns.adobe.com/flex/spark"
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
-					   width="208" height="402" backgroundAlpha="0.5" backgroundColor="#CCCCCC"
-					   contentBackgroundAlpha="0.5" contentBackgroundColor="#CCCCCC"
+					   width="208" backgroundAlpha="0.5" backgroundColor="#CCCCCC"
+					   contentBackgroundAlpha="0.5" contentBackgroundColor="#CCCCCC" height="{this.parentApplication.height * 0.7}"
 					   title="Filterlist">
 	<view:controlBarContent>
 		<s:Button id="update" label="update"/>
 	</view:controlBarContent>
+	
 	<s:List id="filterList" left="0" right="0" top="0" bottom="0" contentBackgroundAlpha="0.0"
 			dataProvider="{filterCollection}"></s:List>
 </view:FilterListWindow>

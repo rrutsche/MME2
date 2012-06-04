@@ -1,7 +1,10 @@
 package de.rutscheschobel.shareyourfilter.main
 {
+	import de.rutscheschobel.shareyourfilter.event.CustomEventDispatcher;
+	import de.rutscheschobel.shareyourfilter.event.FilterValuesChangedEvent;
 	import de.rutscheschobel.shareyourfilter.event.JPEGAsyncCompleteEvent;
 	import de.rutscheschobel.shareyourfilter.util.BasicFilter;
+	import de.rutscheschobel.shareyourfilter.util.FilterValueObject;
 	import de.rutscheschobel.shareyourfilter.util.JPEGAsyncEncoder;
 	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
 	
@@ -14,7 +17,7 @@ package de.rutscheschobel.shareyourfilter.main
 	import flash.utils.ByteArray;
 	
 	import mx.managers.PopUpManager;
-
+	
 	public class ApplicationManager{
 		
 		private var _imageWindow:ImageWindow;
@@ -24,6 +27,7 @@ package de.rutscheschobel.shareyourfilter.main
 		private var _colorTransform:ColorTransform;
 		private var _fileReference:FileReference = new FileReference();
 		private var _encoder:JPEGAsyncEncoder;
+		private var _dispatcher:CustomEventDispatcher;
 		
 		public function ApplicationManager(){
 		}
@@ -41,37 +45,11 @@ package de.rutscheschobel.shareyourfilter.main
 				PopUpManager.removePopUp(_imageWindow);
 				_imageWindow = new ImageWindow(_imageFile.nativePath);	
 			}			
+			_dispatcher = CustomEventDispatcher.getInstance();
+			_dispatcher.dispatchEvent(new FilterValuesChangedEvent(new FilterValueObject));
 			return _imageWindow;
 		}
-
-		public function get bitmap():Bitmap{
-			return _bitmap;
-		}
-
-		public function set bitmap(value:Bitmap):void{
-			_bitmap = value;
-		}
-
-		public function get imageFile():File{
-			return _imageFile;
-		}
-
-		public function set imageFile(value:File):void{
-			_imageFile = value;
-		}
 		
-		public function get colorTransform():ColorTransform	{
-			return _colorTransform;
-		}
-		
-		public function set colorTransform(value:ColorTransform):void {
-			_colorTransform = value;
-		}
-		
-		public function get encoder():JPEGAsyncEncoder {
-			return _encoder;
-		}
-
 		public function saveImage():void{
 			var bitmapData:BitmapData = new BitmapData(_bitmap.bitmapData.width, _bitmap.bitmapData.height);
 			bitmapData.draw(_bitmap,new Matrix(), _bitmap.transform.colorTransform);
@@ -89,14 +67,28 @@ package de.rutscheschobel.shareyourfilter.main
 			var ba:ByteArray = event.ImageData;
 			_fileReference.save(ba,"untitled.jpg");
 		}
-
+		
+		public function get bitmap():Bitmap{
+			return _bitmap;
+		}
+		
+		public function set bitmap(value:Bitmap):void{
+			_bitmap = value;
+		}
+		
+		public function get imageFile():File{
+			return _imageFile;
+		}
+		
+		public function set imageFile(value:File):void{
+			_imageFile = value;
+		}
+		
+		public function get encoder():JPEGAsyncEncoder {
+			return _encoder;
+		}
 		public function get basicFilter():BasicFilter {
 			return _basicFilter;
 		}
-
-		public function set basicFilter(value:BasicFilter):void {
-			_basicFilter = value;
-		}
-
 	}
 }

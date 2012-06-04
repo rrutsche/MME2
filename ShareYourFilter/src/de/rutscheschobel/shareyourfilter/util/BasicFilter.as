@@ -154,7 +154,10 @@ package de.rutscheschobel.shareyourfilter.util{
 			if(cmfBlue != null){
 				_filtersArray.push(cmfBlue);
 			}
-			_bitmap.filters = _filtersArray;
+			if( _bitmap != null ) {
+				_bitmap.filters = _filtersArray;
+			}
+			
 		}
 		
 		
