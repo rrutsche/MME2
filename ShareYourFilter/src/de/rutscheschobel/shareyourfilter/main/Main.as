@@ -45,18 +45,6 @@ package de.rutscheschobel.shareyourfilter.main{
 			
 			request = new HttpRESTService("http://localhost:8080/de.rutscheschobel.syf.rest/rest/filters/");
 			request.readAll();
-//			var filter:FilterValueObject = new FilterValueObject();
-//			filter.id = 5;
-//			filter.name = "RandomFilter";
-//			filter.brightness = 11;
-//			filter.saturation = 22;
-//			filter.contrast = 33;
-//			filter.red = 44;
-//			filter.green = 55;
-//			filter.blue = 66;
-//			filter.negative = false;
-//			filter.random = new Array(1,2,3);
-//			request.deleteFilter(filter);
 		}
 		
 		private function menuItemClickHandler(event:MenuEvent):void{

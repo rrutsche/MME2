@@ -3,7 +3,6 @@ package de.rutscheschobel.shareyourfilter.service
 	import com.adobe.net.URI;
 	
 	import de.rutscheschobel.shareyourfilter.event.CustomEventDispatcher;
-	import de.rutscheschobel.shareyourfilter.event.FilterListEvent;
 	import de.rutscheschobel.shareyourfilter.util.FilterValueObject;
 	
 	import flash.events.ErrorEvent;
@@ -53,8 +52,6 @@ package de.rutscheschobel.shareyourfilter.service
 					filters.addItem( filter );
 				}
 				ServiceManager.getInstance().filterList = filters;
-				var dispatcher:CustomEventDispatcher = CustomEventDispatcher.getInstance();
-				dispatcher.dispatchEvent(new FilterListEvent(filters));
 			};
 			
 			var uri:URI = new URI(uri);
@@ -69,7 +66,6 @@ package de.rutscheschobel.shareyourfilter.service
 				var f:Object = message.filter;
 				var filter:FilterValueObject = new FilterValueObject(f.name, f.id,  f.brightness, f.saturation, 
 					f.contrast, f.red, f.blue, f.green, f.negative, f.random);
-				trace(filter.toString());
 			};
 			var uri:URI = new URI(uri+id);
 			client.get(uri);
@@ -82,9 +78,7 @@ package de.rutscheschobel.shareyourfilter.service
 			bytes.writeUTFBytes( json );
 			bytes.position = 0;
 			client.put(new URI(uri), bytes, "application/json");
-			client.listener.onComplete = function(event:HttpResponseEvent):void {
-				readAll();
-			}
+			readAll();
 		}
 		
 		public function updateFilter(filter:FilterValueObject):void {

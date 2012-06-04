@@ -1,5 +1,6 @@
 package de.rutscheschobel.shareyourfilter.service {
 	import de.rutscheschobel.shareyourfilter.event.CustomEventDispatcher;
+	import de.rutscheschobel.shareyourfilter.event.FilterListEvent;
 	import de.rutscheschobel.shareyourfilter.util.FilterValueObject;
 	
 	import mx.collections.ArrayCollection;
@@ -14,6 +15,7 @@ package de.rutscheschobel.shareyourfilter.service {
 		
 		public function ServiceManager() {
 			_filterValueObject = new FilterValueObject();
+			_service = new HttpRESTService(_uri);
 		}
 		
 		private static var instance:ServiceManager = null;
@@ -25,13 +27,11 @@ package de.rutscheschobel.shareyourfilter.service {
 		}
 		
 		public function updateFilterList():void {
-			_service = new HttpRESTService(_uri);
 			_service.readAll();
 		}
 		
 		public function createFilter(name:String):void {
 			_filterValueObject.name = name;
-			_service = new HttpRESTService(_uri);
 			_service.createFilter(_filterValueObject);
 		}
 
@@ -39,8 +39,10 @@ package de.rutscheschobel.shareyourfilter.service {
 			return _filterList;
 		}
 
-		public function set filterList(value:ArrayCollection):void {
-			_filterList = value;
+		public function set filterList(filters:ArrayCollection):void {
+			_filterList = filters;
+			var dispatcher:CustomEventDispatcher = CustomEventDispatcher.getInstance();
+			dispatcher.dispatchEvent(new FilterListEvent(filters));
 		}
 
 		public function set filterValueObject(value:FilterValueObject):void {
