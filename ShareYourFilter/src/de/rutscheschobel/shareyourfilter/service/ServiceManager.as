@@ -1,4 +1,6 @@
 package de.rutscheschobel.shareyourfilter.service {
+	import de.rutscheschobel.shareyourfilter.util.FilterValueObject;
+	
 	import mx.collections.ArrayCollection;
 
 	public class ServiceManager {
@@ -23,6 +25,11 @@ package de.rutscheschobel.shareyourfilter.service {
 			_service = new HttpRESTService(_uri);
 			_service.readAll();
 			return filterList;
+		}
+		
+		public function createFilter(filter:FilterValueObject):void {
+			_service = new HttpRESTService(_uri);
+			_service.createFilter(filter);
 		}
 
 		public function get filterList():ArrayCollection {

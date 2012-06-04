@@ -3,8 +3,11 @@ package de.rutscheschobel.shareyourfilter.main{
 	import de.rutscheschobel.shareyourfilter.service.HttpRESTService;
 	import de.rutscheschobel.shareyourfilter.service.ServiceManager;
 	import de.rutscheschobel.shareyourfilter.util.*;
-	import de.rutscheschobel.shareyourfilter.view.*;
+	import de.rutscheschobel.shareyourfilter.view.FileWindow;
+	import de.rutscheschobel.shareyourfilter.view.FilterListWindow;
+	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
 	import de.rutscheschobel.shareyourfilter.view.components.BasicFilterControlWindow;
+	import de.rutscheschobel.shareyourfilter.view.components.FilterList;
 	import de.rutscheschobel.shareyourfilter.view.components.ProgressBox;
 	
 	import flash.desktop.ClipboardFormats;
@@ -44,8 +47,6 @@ package de.rutscheschobel.shareyourfilter.main{
 			
 			request = new HttpRESTService("http://localhost:8080/de.rutscheschobel.syf.rest/rest/filters/");
 			request.readAll();
-			var window:FilterListWindow = PopUpManager.createPopUp(this, FilterListWindow) as FilterListWindow;
-			PopUpManager.centerPopUp(window);
 //			var filter:FilterValueObject = new FilterValueObject();
 //			filter.id = 5;
 //			filter.name = "RandomFilter";
