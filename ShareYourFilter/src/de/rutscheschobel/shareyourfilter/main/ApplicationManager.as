@@ -1,6 +1,7 @@
 package de.rutscheschobel.shareyourfilter.main
 {
 	import de.rutscheschobel.shareyourfilter.event.JPEGAsyncCompleteEvent;
+	import de.rutscheschobel.shareyourfilter.util.BasicFilter;
 	import de.rutscheschobel.shareyourfilter.util.JPEGAsyncEncoder;
 	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
 	
@@ -19,6 +20,7 @@ package de.rutscheschobel.shareyourfilter.main
 		private var _imageWindow:ImageWindow;
 		private var _imageFile:File;
 		private var _bitmap:Bitmap;
+		private var _basicFilter:BasicFilter = new BasicFilter();
 		private var _colorTransform:ColorTransform;
 		private var _fileReference:FileReference = new FileReference();
 		private var _encoder:JPEGAsyncEncoder;
@@ -87,5 +89,14 @@ package de.rutscheschobel.shareyourfilter.main
 			var ba:ByteArray = event.ImageData;
 			_fileReference.save(ba,"untitled.jpg");
 		}
+
+		public function get basicFilter():BasicFilter {
+			return _basicFilter;
+		}
+
+		public function set basicFilter(value:BasicFilter):void {
+			_basicFilter = value;
+		}
+
 	}
 }

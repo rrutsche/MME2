@@ -1,6 +1,9 @@
 package de.rutscheschobel.shareyourfilter.view
 {
 	
+	import de.rutscheschobel.shareyourfilter.service.ServiceManager;
+	import de.rutscheschobel.shareyourfilter.util.FilterValueObject;
+	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
@@ -13,6 +16,7 @@ package de.rutscheschobel.shareyourfilter.view
 	{
 		public var uploadFilterButton:Button;
 		public var uploadFilterName:spark.components.TextInput;
+		public var filterValue:FilterValueObject;
 		
 		public function UploadFilterControl()
 		{
@@ -21,12 +25,16 @@ package de.rutscheschobel.shareyourfilter.view
 		}
 		
 		public function init(event:FlexEvent):void{
-//			uploadFilterButton.addEventListener(MouseEvent.CLICK, onShareButtonClicked);
-			trace("hallo");
+			uploadFilterButton.addEventListener(MouseEvent.CLICK, onShareButtonClicked);
 		}
 		
 		public function onShareButtonClicked(event:Event):void{
-			trace("THE FUCK........");
+			filterValue.name = uploadFilterName.text;
+			ServiceManager.getInstance().createFilter(filterValue);
+		}
+		
+		public function setFilterObject(ob:FilterValueObject):void{
+			filterValue = ob;
 		}
 	}
 }

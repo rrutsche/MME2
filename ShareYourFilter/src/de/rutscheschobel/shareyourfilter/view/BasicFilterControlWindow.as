@@ -1,5 +1,6 @@
 package de.rutscheschobel.shareyourfilter.view
 {
+	import de.rutscheschobel.shareyourfilter.event.FilterValuesChangedEvent;
 	import de.rutscheschobel.shareyourfilter.main.ApplicationManager;
 	import de.rutscheschobel.shareyourfilter.service.HttpRESTService;
 	import de.rutscheschobel.shareyourfilter.util.BasicFilter;
@@ -13,6 +14,7 @@ package de.rutscheschobel.shareyourfilter.view
 	
 	import mx.collections.ArrayList;
 	import mx.containers.TitleWindow;
+	import mx.controls.Alert;
 	import mx.core.FlexBitmap;
 	import mx.core.FlexGlobals;
 	import mx.events.FlexEvent;
@@ -65,7 +67,8 @@ package de.rutscheschobel.shareyourfilter.view
 			filterBlueSlider.addEventListener(Event.CHANGE, onBlueFilterControlChange);
 			filterNegativeCheckBox.addEventListener(MouseEvent.CLICK, onNegativeFilterControlChange);
 			filterDefaultButton.addEventListener(MouseEvent.CLICK, onDefaultChange);
-			filter = new BasicFilter();
+			this.addEventListener(FilterValuesChangedEvent.ON_COMPLETE, onFilterValuesChanged);
+			filter = ApplicationManager.getInstance().basicFilter;
 		}
 		
 		/*
@@ -73,15 +76,7 @@ package de.rutscheschobel.shareyourfilter.view
 		*/
 		private function onDefaultChange(event:Event):void{
 			var oldValue:FilterValueObject = history.getItemAt(0) as FilterValueObject;
-			filter.setBrightness(oldValue.brightness);
-			filter.setContrast(oldValue.contrast);
-			filter.setSaturation(oldValue.saturation);
-			filter.setNegative(oldValue.negative);
-			filter.setRandom(oldValue.random);
-			filter.setRed(oldValue.red);
-			filter.setGreen(oldValue.green);
-			filter.setBlue(oldValue.blue);
-			
+			filter.setFilterValueObject(oldValue);
 			filterBrightnessSlider.value = 0;
 			filterContrastSlider.value = 50;
 			filterSaturationSlider.value = 100;
@@ -101,9 +96,12 @@ package de.rutscheschobel.shareyourfilter.view
 			trace("onDefaultChange... history.length: "+history.length);
 		}
 		
+		private function onFilterValuesChanged(event:FilterValuesChangedEvent):void {
+//			Alert.show("event");
+		}
+		
 		private function onFilterButtonShare(event:Event):void{
 			var newFilter:FilterValueObject = new FilterValueObject();
-				newFilter.name = "HasenFilter";
 				newFilter.brightness = filterBrightnessSlider.value;
 				newFilter.saturation = filterSaturationSlider.value;
 				newFilter.contrast = filterContrastSlider.value;
@@ -114,9 +112,7 @@ package de.rutscheschobel.shareyourfilter.view
 				newFilter.random = randomArray;
 				var uploadFilterControl:UploadFilter = PopUpManager.createPopUp(FlexGlobals.topLevelApplication as DisplayObject, UploadFilter, true) as UploadFilter;
 				PopUpManager.centerPopUp(uploadFilterControl);
-//				uploadFilterControl.
-				var rest:HttpRESTService = new HttpRESTService("http://localhost:8080/de.rutscheschobel.syf.rest/rest/filters/");
-				rest.createFilter(newFilter);
+				uploadFilterControl.setFilterObject(newFilter);
 		}
 		
 		private function onRandomFilterBackControlChange(event:Event):void{

@@ -17,7 +17,6 @@ package de.rutscheschobel.shareyourfilter.util{
 		private var _colorTransform:ColorTransform;
 		private var _filtersArray:Array;
 		private var _brightnessArray:Array;
-		private var _blur:BlurFilter;
 		private var randomBack:Array;		
 		private var cmfContrast:ColorMatrixFilter;
 		private var cmfSaturation:ColorMatrixFilter;
@@ -26,9 +25,11 @@ package de.rutscheschobel.shareyourfilter.util{
 		private var cmfRed:ColorMatrixFilter;
 		private var cmfGreen:ColorMatrixFilter;
 		private var cmfBlue:ColorMatrixFilter;
+		private var filterValueObject:FilterValueObject;
 		
 		public function BasicFilter(){
 		}
+		
 		
 		public function setBrightness(value:Number):void{
 			_bitmap = ApplicationManager.getInstance().bitmap;
@@ -141,11 +142,6 @@ package de.rutscheschobel.shareyourfilter.util{
 			if(cmfRandom != null){
 				_filtersArray.push(cmfRandom);
 			}
-			if(_blur != null){
-//				_filtersArray.push(cmfBlur);
-				trace("blur");
-				_filtersArray.push(cmfRed);
-			}
 			if(cmfRed != null){
 				_filtersArray.push(cmfRed);
 			}
@@ -164,6 +160,17 @@ package de.rutscheschobel.shareyourfilter.util{
 								Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), 
 								Math.random(), Math.random(), Math.random(), Math.random(), Math.random()];
 			return random;
+		}
+		
+		public function setFilterValueObject(filterValueObject:FilterValueObject):void {
+			setBrightness(filterValueObject.brightness);
+			setContrast(filterValueObject.contrast);
+			setSaturation(filterValueObject.saturation);
+			setRandom(filterValueObject.random);
+			setRed(filterValueObject.red);
+			setGreen(filterValueObject.green);
+			setBlue(filterValueObject.blue);
+			setNegative(filterValueObject.negative);
 		}
 		
 	}
