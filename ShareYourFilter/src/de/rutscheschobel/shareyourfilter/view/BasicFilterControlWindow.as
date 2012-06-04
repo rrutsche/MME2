@@ -103,7 +103,17 @@ package de.rutscheschobel.shareyourfilter.view
 		}
 		
 		private function onFilterValuesChanged(event:FilterValuesChangedEvent):void {
-			Alert.show("event");
+			updateSliderPositions(event.filter);
+		}
+		
+		private function updateSliderPositions(filter:FilterValueObject):void {
+			filterBrightnessSlider.value = filter.brightness;
+			filterContrastSlider.value = filter.contrast;
+			filterSaturationSlider.value = filter.saturation;
+			filterRedSlider.value = filter.red;
+			filterGreenSlider.value = filter.green;
+			filterBlueSlider.value = filter.blue;
+			filterNegativeCheckBox.selected = filter.negative;
 		}
 		
 		private function onFilterButtonShare(event:Event):void{

@@ -13,9 +13,11 @@ package de.rutscheschobel.shareyourfilter.util
 		private var _negative:Boolean ;
 		private var _random:Array;
 		
-		public function FilterValueObject(brightness:Number = 0, saturation:Number = 100, 
-			contrast:Number = 50, red:Number = 10, blue:Number = 10, green:Number = 10, negative:Boolean = false)
+		public function FilterValueObject(name:String = null, id:Number = 0, brightness:Number = 0, saturation:Number = 100, 
+			contrast:Number = 50, red:Number = 10, blue:Number = 10, green:Number = 10, negative:Boolean = false, random:Array = null)
 		{
+			_name = name;
+			_id = id;
 			_brightness = brightness;
 			_saturation = saturation;
 			_contrast = contrast;
@@ -23,6 +25,7 @@ package de.rutscheschobel.shareyourfilter.util
 			_blue = blue;
 			_green = green;
 			_negative = negative; 
+			_random = random;
 		}
 		
 		

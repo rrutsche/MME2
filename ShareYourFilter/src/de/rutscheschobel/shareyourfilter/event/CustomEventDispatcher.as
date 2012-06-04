@@ -17,5 +17,9 @@ package de.rutscheschobel.shareyourfilter.event
 		public function dispatchFilterValuesChangedEvent(event:FilterValuesChangedEvent):void {
 			dispatchEvent(event);
 		}
+		
+		public function dispatchFilterListEvent(event:FilterListEvent):void {
+			dispatchEvent(event);
+		}
 	}
 }

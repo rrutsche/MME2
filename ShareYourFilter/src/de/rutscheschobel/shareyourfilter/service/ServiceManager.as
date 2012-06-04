@@ -1,4 +1,5 @@
 package de.rutscheschobel.shareyourfilter.service {
+	import de.rutscheschobel.shareyourfilter.event.CustomEventDispatcher;
 	import de.rutscheschobel.shareyourfilter.util.FilterValueObject;
 	
 	import mx.collections.ArrayCollection;
@@ -23,10 +24,9 @@ package de.rutscheschobel.shareyourfilter.service {
 			return ServiceManager.instance;
 		}
 		
-		public function updateFilterList():ArrayCollection {
+		public function updateFilterList():void {
 			_service = new HttpRESTService(_uri);
 			_service.readAll();
-			return filterList;
 		}
 		
 		public function createFilter(name:String):void {

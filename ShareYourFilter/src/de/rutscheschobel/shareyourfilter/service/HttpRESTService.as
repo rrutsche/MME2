@@ -2,6 +2,8 @@ package de.rutscheschobel.shareyourfilter.service
 {
 	import com.adobe.net.URI;
 	
+	import de.rutscheschobel.shareyourfilter.event.CustomEventDispatcher;
+	import de.rutscheschobel.shareyourfilter.event.FilterListEvent;
 	import de.rutscheschobel.shareyourfilter.util.FilterValueObject;
 	
 	import flash.events.ErrorEvent;
@@ -14,6 +16,7 @@ package de.rutscheschobel.shareyourfilter.service
 	import mx.rpc.http.HTTPService;
 	
 	import org.httpclient.HttpClient;
+	import org.httpclient.HttpResponse;
 	import org.httpclient.events.HttpDataEvent;
 	import org.httpclient.events.HttpErrorEvent;
 	import org.httpclient.events.HttpListener;
@@ -36,29 +39,24 @@ package de.rutscheschobel.shareyourfilter.service
 		}
 		
 		public function readAll() : void {
-			
+
+			var filters:ArrayCollection = new ArrayCollection();
 			client.listener.onData = function(event:HttpDataEvent):void {
 				// For string data
 				var stringData:String = event.readUTFBytes();
 				var message: Object = JSON.parse( stringData );
-				var filters:ArrayCollection = new ArrayCollection();
 				
 				for( var s:String in message.filters ) {
-					var filter:FilterValueObject = new FilterValueObject();
-					filter.id = message.filters[s].id;
-					filter.name = message.filters[s].name;
-					filter.brightness = message.filters[s].brightness;
-					filter.saturation = message.filters[s].saturation;
-					filter.contrast = message.filters[s].contrast;
-					filter.red = message.filters[s].red;
-					filter.green = message.filters[s].green;
-					filter.blue = message.filters[s].blue;
-					filter.negative = message.filters[s].negative;
-					filter.random = message.filters[s].random;
+					var f:Object = message.filters[s] ;
+					var filter:FilterValueObject = new FilterValueObject(f.name, f.id,  f.brightness, f.saturation, 
+						f.contrast, f.red, f.blue, f.green, f.negative, f.random);
 					filters.addItem( filter );
 				}
 				ServiceManager.getInstance().filterList = filters;
+				var dispatcher:CustomEventDispatcher = CustomEventDispatcher.getInstance();
+				dispatcher.dispatchEvent(new FilterListEvent(filters));
 			};
+			
 			var uri:URI = new URI(uri);
 			client.get(uri);
 		}
@@ -68,17 +66,9 @@ package de.rutscheschobel.shareyourfilter.service
 				// For string data
 				var stringData:String = event.readUTFBytes();
 				var message: Object = JSON.parse( stringData );
-				var filter:FilterValueObject = new FilterValueObject();
-				filter.id = message.filter.id;
-				filter.name = message.filter.name;
-				filter.brightness = message.filter.brightness;
-				filter.saturation = message.filter.saturation;
-				filter.contrast = message.filter.contrast;
-				filter.red = message.filter.red;
-				filter.green = message.filter.green;
-				filter.blue = message.filter.blue;
-				filter.negative = message.filter.negative;
-				filter.random = message.filter.random;
+				var f:Object = message.filter;
+				var filter:FilterValueObject = new FilterValueObject(f.name, f.id,  f.brightness, f.saturation, 
+					f.contrast, f.red, f.blue, f.green, f.negative, f.random);
 				trace(filter.toString());
 			};
 			var uri:URI = new URI(uri+id);
@@ -92,6 +82,9 @@ package de.rutscheschobel.shareyourfilter.service
 			bytes.writeUTFBytes( json );
 			bytes.position = 0;
 			client.put(new URI(uri), bytes, "application/json");
+			client.listener.onComplete = function(event:HttpResponseEvent):void {
+				readAll();
+			}
 		}
 		
 		public function updateFilter(filter:FilterValueObject):void {
