@@ -4,8 +4,14 @@ package de.rutscheschobel.shareyourfilter.event
 
 	public class CustomEventDispatcher extends EventDispatcher
 	{
-		public function CustomEventDispatcher()
-		{
+		public function CustomEventDispatcher(){}
+		
+		private static var instance:CustomEventDispatcher = null;
+		public static function getInstance():CustomEventDispatcher {
+			if (CustomEventDispatcher.instance == null) {
+				CustomEventDispatcher.instance = new CustomEventDispatcher();
+			}
+			return CustomEventDispatcher.instance;
 		}
 		
 		public function dispatchFilterValuesChangedEvent(event:FilterValuesChangedEvent):void {

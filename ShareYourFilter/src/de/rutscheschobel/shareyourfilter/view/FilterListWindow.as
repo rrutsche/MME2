@@ -40,7 +40,7 @@ package de.rutscheschobel.shareyourfilter.view
 		private function onFilterClick(event:Event):void {
 			var filter:FilterValueObject = List(event.currentTarget).selectedItem;
 			ApplicationManager.getInstance().basicFilter.setFilterValueObject(filter);
-			var dispatcher:CustomEventDispatcher = new CustomEventDispatcher();
+			var dispatcher:CustomEventDispatcher = CustomEventDispatcher.getInstance();
 			dispatcher.dispatchFilterValuesChangedEvent(new FilterValuesChangedEvent());
 		}
 	}

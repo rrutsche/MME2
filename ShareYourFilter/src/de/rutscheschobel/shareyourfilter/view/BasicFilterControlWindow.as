@@ -1,5 +1,6 @@
 package de.rutscheschobel.shareyourfilter.view
 {
+	import de.rutscheschobel.shareyourfilter.event.CustomEventDispatcher;
 	import de.rutscheschobel.shareyourfilter.event.FilterValuesChangedEvent;
 	import de.rutscheschobel.shareyourfilter.main.ApplicationManager;
 	import de.rutscheschobel.shareyourfilter.service.HttpRESTService;
@@ -37,7 +38,9 @@ package de.rutscheschobel.shareyourfilter.view
 		public var filterNegativeCheckBox:CheckBox;
 		public var filter:BasicFilter;
 		public var history:ArrayList;
-		public var oldValues:FilterValueObject;
+		private var oldValues:FilterValueObject;
+		private var defaultValues:FilterValueObject;
+		private var dispatcher:CustomEventDispatcher;
 		public var randomArray:Array
 		
 		public function BasicFilterControlWindow(){
@@ -46,8 +49,10 @@ package de.rutscheschobel.shareyourfilter.view
 		}
 		
 		public function init(event:FlexEvent):void{
+			dispatcher = CustomEventDispatcher.getInstance();
 			history = new ArrayList();
 			oldValues = new FilterValueObject();
+			defaultValues = new FilterValueObject();
 			history.addItem(oldValues);
 			stepInHistory = history.length - 1;
 			
@@ -62,7 +67,7 @@ package de.rutscheschobel.shareyourfilter.view
 			filterBlueSlider.addEventListener(Event.CHANGE, onBlueFilterControlChange);
 			filterNegativeCheckBox.addEventListener(MouseEvent.CLICK, onNegativeFilterControlChange);
 			filterDefaultButton.addEventListener(MouseEvent.CLICK, onDefaultChange);
-			this.addEventListener(FilterValuesChangedEvent.ON_COMPLETE, onFilterValuesChanged);
+			dispatcher.addEventListener(FilterValuesChangedEvent.ON_COMPLETE, onFilterValuesChanged);
 			filter = ApplicationManager.getInstance().basicFilter;
 		}
 		
@@ -72,13 +77,13 @@ package de.rutscheschobel.shareyourfilter.view
 		private function onDefaultChange(event:Event):void{
 			var oldValue:FilterValueObject = history.getItemAt(0) as FilterValueObject;
 			filter.setFilterValueObject(oldValue);
-			filterBrightnessSlider.value = 0;
-			filterContrastSlider.value = 50;
-			filterSaturationSlider.value = 100;
-			filterRedSlider.value = 10;
-			filterGreenSlider.value = 10;
-			filterBlueSlider.value = 10;
-			filterNegativeCheckBox.selected = false;
+			filterBrightnessSlider.value = defaultValues.brightness;
+			filterContrastSlider.value = defaultValues.contrast;
+			filterSaturationSlider.value = defaultValues.saturation;
+			filterRedSlider.value = defaultValues.red;
+			filterGreenSlider.value = defaultValues.green;
+			filterBlueSlider.value = defaultValues.blue;
+			filterNegativeCheckBox.selected = defaultValues.negative;
 			if(history.length > 0){
 				var index:int = history.length-1;
 				while(history.length > 1){
@@ -92,7 +97,7 @@ package de.rutscheschobel.shareyourfilter.view
 		}
 		
 		private function onFilterValuesChanged(event:FilterValuesChangedEvent):void {
-//			Alert.show("event");
+			Alert.show("event");
 		}
 		
 		private function onFilterButtonShare(event:Event):void{
