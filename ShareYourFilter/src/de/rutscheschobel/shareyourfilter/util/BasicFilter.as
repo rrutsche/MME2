@@ -157,13 +157,6 @@ package de.rutscheschobel.shareyourfilter.util{
 			_bitmap.filters = _filtersArray;
 		}
 		
-		public function generateRandomNumberArray():Array{
-			var random:Array = [Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), 
-								Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), 
-								Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), 
-								Math.random(), Math.random(), Math.random(), Math.random(), Math.random()];
-			return random;
-		}
 		
 		public function setRandomFilter():void {
 			var randomFilter:FilterValueObject = new FilterValueObject();
@@ -181,16 +174,21 @@ package de.rutscheschobel.shareyourfilter.util{
 			dispatcher.dispatchEvent(new FilterValuesChangedEvent(randomFilter));
 		}
 		
-		public function setFilterValueObject(filterValueObject:FilterValueObject):BasicFilter {
-			setBrightness(filterValueObject.brightness);
-			setContrast(filterValueObject.contrast);
-			setSaturation(filterValueObject.saturation);
-			setRandom(filterValueObject.random);
-			setRed(filterValueObject.red);
-			setGreen(filterValueObject.green);
-			setBlue(filterValueObject.blue);
-			setNegative(filterValueObject.negative);
+		public function setFilterValueObject(filterValues:FilterValueObject):BasicFilter {
+			setBrightness(filterValues.brightness);
+			setContrast(filterValues.contrast);
+			setSaturation(filterValues.saturation);
+			setRandom(filterValues.random);
+			setRed(filterValues.red);
+			setGreen(filterValues.green);
+			setBlue(filterValues.blue);
+			setNegative(filterValues.negative);
+			filterValueObject = filterValues;
 			return this;
+		}
+		
+		public function getFilterValueObject():FilterValueObject{
+			return filterValueObject;
 		}
 		
 	}
