@@ -10,12 +10,15 @@ package de.rutscheschobel.shareyourfilter.view
 	import mx.managers.PopUpManager;
 	
 	import spark.components.Button;
+	import spark.components.Label;
 	import spark.components.TextInput;
 	
 	public class UploadFilterControl extends AbstractWindow
 	{
 		public var uploadFilterButton:Button;
 		public var uploadFilterName:spark.components.TextInput;
+		public var nameTakenLabel:Label;
+		public var noNameLabel:Label;
 		
 		public function UploadFilterControl()
 		{
@@ -28,9 +31,15 @@ package de.rutscheschobel.shareyourfilter.view
 		}
 		
 		public function onShareButtonClicked(event:Event):void{
-			var name:String = uploadFilterName.text;
-			ServiceManager.getInstance().createFilter(name);
-			PopUpManager.removePopUp(this);
+			if(uploadFilterName.text == ""){
+				noNameLabel.visible = true;
+			}else{
+				noNameLabel.visible = false;
+				ServiceManager.getInstance().createFilter(uploadFilterName.text);
+				PopUpManager.removePopUp(this);
+			}
+			
+			
 		}
 	}
 }
