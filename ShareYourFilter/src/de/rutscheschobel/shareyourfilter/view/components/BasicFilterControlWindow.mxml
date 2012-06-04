@@ -11,7 +11,7 @@
 		<s:Button id="filterDefaultButton" width="127" label="Remove Filters"/>
 		<s:Label id="filterBrightness" paddingLeft="0" paddingTop="10" text="Brightness"/>
 		<s:HSlider id="filterBrightnessSlider" liveDragging="true" maximum="100.0" minimum="-100.0"
-				   value="0"/>
+				   value="0" />
 		<s:Label id="filterContrast" paddingTop="10" text="Contrast"/>
 		<s:HSlider id="filterContrastSlider" liveDragging="true" maximum="100" minimum="0"
 				   stepSize="1" value="50"/>

@@ -1,4 +1,6 @@
 package de.rutscheschobel.shareyourfilter.util{
+	import de.rutscheschobel.shareyourfilter.event.CustomEventDispatcher;
+	import de.rutscheschobel.shareyourfilter.event.FilterValuesChangedEvent;
 	import de.rutscheschobel.shareyourfilter.main.ApplicationManager;
 	
 	import flash.display.Bitmap;
@@ -26,6 +28,7 @@ package de.rutscheschobel.shareyourfilter.util{
 		private var cmfGreen:ColorMatrixFilter;
 		private var cmfBlue:ColorMatrixFilter;
 		private var filterValueObject:FilterValueObject;
+		private var dispatcher:CustomEventDispatcher;
 		
 		public function BasicFilter(){
 		}
@@ -162,7 +165,23 @@ package de.rutscheschobel.shareyourfilter.util{
 			return random;
 		}
 		
-		public function setFilterValueObject(filterValueObject:FilterValueObject):void {
+		public function setRandomFilter():void {
+			var randomFilter:FilterValueObject = new FilterValueObject();
+			randomFilter.brightness = Math.random() * 200 - 100;
+			randomFilter.contrast = Math.random() * 100;
+			randomFilter.saturation = Math.random() * 300;
+			randomFilter.red = Math.random() * 20;
+			randomFilter.green = Math.random() * 20;
+			randomFilter.blue = Math.random() * 20;
+			if(0.5 <= Math.random()){
+				randomFilter.negative = true;
+			}
+			ApplicationManager.getInstance().basicFilter.setFilterValueObject(randomFilter);
+			dispatcher = CustomEventDispatcher.getInstance();
+			dispatcher.dispatchEvent(new FilterValuesChangedEvent(randomFilter));
+		}
+		
+		public function setFilterValueObject(filterValueObject:FilterValueObject):BasicFilter {
 			setBrightness(filterValueObject.brightness);
 			setContrast(filterValueObject.contrast);
 			setSaturation(filterValueObject.saturation);
@@ -171,6 +190,7 @@ package de.rutscheschobel.shareyourfilter.util{
 			setGreen(filterValueObject.green);
 			setBlue(filterValueObject.blue);
 			setNegative(filterValueObject.negative);
+			return this;
 		}
 		
 	}

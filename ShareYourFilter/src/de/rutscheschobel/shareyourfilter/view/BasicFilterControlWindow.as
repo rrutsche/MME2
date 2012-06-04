@@ -97,6 +97,7 @@ package de.rutscheschobel.shareyourfilter.view
 		}
 		
 		private function onFilterValuesChanged(event:FilterValuesChangedEvent):void {
+			filter = ApplicationManager.getInstance().basicFilter;
 			updateSliderPositions(event.filter);
 		}
 		
@@ -148,6 +149,7 @@ package de.rutscheschobel.shareyourfilter.view
 		}
 		
 		private function onRandomFilterControlChange(event:Event):void{
+			filter.setRandomFilter();
 			randomArray = filter.generateRandomNumberArray();
 			var newFilterValueObject:FilterValueObject = new FilterValueObject();
 			newFilterValueObject.random = randomArray;
@@ -159,7 +161,7 @@ package de.rutscheschobel.shareyourfilter.view
 				history.addItem(newFilterValueObject);
 				stepInHistory++;
 			}
-			filter.setRandom(randomArray);
+			//filter.setRandom(randomArray);
 			trace("onRandomFilterControlChange... history.length: "+history.length);
 //			trace("history.length: "+history.length);
 //			trace("stepInHistory: "+stepInHistory);
