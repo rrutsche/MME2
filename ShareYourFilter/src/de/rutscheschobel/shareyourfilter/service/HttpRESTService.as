@@ -31,14 +31,11 @@ package de.rutscheschobel.shareyourfilter.service
 		
 		public function HttpRESTService(uri:String) {
 			_uri = uri;
-			client = new HttpClient();
-			client.addEventListener("ERROR", onError);
-			client.addEventListener("COMPLETE", onComplete);
-			client.addEventListener("STATUS", onStatus);
 		}
 		
 		public function readAll() : void {
 
+			client = new HttpClient();
 			var filters:ArrayCollection = new ArrayCollection();
 			client.listener.onData = function(event:HttpDataEvent):void {
 				// For string data
@@ -73,12 +70,17 @@ package de.rutscheschobel.shareyourfilter.service
 		
 		public function createFilter(filter:FilterValueObject):void {
 			
+			client = new HttpClient();
 			var json:String = JSON.stringify( filter );
 			var bytes:ByteArray = new ByteArray();
 			bytes.writeUTFBytes( json );
 			bytes.position = 0;
 			client.put(new URI(uri), bytes, "application/json");
-			readAll();
+			client.listener.onComplete = function(event:HttpResponseEvent):void {
+				trace("onComplete");
+				readAll();
+			}
+			
 		}
 		
 		public function updateFilter(filter:FilterValueObject):void {
