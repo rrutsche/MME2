@@ -8,9 +8,11 @@ package de.rutscheschobel.shareyourfilter.service {
 		[Bindable]
 		private var _filterList:ArrayCollection = new ArrayCollection();
 		private var _service:HttpRESTService;
+		private var _filterValueObject:FilterValueObject;
 		private static const _uri:String = "http://localhost:8080/de.rutscheschobel.syf.rest/rest/filters/";
 		
 		public function ServiceManager() {
+			_filterValueObject = new FilterValueObject();
 		}
 		
 		private static var instance:ServiceManager = null;
@@ -27,9 +29,10 @@ package de.rutscheschobel.shareyourfilter.service {
 			return filterList;
 		}
 		
-		public function createFilter(filter:FilterValueObject):void {
+		public function createFilter(name:String):void {
+			_filterValueObject.name = name;
 			_service = new HttpRESTService(_uri);
-			_service.createFilter(filter);
+			_service.createFilter(_filterValueObject);
 		}
 
 		public function get filterList():ArrayCollection {
@@ -38,6 +41,10 @@ package de.rutscheschobel.shareyourfilter.service {
 
 		public function set filterList(value:ArrayCollection):void {
 			_filterList = value;
+		}
+
+		public function set filterValueObject(value:FilterValueObject):void {
+			_filterValueObject = value;
 		}
 		
 		

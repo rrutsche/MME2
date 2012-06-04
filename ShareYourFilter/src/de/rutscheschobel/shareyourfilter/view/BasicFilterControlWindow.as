@@ -4,6 +4,7 @@ package de.rutscheschobel.shareyourfilter.view
 	import de.rutscheschobel.shareyourfilter.event.FilterValuesChangedEvent;
 	import de.rutscheschobel.shareyourfilter.main.ApplicationManager;
 	import de.rutscheschobel.shareyourfilter.service.HttpRESTService;
+	import de.rutscheschobel.shareyourfilter.service.ServiceManager;
 	import de.rutscheschobel.shareyourfilter.util.BasicFilter;
 	import de.rutscheschobel.shareyourfilter.util.FilterValueObject;
 	import de.rutscheschobel.shareyourfilter.view.components.UploadFilter;
@@ -115,9 +116,10 @@ package de.rutscheschobel.shareyourfilter.view
 				newFilter.blue = filterBlueSlider.value;
 				newFilter.negative = filterNegativeCheckBox.selected;
 				newFilter.random = randomArray;
-				var uploadFilterControl:UploadFilter = PopUpManager.createPopUp(FlexGlobals.topLevelApplication as DisplayObject, UploadFilter, true) as UploadFilter;
+				ServiceManager.getInstance().filterValueObject = newFilter;
+				var uploadFilterControl:UploadFilter = PopUpManager.createPopUp(FlexGlobals.topLevelApplication as DisplayObject, 
+					UploadFilter, true) as UploadFilter;
 				PopUpManager.centerPopUp(uploadFilterControl);
-				uploadFilterControl.setFilterObject(newFilter);
 		}
 		
 		private function onRandomFilterBackControlChange(event:Event):void{
