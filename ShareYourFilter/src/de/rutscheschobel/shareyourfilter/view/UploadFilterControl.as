@@ -7,6 +7,7 @@ package de.rutscheschobel.shareyourfilter.view
 	import flash.events.MouseEvent;
 	
 	import mx.events.FlexEvent;
+	import mx.managers.PopUpManager;
 	
 	import spark.components.Button;
 	import spark.components.TextInput;
@@ -29,6 +30,7 @@ package de.rutscheschobel.shareyourfilter.view
 		public function onShareButtonClicked(event:Event):void{
 			var name:String = uploadFilterName.text;
 			ServiceManager.getInstance().createFilter(name);
+			PopUpManager.removePopUp(this);
 		}
 	}
 }

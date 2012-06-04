@@ -8,7 +8,7 @@
 	contentBackgroundAlpha="0.5" contentBackgroundColor="#CCCCCC"
 	title="Share Filter">
 
-		<s:Button x="22" y="23" label="share now" id="uploadFilterButton2"/>
+		<s:Button x="22" y="23" label="share now" id="uploadFilterButton"/>
 		<s:TextInput x="21" y="92" width="189" id="uploadFilterName"/>
 		<s:Label x="22" y="78" text="name your filter" id="uploadFilterLabel"/>
 </view:UploadFilterControl>

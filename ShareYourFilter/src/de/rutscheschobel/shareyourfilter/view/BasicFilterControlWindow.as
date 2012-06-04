@@ -117,9 +117,9 @@ package de.rutscheschobel.shareyourfilter.view
 				newFilter.negative = filterNegativeCheckBox.selected;
 				newFilter.random = randomArray;
 				ServiceManager.getInstance().filterValueObject = newFilter;
-				var uploadFilterControl:UploadFilter = PopUpManager.createPopUp(FlexGlobals.topLevelApplication as DisplayObject, 
+				var uploadFilter:UploadFilter = PopUpManager.createPopUp(FlexGlobals.topLevelApplication as DisplayObject, 
 					UploadFilter, true) as UploadFilter;
-				PopUpManager.centerPopUp(uploadFilterControl);
+				PopUpManager.centerPopUp(uploadFilter);
 		}
 		
 		private function onRandomFilterBackControlChange(event:Event):void{
