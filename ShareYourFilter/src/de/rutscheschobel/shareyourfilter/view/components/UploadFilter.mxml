@@ -4,11 +4,13 @@
 	xmlns:fx="http://ns.adobe.com/mxml/2009"
 	xmlns:s="library://ns.adobe.com/flex/spark"
 	xmlns:mx="library://ns.adobe.com/flex/mx"
-	width="306" height="188" backgroundAlpha="0.5" backgroundColor="#CCCCCC"
+	width="306" height="188" backgroundAlpha="1" backgroundColor="#CCCCCC"
 	contentBackgroundAlpha="0.5" contentBackgroundColor="#CCCCCC"
 	title="Share Filter">
 
 		<s:Button x="22" y="23" label="share now" id="uploadFilterButton"/>
-		<s:TextInput x="21" y="92" width="189" id="uploadFilterName"/>
+		<s:TextInput x="21" y="92" width="189" id="uploadFilterName" contentBackgroundColor="#FCFAFA" contentBackgroundAlpha="1.0"/>
 		<s:Label x="22" y="78" text="name your filter" id="uploadFilterLabel"/>
+		<s:Label x="21" y="122" text="name already taken. please choose another." width="257" height="23" color="#FC0202" verticalAlign="middle" id="nameTakenLabel" visible="false"/>
+		<s:Label x="21" y="122" text="please enter a name for you filter" width="193" height="23" verticalAlign="middle" color="#F90606" id="noNameLabel" visible="false"/>
 </view:UploadFilterControl>
