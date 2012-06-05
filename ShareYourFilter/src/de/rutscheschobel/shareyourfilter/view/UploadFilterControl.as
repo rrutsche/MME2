@@ -28,6 +28,7 @@ package de.rutscheschobel.shareyourfilter.view
 		
 		public function init(event:FlexEvent):void{
 			uploadFilterButton.addEventListener(MouseEvent.CLICK, onShareButtonClicked);
+			uploadFilterName.setFocus();
 		}
 		
 		public function onShareButtonClicked(event:Event):void{
