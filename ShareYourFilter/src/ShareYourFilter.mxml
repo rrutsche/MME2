@@ -4,7 +4,7 @@
 			  xmlns:viewcompontents="de.rutscheschobel.shareyourfilter.view.components.*" 
 			  xmlns:mx="http://www.adobe.com/2006/mxml"
 			  xmlns:s="library://ns.adobe.com/flex/spark"
-			  width="1200" height="650" minWidth="900" minHeight="600" backgroundColor="#838383" creationComplete="init()"
+			  width="1200" height="650" minWidth="900" minHeight="600" backgroundColor="#838383" applicationComplete="boot()"
 			  layout="absolute" >
 	<mx:MenuBar id="menuBar" left="0" right="0" top="0" labelField="@label">
 		<mx:XMLList>
@@ -13,27 +13,15 @@
 				<menuitem label="Save" id="menuSave"/>
 				<menuitem label="Close" id="menuClose"/>
 			</menuitem>
-			<menuitem label="Edit" id="menuEdit">
-				<menuitem label="Filter" id="menuFilter">
-					<menuitem/>
-				</menuitem>
-			</menuitem>
 			<menuitem label="Window" id="menuWindow">
 				<menuitem label="Filter Control Window" id="filterControlWindow" type="check" toggled="true"/>
 				<menuitem label="Image Window" id="imageWindow" type="check"/>
 			</menuitem>
 			<menuitem label="Help">
-				
+				<menuitem label="About" id="menuAbout"/>
 			</menuitem>
 		</mx:XMLList>
 	</mx:MenuBar>
-	<view:FileWindow id="fileWindow" x="177" y="140" width="400" height="252" visible="false">
-		<view:controlBarContent>
-			<s:Button id="fileOpenOK" label="OK"/>
-			<s:Button id="fileOpenCancel" label="Cancel"/>
-		</view:controlBarContent>
-		<mx:FileSystemTree id="fileTree" left="0" right="0" top="0" bottom="0"/>
-	</view:FileWindow>
 	<viewcompontents:BasicFilterControlWindow x="502" y="145">
 	</viewcompontents:BasicFilterControlWindow>
 	

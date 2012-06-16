@@ -1,10 +1,13 @@
 package de.rutscheschobel.shareyourfilter.view{
+	import de.rutscheschobel.shareyourfilter.main.ApplicationManager;
+	
 	import flash.events.MouseEvent;
 	
 	import mx.controls.Alert;
 	import mx.controls.FileSystemTree;
 	import mx.events.FileEvent;
 	import mx.events.FlexEvent;
+	import mx.managers.PopUpManager;
 	
 	import spark.components.Button;
 	
@@ -20,22 +23,22 @@ package de.rutscheschobel.shareyourfilter.view{
 		}
 		
 		private function init(event:FlexEvent):void{
-			//fileOpenCancel.addEventListener(MouseEvent.CLICK, closeWindow);
-			//fileTree.addEventListener(FileEvent.FILE_CHOOSE, onFileClick);
+			fileOpenCancel.addEventListener(MouseEvent.CLICK, closeWindow);
+			fileTree.addEventListener(FileEvent.FILE_CHOOSE, onFileClick);
 		}
 		
 		/*
-		*	opens a file via menubar
+		*	opens a file
 		*/
 		public function onFileClick(event:FileEvent):void{
-			this.visible = false;
+			PopUpManager.removePopUp(this);
 			if(event.file != null){
-				//setImage(event.file);
+				ApplicationManager.getInstance().setImage(event.file);
 			}
 		}
 		
 		private function closeWindow(event:MouseEvent):void{
-			this.visible = false;
+			PopUpManager.removePopUp(this);
 		}
 	}
 }

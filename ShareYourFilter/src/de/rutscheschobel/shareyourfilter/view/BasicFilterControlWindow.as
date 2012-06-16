@@ -3,7 +3,6 @@ package de.rutscheschobel.shareyourfilter.view
 	import de.rutscheschobel.shareyourfilter.event.CustomEventDispatcher;
 	import de.rutscheschobel.shareyourfilter.event.FilterValuesChangedEvent;
 	import de.rutscheschobel.shareyourfilter.main.ApplicationManager;
-	import de.rutscheschobel.shareyourfilter.service.HttpRESTService;
 	import de.rutscheschobel.shareyourfilter.service.ServiceManager;
 	import de.rutscheschobel.shareyourfilter.util.BasicFilter;
 	import de.rutscheschobel.shareyourfilter.util.FilterValueObject;
@@ -15,14 +14,10 @@ package de.rutscheschobel.shareyourfilter.view
 	import flash.events.NativeDragEvent;
 	
 	import mx.collections.ArrayList;
-	import mx.containers.TitleWindow;
-	import mx.controls.Alert;
-	import mx.core.FlexBitmap;
 	import mx.core.FlexGlobals;
 	import mx.events.FlexEvent;
 	import mx.managers.PopUpManager;
 	
-	import spark.components.Application;
 	import spark.components.Button;
 	import spark.components.CheckBox;
 	import spark.components.HSlider;
@@ -146,8 +141,6 @@ package de.rutscheschobel.shareyourfilter.view
 				} 
 			}
 			trace("onRandomFilterBackControlChange... history.length: "+history.length);
-//			trace("history.length: "+history.length);
-//			trace("stepInHistory: "+stepInHistory);
 		}
 		
 		private function onRandomFilterControlChange(event:Event):void{
@@ -162,10 +155,7 @@ package de.rutscheschobel.shareyourfilter.view
 				history.addItem(historyValueObject);
 				stepInHistory++;
 			}
-			//filter.setRandom(randomArray);
 			trace("onRandomFilterControlChange... history.length: "+history.length);
-//			trace("history.length: "+history.length);
-//			trace("stepInHistory: "+stepInHistory);
 		}
 		private function onRedFilterControlChange(event:Event):void{
 			filter.setRed((event.target as HSlider).value);

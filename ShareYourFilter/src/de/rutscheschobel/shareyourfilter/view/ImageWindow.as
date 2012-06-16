@@ -5,26 +5,23 @@ package de.rutscheschobel.shareyourfilter.view
 	import flash.display.Bitmap;
 	import flash.display.Loader;
 	import flash.events.Event;
-	import flash.events.MouseEvent;
 	import flash.filesystem.File;
 	import flash.net.URLRequest;
-	import flash.system.Capabilities;
 	
 	import mx.containers.Canvas;
-	import mx.containers.Panel;
-	import mx.containers.TitleWindow;
-	import mx.controls.Alert;
 	import mx.controls.Image;
 	import mx.events.FlexEvent;
 	import mx.managers.PopUpManager;
-
+	
 	public class ImageWindow extends AbstractWindow{
 		
 		public var canvas:Canvas;
 		public var filePath:String;
+		public var _filename:String;
 		private var _image:Image;
 		private var _bitmap:Bitmap;
 		private var _loader:Loader;
+		private var size:Number;
 		
 		public function ImageWindow(filePath:String){
 			this.filePath = filePath;
@@ -49,7 +46,8 @@ package de.rutscheschobel.shareyourfilter.view
 				_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, setBitmapContent);
 				_loader.load(new URLRequest(encodeURI(file.nativePath)));
 			}
-			this.title = file.name;			
+			_filename = file.name;
+			this.title = _filename;			
 		}
 		
 		private function setBitmapContent(e:Event):void{
@@ -57,26 +55,28 @@ package de.rutscheschobel.shareyourfilter.view
 			ApplicationManager.getInstance().bitmap = _bitmap;
 			_image = new Image();
 			_image.source = _bitmap;
-			setWindowSize(_bitmap);
+			setWindowSize();
 			canvas.addChild(_image);
-			
 			PopUpManager.addPopUp(this, this.parent, false);
 			PopUpManager.centerPopUp(this);
 		}
 		
-		private function setWindowSize(bitmap:Bitmap):void {
+		private function setWindowSize():void {
 			
+			var bitmap:Bitmap = ApplicationManager.getInstance().bitmap;
 			if(bitmap.width > bitmap.height) {
-				_image.width = parent.width * 0.6;
+				_image.width = parentApplication.width * 0.6;
 				_image.height = (_image.width / bitmap.width ) * bitmap.height;
 			} else {
-				_image.height = parent.height * 0.8;
+				_image.height = parentApplication.height * 0.8;
 				_image.width = (_image.height / bitmap.height) * bitmap.width;
 			}
+			this.title = _filename + " " + Math.round(_image.width / bitmap.width * 100)+"%";
+			
 		}
 		
 		private function onApplicationResize(event:Event):void {
-			setWindowSize(ApplicationManager.getInstance().bitmap);
+			setWindowSize();
 		}
 		
 	}

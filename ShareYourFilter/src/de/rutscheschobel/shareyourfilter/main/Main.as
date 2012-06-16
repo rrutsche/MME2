@@ -1,44 +1,65 @@
 package de.rutscheschobel.shareyourfilter.main{
 	import de.rutscheschobel.shareyourfilter.service.HttpRESTService;
-	import de.rutscheschobel.shareyourfilter.service.ServiceManager;
 	import de.rutscheschobel.shareyourfilter.util.*;
-	import de.rutscheschobel.shareyourfilter.view.FileWindow;
-	import de.rutscheschobel.shareyourfilter.view.FilterListWindow;
 	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
-	import de.rutscheschobel.shareyourfilter.view.components.BasicFilterControlWindow;
-	import de.rutscheschobel.shareyourfilter.view.components.FilterList;
+	import de.rutscheschobel.shareyourfilter.view.components.BatchJobComponent;
+	import de.rutscheschobel.shareyourfilter.view.components.FileWindowComponent;
 	import de.rutscheschobel.shareyourfilter.view.components.ProgressBox;
+	import de.rutscheschobel.shareyourfilter.view.components.Splashscreen;
 	
 	import flash.desktop.ClipboardFormats;
 	import flash.desktop.NativeApplication;
 	import flash.desktop.NativeDragManager;
+	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
+	import flash.display.NativeWindow;
 	import flash.events.NativeDragEvent;
 	import flash.events.ProgressEvent;
+	import flash.events.TimerEvent;
 	import flash.filesystem.File;
+	import flash.geom.Matrix;
+	import flash.utils.Timer;
 	
+	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.controls.FileSystemTree;
 	import mx.controls.MenuBar;
 	import mx.core.WindowedApplication;
-	import mx.events.FileEvent;
 	import mx.events.MenuEvent;
 	import mx.managers.PopUpManager;
 
 	public class Main extends WindowedApplication{
 		
 		public var imageWindow:ImageWindow;
-		public var fileWindow:FileWindow;
+		public var fileWindow:FileWindowComponent;
 		public var menuBar:MenuBar;
 		public var fileTree:FileSystemTree;
 		public var progressBox:ProgressBox;
 		public var request:HttpRESTService;
+		public var splash:Splashscreen;
+		public var mainWindow:NativeWindow;
+		public var batchWindow:BatchJobComponent;
+		private var _imageFiles:ArrayCollection;
+		
 		
 		public function Main(){
 			
 		}
 		
-		public function init():void{
-			fileTree.addEventListener(FileEvent.FILE_CHOOSE, onFileClick);
+		public function boot():void {
+			mainWindow = this.stage.nativeWindow;
+			mainWindow.visible = false;
+			splash = new Splashscreen();
+			splash = PopUpManager.createPopUp(this,Splashscreen, true) as Splashscreen;
+			PopUpManager.centerPopUp(splash);
+			var splashTimer:Timer = new Timer(1000, 4);
+			splashTimer.addEventListener(TimerEvent.TIMER_COMPLETE, init);
+			splashTimer.start();
+		}
+		
+		public function init(event:TimerEvent):void{
+			PopUpManager.removePopUp(splash);
+			mainWindow.visible = true;
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER,onDragEnter);
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP,onDrop);
 			menuBar.addEventListener(MenuEvent.ITEM_CLICK, menuItemClickHandler);
@@ -48,13 +69,25 @@ package de.rutscheschobel.shareyourfilter.main{
 		}
 		
 		private function menuItemClickHandler(event:MenuEvent):void{
-			if(event.item.@id == "menuOpen"){
-				fileWindow.visible = true;
-			}else if(event.item.@id == "menuSave"){
-				ApplicationManager.getInstance().saveImage();
-				setProgressBox();
-			}else if(event.item.@id == "menuClose"){
-				NativeApplication.nativeApplication.exit();
+			var id:String = event.item.@id;
+			switch(id) {
+				case "menuOpen": 
+					fileWindow = PopUpManager.createPopUp(this, FileWindowComponent, true) as FileWindowComponent;
+					PopUpManager.centerPopUp(fileWindow);
+					break;
+				case "menuSave": 
+					ApplicationManager.getInstance().saveImage(new Matrix());
+					setProgressBox();
+					break;
+				case "menuClose":
+					NativeApplication.nativeApplication.exit();
+					break;
+				case "menuAbout":
+					splash = PopUpManager.createPopUp(this,Splashscreen, true) as Splashscreen;
+					PopUpManager.centerPopUp(splash);
+					break;
+				default:
+					break;
 			}
 		}
 		
@@ -68,31 +101,32 @@ package de.rutscheschobel.shareyourfilter.main{
 			
 			var pattern:RegExp = /jpg|jpeg|JPG|gif|png/;
 			var dropfiles:Array = event.clipboard.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array;
-			if(dropfiles[0] != null && pattern.test(dropfiles[0].extension)){
-				setImage(dropfiles[0]);
+			if(dropfiles[0] != null && pattern.test(dropfiles[0].extension) && dropfiles.length == 1){
+				ApplicationManager.getInstance().setImage(dropfiles[0]);
+			}else if (dropfiles != null && dropfiles.length>0){
+				_imageFiles = new ArrayCollection();
+				processDroppedFiles(dropfiles);
+				batchWindow = PopUpManager.createPopUp(this, BatchJobComponent, true) as BatchJobComponent;
+				PopUpManager.centerPopUp(batchWindow);
 			}else{
 				Alert.show("File format not supported.");
 			}
 		}
-		/*
-		 *	opens a file via menubar
-		 */
-		public function onFileClick(event:FileEvent):void{
-			fileWindow.visible = false;
-			if(event.file != null){
-				setImage(event.file);
+		
+		private function processDroppedFiles(dropfiles:Array):void {
+			
+			var pattern:RegExp = /jpg|jpeg|JPG|gif|png/;
+			
+			for each (var file:File in dropfiles) {
+				if (file.isDirectory) {
+					processDroppedFiles(file.getDirectoryListing());
+				} else {
+					if (pattern.test(file.extension)) {
+						_imageFiles.addItem(file);
+					}
+				}
 			}
-		}
-		/*
-			creates a new imagewindow with an image
-		*/
-		private function setImage(file:File):void{
-			ApplicationManager.getInstance().imageFile = file;
-			imageWindow = ApplicationManager.getInstance().imageWindow;
-			if(imageWindow != null){
-				this.addChild(imageWindow);
-				ServiceManager.getInstance().updateFilterList();
-			}	
+			ApplicationManager.getInstance().batchFiles = _imageFiles;
 		}
 		
 		private function setProgressBox():void{
