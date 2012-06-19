@@ -38,6 +38,7 @@ package de.rutscheschobel.shareyourfilter.view {
 		private var dispatcher:CustomEventDispatcher;
 		private var _bitmap:Bitmap;
 		private var _bitmapData:BitmapData
+		private var _batchBitmaps:Array;
 		private var _scaleFactor:Number;
 		private var _filter:FilterValueObject;
 		private var _loader:Loader;
@@ -51,6 +52,7 @@ package de.rutscheschobel.shareyourfilter.view {
 		
 		private function init(event:FlexEvent):void {
 			_counter = 0;
+			_batchBitmaps = new Array();
 			dispatcher = CustomEventDispatcher.getInstance();
 			filterList.addEventListener(Event.CHANGE, onFilterClick);
 			fileList.addEventListener(Event.CHANGE, onFileClick);
@@ -66,37 +68,39 @@ package de.rutscheschobel.shareyourfilter.view {
 		}
 		
 		private function onBatchJobStart(e:MouseEvent):void {
+			_loader = new Loader();
+			_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, processBitmap);
+			processJobStart();
+		}
+		
+		private function processJobStart():void {
+			if (_counter < batchFiles.length) {
 				var file:File = batchFiles.getItemAt(_counter) as File;
-				_bitmap = ApplicationManager.getInstance().bitmap;
-				_loader = new Loader();
-				_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, processBitmap);
 				_loader.load(new URLRequest(encodeURI(file.nativePath)));
-			
+				_counter++;
+			} else {
+				ApplicationManager.getInstance().batchSave(_batchBitmaps);
+				PopUpManager.removePopUp(this);
+			}
 			
 		}
 		
 		private function processBitmap(e:Event):void {
 			_bitmap = Bitmap(_loader.content);
-			_name = "batchfile"+_counter;
-			trace(_name);
 			var width:int = int(textWidth.text);
 			var height:int = int(textHeight.text);
 			var isLandscape:Boolean = _bitmap.width >= _bitmap.height;
 			if (width < _bitmap.width && isLandscape) {
 				_scaleFactor = _bitmap.width / width;
-				_bitmapData = new BitmapData(width, _bitmap.height / _scaleFactor);
+				_bitmap.width = width;
+				_bitmap.height = _bitmap.height / _scaleFactor;
 			} else {
 				_scaleFactor = _bitmap.bitmapData.height / height;
-				_bitmapData = new BitmapData(_bitmap.width / _scaleFactor, height);	
+				_bitmap.width = _bitmap.width / _scaleFactor;
+				_bitmap.height =height;
 			}
-			ApplicationManager.getInstance().bitmap = _bitmap;
-			PopUpManager.removePopUp(this);
-			
-			ApplicationManager.getInstance().batchSave(_name, _bitmapData);
-			_counter++;
-			if (_counter < batchFiles.length) {
-				processBitmap(new Event(Event.COMPLETE));
-			}
+			_batchBitmaps.push(_bitmap);
+			processJobStart();
 		}
 		
 		private function onFileClick(event:Event):void {

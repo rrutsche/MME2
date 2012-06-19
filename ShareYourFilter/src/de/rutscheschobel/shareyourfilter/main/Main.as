@@ -10,14 +10,12 @@ package de.rutscheschobel.shareyourfilter.main{
 	import flash.desktop.ClipboardFormats;
 	import flash.desktop.NativeApplication;
 	import flash.desktop.NativeDragManager;
-	import flash.display.BitmapData;
-	import flash.display.DisplayObject;
 	import flash.display.NativeWindow;
 	import flash.events.NativeDragEvent;
 	import flash.events.ProgressEvent;
 	import flash.events.TimerEvent;
 	import flash.filesystem.File;
-	import flash.geom.Matrix;
+	import flash.system.Capabilities;
 	import flash.utils.Timer;
 	
 	import mx.collections.ArrayCollection;
@@ -47,11 +45,13 @@ package de.rutscheschobel.shareyourfilter.main{
 		}
 		
 		public function boot():void {
-			mainWindow = this.stage.nativeWindow;
+			mainWindow = this.nativeWindow;
 			mainWindow.visible = false;
 			splash = new Splashscreen();
 			splash = PopUpManager.createPopUp(this,Splashscreen, true) as Splashscreen;
-			PopUpManager.centerPopUp(splash);
+			splash.x = (Capabilities.screenResolutionX - splash.width) / 2;
+			splash.y = (Capabilities.screenResolutionY - splash.height) / 2;
+//			PopUpManager.centerPopUp(splash);
 			var splashTimer:Timer = new Timer(1000, 4);
 			splashTimer.addEventListener(TimerEvent.TIMER_COMPLETE, init);
 			splashTimer.start();
