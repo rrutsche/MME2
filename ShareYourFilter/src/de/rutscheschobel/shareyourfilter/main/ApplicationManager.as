@@ -12,6 +12,8 @@ package de.rutscheschobel.shareyourfilter.main
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.filesystem.File;
+	import flash.filesystem.FileMode;
+	import flash.filesystem.FileStream;
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
 	import flash.net.FileReference;
@@ -32,7 +34,7 @@ package de.rutscheschobel.shareyourfilter.main
 		private var _batchFiles:ArrayCollection;
 		private var _encoder:JPEGAsyncEncoder;
 		private var _dispatcher:CustomEventDispatcher;
-		
+		private var _fileName:String;
 		public function ApplicationManager(){
 		}
 		
@@ -54,22 +56,53 @@ package de.rutscheschobel.shareyourfilter.main
 			return _imageWindow;
 		}
 		
-		public function saveImage(matrix:Matrix):void{
-			var bitmapData:BitmapData = new BitmapData(_bitmap.bitmapData.width, _bitmap.bitmapData.height);
-			bitmapData.draw(_bitmap,matrix, _bitmap.transform.colorTransform);
-			var bitmap:Bitmap = new Bitmap(bitmapData);
+		public function saveImage(name:String = "untitled.jpg", bitmapData:BitmapData = null):void {
 			
+			bitmapData = processScaling(bitmapData);
+			_fileName = name;
 			_encoder = new JPEGAsyncEncoder(90);
 			_encoder.PixelsPerIteration = 1500;
 			_encoder.addEventListener(JPEGAsyncCompleteEvent.JPEGASYNC_COMPLETE, onEncodeDone);
 			_encoder.encode(bitmapData);
 			
 		}
+		
+		public function batchSave(name:String = "untitled.jpg", bitmapData:BitmapData = null):void {
+			bitmapData = processScaling(bitmapData);
+			_fileName = name;
+			_encoder = new JPEGAsyncEncoder(90);
+			_encoder.PixelsPerIteration = 1500;
+			_encoder.addEventListener(JPEGAsyncCompleteEvent.JPEGASYNC_COMPLETE, onBatchEncodeDone);
+			_encoder.encode(bitmapData);
+		}
+		
+		private function processScaling(bitmapData:BitmapData):BitmapData {
+			if (bitmapData == null) {
+				bitmapData = new BitmapData(_bitmap.bitmapData.width, _bitmap.bitmapData.height);
+			}
+			var scaleFactor:Number = bitmapData.width / _bitmap.bitmapData.width;
+			var matrix:Matrix = new Matrix();
+			matrix.scale(scaleFactor, scaleFactor);
+			bitmapData.draw(_bitmap,matrix, _bitmap.transform.colorTransform);
+			return bitmapData;
+		}
 
 		private function onEncodeDone(event:JPEGAsyncCompleteEvent):void {
-			trace("encoding complete");
 			var ba:ByteArray = event.ImageData;
-			_fileReference.save(ba,"untitled.jpg");
+			_fileReference.save(ba,_fileName);
+		}
+		
+		private function onBatchEncodeDone(event:JPEGAsyncCompleteEvent):void {
+			var ba:ByteArray = event.ImageData;
+			var fl:File = File.desktopDirectory.resolvePath(_fileName+"_resized.jpg");
+			var fs:FileStream = new FileStream();
+			try{
+				fs.open(fl,FileMode.WRITE);
+				fs.writeBytes(ba);
+				fs.close();
+			}catch(e:Error){
+				trace(e.message);
+			}
 		}
 		
 		/*

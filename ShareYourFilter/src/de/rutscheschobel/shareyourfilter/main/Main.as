@@ -76,7 +76,7 @@ package de.rutscheschobel.shareyourfilter.main{
 					PopUpManager.centerPopUp(fileWindow);
 					break;
 				case "menuSave": 
-					ApplicationManager.getInstance().saveImage(new Matrix());
+					ApplicationManager.getInstance().saveImage();
 					setProgressBox();
 					break;
 				case "menuClose":

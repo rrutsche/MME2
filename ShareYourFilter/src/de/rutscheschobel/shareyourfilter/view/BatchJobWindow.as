@@ -1,8 +1,5 @@
 package de.rutscheschobel.shareyourfilter.view {
-	import com.hurlant.util.der.Integer;
-	
 	import de.rutscheschobel.shareyourfilter.event.CustomEventDispatcher;
-	import de.rutscheschobel.shareyourfilter.event.FilterListEvent;
 	import de.rutscheschobel.shareyourfilter.event.FilterValuesChangedEvent;
 	import de.rutscheschobel.shareyourfilter.main.ApplicationManager;
 	import de.rutscheschobel.shareyourfilter.service.ServiceManager;
@@ -14,13 +11,10 @@ package de.rutscheschobel.shareyourfilter.view {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.filesystem.File;
-	import flash.geom.Matrix;
 	import flash.net.URLRequest;
-	import flash.system.Capabilities;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
-	import mx.controls.Image;
 	import mx.events.FlexEvent;
 	import mx.managers.PopUpManager;
 	
@@ -43,8 +37,12 @@ package de.rutscheschobel.shareyourfilter.view {
 		public var buttonStartBatchJob:Button;
 		private var dispatcher:CustomEventDispatcher;
 		private var _bitmap:Bitmap;
+		private var _bitmapData:BitmapData
+		private var _scaleFactor:Number;
 		private var _filter:FilterValueObject;
 		private var _loader:Loader;
+		private var _name:String;
+		private var _counter:int;
 		
 		public function BatchJobWindow() {
 			super();
@@ -52,6 +50,7 @@ package de.rutscheschobel.shareyourfilter.view {
 		}
 		
 		private function init(event:FlexEvent):void {
+			_counter = 0;
 			dispatcher = CustomEventDispatcher.getInstance();
 			filterList.addEventListener(Event.CHANGE, onFilterClick);
 			fileList.addEventListener(Event.CHANGE, onFileClick);
@@ -67,25 +66,42 @@ package de.rutscheschobel.shareyourfilter.view {
 		}
 		
 		private function onBatchJobStart(e:MouseEvent):void {
-			_bitmap = ApplicationManager.getInstance().bitmap;
-			_loader = new Loader();
-			_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, processBitmap);
-			_loader.load(new URLRequest(encodeURI(batchFiles.getItemAt(0).nativePath)));
+				var file:File = batchFiles.getItemAt(_counter) as File;
+				_bitmap = ApplicationManager.getInstance().bitmap;
+				_loader = new Loader();
+				_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, processBitmap);
+				_loader.load(new URLRequest(encodeURI(file.nativePath)));
+			
+			
 		}
 		
 		private function processBitmap(e:Event):void {
-			_bitmap = Bitmap(_loader.content); 
+			_bitmap = Bitmap(_loader.content);
+			_name = "batchfile"+_counter;
+			trace(_name);
+			var width:int = int(textWidth.text);
+			var height:int = int(textHeight.text);
+			var isLandscape:Boolean = _bitmap.width >= _bitmap.height;
+			if (width < _bitmap.width && isLandscape) {
+				_scaleFactor = _bitmap.width / width;
+				_bitmapData = new BitmapData(width, _bitmap.height / _scaleFactor);
+			} else {
+				_scaleFactor = _bitmap.bitmapData.height / height;
+				_bitmapData = new BitmapData(_bitmap.width / _scaleFactor, height);	
+			}
 			ApplicationManager.getInstance().bitmap = _bitmap;
 			PopUpManager.removePopUp(this);
-			var scale:Number = _bitmap.width / int(textWidth.text),
-			matrix:Matrix = new Matrix();
-//			matrix.scale(scale, scale);
-			ApplicationManager.getInstance().saveImage(matrix);
+			
+			ApplicationManager.getInstance().batchSave(_name, _bitmapData);
+			_counter++;
+			if (_counter < batchFiles.length) {
+				processBitmap(new Event(Event.COMPLETE));
+			}
 		}
 		
 		private function onFileClick(event:Event):void {
 			var file:File = List(event.currentTarget).selectedItem;
-			Alert.show(file.nativePath);
+			Alert.show(batchFiles.length.toString());
 		}
 	}
 }
