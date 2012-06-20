@@ -15,6 +15,7 @@
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
+  <theme themeIsDefault="false" themeIsSDK="false" themeLocation="${EXTERNAL_THEME_DIR}/Lightroom"/>
   <applications>
     <application path="ShareYourFilter.mxml">
       <airExcludes/>

@@ -8,10 +8,13 @@ package de.rutscheschobel.shareyourfilter.main
 	import de.rutscheschobel.shareyourfilter.util.FilterValueObject;
 	import de.rutscheschobel.shareyourfilter.util.JPEGAsyncEncoder;
 	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
+	import de.rutscheschobel.shareyourfilter.view.components.ProgressBox;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.events.ProgressEvent;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
@@ -34,6 +37,7 @@ package de.rutscheschobel.shareyourfilter.main
 		private var _fileReference:FileReference = new FileReference();
 		private var _batchFiles:ArrayCollection;
 		private var _batchBitmaps:Array;
+		public var progressBox:ProgressBox;
 		private var _encoder:JPEGAsyncEncoder;
 		private var _dispatcher:CustomEventDispatcher;
 		private var _fileName:String;
@@ -66,6 +70,7 @@ package de.rutscheschobel.shareyourfilter.main
 			_encoder.PixelsPerIteration = 1500;
 			_encoder.addEventListener(JPEGAsyncCompleteEvent.JPEGASYNC_COMPLETE, onEncodeDone);
 			_encoder.encode(bitmapData);
+			setProgressBox();
 		}
 		
 		private function onEncodeDone(event:JPEGAsyncCompleteEvent):void {
@@ -74,7 +79,6 @@ package de.rutscheschobel.shareyourfilter.main
 		}
 		
 		public function batchSave(array:Array):void {
-			_batchBitmaps = new Array();
 			_batchBitmaps = array;
 			_folder = new File();
 			_folder.addEventListener(Event.SELECT, onFolderSelected);
@@ -94,6 +98,7 @@ package de.rutscheschobel.shareyourfilter.main
 			_encoder.PixelsPerIteration = 1500;
 			_encoder.addEventListener(JPEGAsyncCompleteEvent.JPEGASYNC_COMPLETE, onBatchEncodeDone);
 			_encoder.encode(bitmapData);
+			setProgressBox();
 		}
 		
 		private function processScaling(bitmapData:BitmapData):BitmapData {
@@ -120,6 +125,20 @@ package de.rutscheschobel.shareyourfilter.main
 			}
 			if (_batchBitmaps.length > 0) {
 				processBatchEncoding();
+			}
+		}
+		
+		private function setProgressBox():void{
+			progressBox = PopUpManager.createPopUp(FlexGlobals.topLevelApplication as DisplayObject, ProgressBox) as ProgressBox;
+			PopUpManager.centerPopUp(progressBox);
+			_encoder.addEventListener(ProgressEvent.PROGRESS, encodeProgress);
+		}
+		
+		private function encodeProgress(event:ProgressEvent):void {
+			progressBox.progBar.setProgress(event.bytesLoaded, event.bytesTotal);
+			progressBox.progBar.label = (event.bytesLoaded / event.bytesTotal * 100).toFixed() + "%" + " Complete";
+			if(event.bytesLoaded / event.bytesTotal * 100 >= 100){
+				PopUpManager.removePopUp(progressBox);
 			}
 		}
 		
