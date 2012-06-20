@@ -23,9 +23,9 @@
 			</menuitem>
 		</mx:XMLList>
 	</mx:MenuBar>
-	<viewcompontents:BasicFilterControlWindow x="502" y="145">
+	<viewcompontents:BasicFilterControlWindow right="10" top="50">
 	</viewcompontents:BasicFilterControlWindow>
 	
-	<viewcompontents:FilterList x="8" y="67"/>
+	<viewcompontents:FilterList left="10" top="50"/>
 	
 </mainapp:Main>
