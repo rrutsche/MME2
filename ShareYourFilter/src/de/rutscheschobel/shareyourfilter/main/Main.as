@@ -1,5 +1,6 @@
 package de.rutscheschobel.shareyourfilter.main{
 	import de.rutscheschobel.shareyourfilter.service.HttpRESTService;
+	import de.rutscheschobel.shareyourfilter.service.ServiceManager;
 	import de.rutscheschobel.shareyourfilter.util.*;
 	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
 	import de.rutscheschobel.shareyourfilter.view.components.BatchJobComponent;
@@ -51,7 +52,6 @@ package de.rutscheschobel.shareyourfilter.main{
 			splash = PopUpManager.createPopUp(this,Splashscreen, true) as Splashscreen;
 			splash.x = (Capabilities.screenResolutionX - splash.width) / 2;
 			splash.y = (Capabilities.screenResolutionY - splash.height) / 2;
-//			PopUpManager.centerPopUp(splash);
 			var splashTimer:Timer = new Timer(1000, 4);
 			splashTimer.addEventListener(TimerEvent.TIMER_COMPLETE, init);
 			splashTimer.start();
@@ -63,9 +63,7 @@ package de.rutscheschobel.shareyourfilter.main{
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER,onDragEnter);
 			this.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP,onDrop);
 			menuBar.addEventListener(MenuEvent.ITEM_CLICK, menuItemClickHandler);
-			
-			request = new HttpRESTService("http://localhost:8080/de.rutscheschobel.syf.rest/rest/filters/");
-			request.readAll();
+			ServiceManager.getInstance().updateFilterList();
 		}
 		
 		private function menuItemClickHandler(event:MenuEvent):void{
@@ -77,7 +75,7 @@ package de.rutscheschobel.shareyourfilter.main{
 					break;
 				case "menuSave": 
 					ApplicationManager.getInstance().saveImage();
-					setProgressBox();
+//					setProgressBox();
 					break;
 				case "menuClose":
 					NativeApplication.nativeApplication.exit();
