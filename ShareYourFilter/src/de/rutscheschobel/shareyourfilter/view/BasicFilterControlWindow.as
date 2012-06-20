@@ -6,6 +6,7 @@ package de.rutscheschobel.shareyourfilter.view
 	import de.rutscheschobel.shareyourfilter.service.ServiceManager;
 	import de.rutscheschobel.shareyourfilter.util.BasicFilter;
 	import de.rutscheschobel.shareyourfilter.util.FilterValueObject;
+	import de.rutscheschobel.shareyourfilter.view.components.ResizeComponent;
 	import de.rutscheschobel.shareyourfilter.view.components.UploadFilter;
 	
 	import flash.display.DisplayObject;
@@ -29,6 +30,7 @@ package de.rutscheschobel.shareyourfilter.view
 		public var filterRandomButtonBack:Button;
 		public var filterRandomButton:Button;
 		public var filterButtonShare:Button;
+		public var resizeButtonControlWindow:Button;
 		public var filterBlurSlider:HSlider;
 		public var filterBrightnessSlider:HSlider;
 		public var filterContrastSlider:HSlider;
@@ -43,6 +45,7 @@ package de.rutscheschobel.shareyourfilter.view
 		private var defaultValues:FilterValueObject;
 		private var dispatcher:CustomEventDispatcher;
 		public var randomArray:Array
+		public var resizeWindow:ResizeWindow; 
 		
 		public function BasicFilterControlWindow(){
 			super();
@@ -56,7 +59,9 @@ package de.rutscheschobel.shareyourfilter.view
 			defaultValues = new FilterValueObject();
 			history.addItem(oldValues);
 			stepInHistory = history.length - 1;
+			resizeWindow = new ResizeWindow();
 			
+			resizeButtonControlWindow.addEventListener(MouseEvent.CLICK, onResizeButtonChange);
 			filterButtonShare.addEventListener(MouseEvent.CLICK, onFilterButtonShare);
 			filterRandomButtonBack.addEventListener(MouseEvent.CLICK, onRandomFilterBackControlChange);
 			filterRandomButton.addEventListener(MouseEvent.CLICK, onRandomFilterControlChange);
@@ -89,6 +94,12 @@ package de.rutscheschobel.shareyourfilter.view
 				stepInHistory = 0;
 			}
 			trace("onDefaultChange... history.length: "+history.length);
+		}
+		
+		private function onResizeButtonChange(event:Event):void{
+			trace("mein name ist hase");
+			resizeWindow = PopUpManager.createPopUp(this.parent, ResizeComponent, true) as ResizeComponent;
+			PopUpManager.centerPopUp(resizeWindow);
 		}
 		
 		private function onFilterValuesChanged(event:FilterValuesChangedEvent):void {

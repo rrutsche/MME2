@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view:ResizeWindow xmlns:view="de.rutscheschobel.shareyourfilter.view.*"
+				   xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				   xmlns:s="library://ns.adobe.com/flex/spark" 
+		 		   xmlns:mx="library://ns.adobe.com/flex/mx" width="300" height="200"
+				   xmlns:components="de.rutscheschobel.shareyourfilter.view.components.*" 
+				   backgroundColor="#CCCCCC" contentBackgroundColor="#CCCCCC" backgroundAlpha="0.5" 
+				   contentBackgroundAlpha="0.5">
+					 
+		<mx:Button label="Resize" x="211" y="130" id="resizeButton"/>
+		<s:Label x="32" y="43" text="width" width="88" height="21"/>
+		<s:Label x="169" y="43" text="height" width="88" height="21"/>
+		<mx:TextInput x="32" y="64" width="88" id="resizeWidth" text="400"/>
+		<mx:TextInput x="169" y="64" width="88" id="resizeHeight" text="400"/>
+</view:ResizeWindow>
