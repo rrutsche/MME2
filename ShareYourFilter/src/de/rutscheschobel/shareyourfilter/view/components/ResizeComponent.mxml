@@ -5,9 +5,11 @@
 		 		   xmlns:mx="library://ns.adobe.com/flex/mx" width="300" height="200"
 				   xmlns:components="de.rutscheschobel.shareyourfilter.view.components.*" 
 				   backgroundColor="#CCCCCC" contentBackgroundColor="#CCCCCC" backgroundAlpha="0.5" 
-				   contentBackgroundAlpha="0.5">
-					 
-		<mx:Button label="Resize" x="211" y="130" id="resizeButton"/>
+				   contentBackgroundAlpha="0.5" title="Resize Image">
+	<view:controlBarContent>
+		<mx:Button label="Resize" id="resizeButton"/>
+	
+	</view:controlBarContent>
 		<s:Label x="32" y="43" text="width" width="88" height="21"/>
 		<s:Label x="169" y="43" text="height" width="88" height="21"/>
 		<mx:TextInput x="32" y="64" width="88" id="resizeWidth" text="400"/>
