@@ -33,8 +33,10 @@ package de.rutscheschobel.shareyourfilter.view
 		private var _loader:Loader;
 		private var _scaleFactor:Number;
 		public var progressBox:ProgressBox;
+		private var _batchBitmaps:Array;
 		
 		private function init(event:FlexEvent):void{
+			_batchBitmaps = new Array();
 			resizeButton.addEventListener(MouseEvent.CLICK, onResizeButtonChange);
 		}
 		
@@ -60,22 +62,8 @@ package de.rutscheschobel.shareyourfilter.view
 				_bitmap.width = _bitmap.width / _scaleFactor;
 				_bitmap.height =height;
 			}
-			ApplicationManager.getInstance().saveImage();
-			setProgressBox();
-		}
-		
-		private function setProgressBox():void{
-			progressBox = PopUpManager.createPopUp(this, ProgressBox) as ProgressBox;
-			PopUpManager.centerPopUp(progressBox);
-			ApplicationManager.getInstance().encoder.addEventListener(ProgressEvent.PROGRESS, encodeProgress);
-		}
-		
-		private function encodeProgress(event:ProgressEvent):void {
-			progressBox.progBar.setProgress(event.bytesLoaded, event.bytesTotal);
-			progressBox.progBar.label = (event.bytesLoaded / event.bytesTotal * 100).toFixed() + "%" + " Complete";
-			if(event.bytesLoaded / event.bytesTotal * 100 >= 100){
-				PopUpManager.removePopUp(progressBox);
-			}
+			_batchBitmaps.push(_bitmap);
+			ApplicationManager.getInstance().batchSave(_batchBitmaps);
 		}
 	}
 }
