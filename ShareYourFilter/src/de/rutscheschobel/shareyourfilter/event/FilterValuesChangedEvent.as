@@ -10,8 +10,11 @@ package de.rutscheschobel.shareyourfilter.event {
 		public static const NEW_IMAGE:String = "NEW_IMAGE";
 		public var filter:FilterValueObject;
 		
-		public function FilterValuesChangedEvent(filter:FilterValueObject, type:String = FilterValuesChangedEvent.ON_COMPLETE, bubbles:Boolean = true, cancelable:Boolean = false) 
+		public function FilterValuesChangedEvent(filter:FilterValueObject = null, type:String = FilterValuesChangedEvent.ON_COMPLETE, bubbles:Boolean = true, cancelable:Boolean = false) 
 		{
+			if (filter == null) {
+				filter = new FilterValueObject();
+			}
 			this.filter = filter;
 			super(type, bubbles, cancelable);
 		}

@@ -2,46 +2,27 @@ package de.rutscheschobel.shareyourfilter.main
 {
 	import de.rutscheschobel.shareyourfilter.event.CustomEventDispatcher;
 	import de.rutscheschobel.shareyourfilter.event.FilterValuesChangedEvent;
-	import de.rutscheschobel.shareyourfilter.event.JPEGAsyncCompleteEvent;
-	import de.rutscheschobel.shareyourfilter.service.ServiceManager;
 	import de.rutscheschobel.shareyourfilter.util.BasicFilter;
-	import de.rutscheschobel.shareyourfilter.util.FilterValueObject;
-	import de.rutscheschobel.shareyourfilter.util.JPEGAsyncEncoder;
+	import de.rutscheschobel.shareyourfilter.util.ImageSaveHelperClass;
 	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
-	import de.rutscheschobel.shareyourfilter.view.components.ProgressBox;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.DisplayObject;
-	import flash.events.Event;
-	import flash.events.ProgressEvent;
 	import flash.filesystem.File;
-	import flash.filesystem.FileMode;
-	import flash.filesystem.FileStream;
-	import flash.geom.ColorTransform;
-	import flash.geom.Matrix;
-	import flash.net.FileReference;
-	import flash.utils.ByteArray;
 	
 	import mx.collections.ArrayCollection;
 	import mx.core.FlexGlobals;
 	import mx.managers.PopUpManager;
 	
-	public class ApplicationManager{
+	public class ApplicationManager {
 		
 		private var _imageWindow:ImageWindow;
 		private var _imageFile:File;
 		private var _bitmap:Bitmap;
 		private var _basicFilter:BasicFilter = new BasicFilter();
-		private var _colorTransform:ColorTransform;
-		private var _fileReference:FileReference = new FileReference();
 		private var _batchFiles:ArrayCollection;
-		private var _batchBitmaps:Array;
-		public var progressBox:ProgressBox;
-		private var _encoder:JPEGAsyncEncoder;
 		private var _dispatcher:CustomEventDispatcher;
-		private var _fileName:String;
-		private var _folder:File;
+		
 		public function ApplicationManager(){
 		}
 		
@@ -53,105 +34,57 @@ package de.rutscheschobel.shareyourfilter.main
 			return ApplicationManager.instance;
 		}
 		
-		public function get imageWindow():ImageWindow{
+		/**
+		 * Returns the active imageWindow, creates a new when its null
+		 * @return  ImageWindow
+		 * 
+		 */		
+		public function get imageWindow():ImageWindow {
 			if(_imageFile != null){
 				PopUpManager.removePopUp(_imageWindow);
 				_imageWindow = new ImageWindow(_imageFile.nativePath);	
 			}			
 			_dispatcher = CustomEventDispatcher.getInstance();
-			_dispatcher.dispatchEvent(new FilterValuesChangedEvent(new FilterValueObject));
+			_dispatcher.dispatchEvent(new FilterValuesChangedEvent());
 			return _imageWindow;
 		}
 		
+		/**
+		 * 
+		 * @param name name of the file (optional)
+		 * @param bitmapData (optional)
+		 * 
+		 */
 		public function saveImage(name:String = "untitled.jpg", bitmapData:BitmapData = null):void {
-			bitmapData = processScaling(bitmapData);
-			_fileName = name;
-			_encoder = new JPEGAsyncEncoder(90);
-			_encoder.PixelsPerIteration = 1500;
-			_encoder.addEventListener(JPEGAsyncCompleteEvent.JPEGASYNC_COMPLETE, onEncodeDone);
-			_encoder.encode(bitmapData);
-			setProgressBox();
+			var imageSaver:ImageSaveHelperClass = new ImageSaveHelperClass();
+			imageSaver.saveImage(name,bitmapData);
 		}
 		
-		private function onEncodeDone(event:JPEGAsyncCompleteEvent):void {
-			var ba:ByteArray = event.ImageData;
-			_fileReference.save(ba,_fileName);
-		}
-		
+		/**
+		 * Starts the batch saving process 
+		 * @param array bitmap files
+		 * 
+		 */
 		public function batchSave(array:Array):void {
-			_batchBitmaps = array;
-			_folder = new File();
-			_folder.addEventListener(Event.SELECT, onFolderSelected);
-			_folder.browseForDirectory("Choose a Directory");
+			var imageSaver:ImageSaveHelperClass = new ImageSaveHelperClass();
+			imageSaver.batchSave(array);
 		}
 		
-		private function onFolderSelected(e:Event):void {
-			processBatchEncoding();
-		}
-		
-		private function processBatchEncoding():void {
-			_bitmap = _batchBitmaps.pop();
-			var bitmapData:BitmapData = new BitmapData(_bitmap.width, _bitmap.height);
-			bitmapData = processScaling(bitmapData);
-			_fileName = "batch"+_batchBitmaps.length;
-			_encoder = new JPEGAsyncEncoder(90);
-			_encoder.PixelsPerIteration = 1500;
-			_encoder.addEventListener(JPEGAsyncCompleteEvent.JPEGASYNC_COMPLETE, onBatchEncodeDone);
-			_encoder.encode(bitmapData);
-			setProgressBox();
-		}
-		
-		private function processScaling(bitmapData:BitmapData):BitmapData {
-			if (bitmapData == null) {
-				bitmapData = new BitmapData(_bitmap.bitmapData.width, _bitmap.bitmapData.height);
-			}
-			var scaleFactor:Number = bitmapData.width / _bitmap.bitmapData.width;
-			var matrix:Matrix = new Matrix();
-			matrix.scale(scaleFactor, scaleFactor);
-			bitmapData.draw(_bitmap,matrix, _bitmap.transform.colorTransform);
-			return bitmapData;
-		}
-		
-		private function onBatchEncodeDone(event:JPEGAsyncCompleteEvent):void {
-			var ba:ByteArray = event.ImageData;
-			var fl:File = _folder.resolvePath(_fileName+"_resized.jpg");
-			var fs:FileStream = new FileStream();
-			try{
-				fs.open(fl,FileMode.WRITE);
-				fs.writeBytes(ba);
-				fs.close();
-			}catch(e:Error){
-				trace(e.message);
-			}
-			if (_batchBitmaps.length > 0) {
-				processBatchEncoding();
-			}
-		}
-		
-		private function setProgressBox():void{
-			progressBox = PopUpManager.createPopUp(FlexGlobals.topLevelApplication as DisplayObject, ProgressBox) as ProgressBox;
-			PopUpManager.centerPopUp(progressBox);
-			_encoder.addEventListener(ProgressEvent.PROGRESS, encodeProgress);
-		}
-		
-		private function encodeProgress(event:ProgressEvent):void {
-			progressBox.progBar.setProgress(event.bytesLoaded, event.bytesTotal);
-			progressBox.progBar.label = (event.bytesLoaded / event.bytesTotal * 100).toFixed() + "%" + " Complete";
-			if(event.bytesLoaded / event.bytesTotal * 100 >= 100){
-				PopUpManager.removePopUp(progressBox);
-			}
-		}
-		
-		/*
-		creates a new imagewindow with an image
-		*/
+		/**
+		 * creates a new imagewindow with an image
+		 * @param file
+		 * 
+		 */
 		public function setImage(file:File):void{
 			_imageFile = file;
 			if(imageWindow != null){
 				FlexGlobals.topLevelApplication.addChild(imageWindow);
-				ServiceManager.getInstance().updateFilterList();
 			}	
 		}
+		
+		/**
+		 * Getter and Setter
+		 */	
 		
 		public function get bitmap():Bitmap{
 			return _bitmap;
@@ -169,9 +102,6 @@ package de.rutscheschobel.shareyourfilter.main
 			_imageFile = value;
 		}
 		
-		public function get encoder():JPEGAsyncEncoder {
-			return _encoder;
-		}
 		public function get basicFilter():BasicFilter {
 			return _basicFilter;
 		}

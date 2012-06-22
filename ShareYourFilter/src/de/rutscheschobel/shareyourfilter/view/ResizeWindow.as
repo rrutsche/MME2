@@ -18,10 +18,8 @@ package de.rutscheschobel.shareyourfilter.view
 	import mx.events.FlexEvent;
 	import mx.managers.PopUpManager;
 
-	public class ResizeWindow extends AbstractWindow
-	{
-		public function ResizeWindow()
-		{
+	public class ResizeWindow extends AbstractWindow {
+		public function ResizeWindow() {
 			super();
 			addEventListener(FlexEvent.CREATION_COMPLETE, init);
 		}
@@ -40,8 +38,7 @@ package de.rutscheschobel.shareyourfilter.view
 			resizeButton.addEventListener(MouseEvent.CLICK, onResizeButtonChange);
 		}
 		
-		private function onResizeButtonChange(event:Event):void{
-			trace("mein name ist otter");
+		private function onResizeButtonChange(event:Event):void {
 			if(ApplicationManager.getInstance().bitmap != null){
 				processBitmap();
 				PopUpManager.removePopUp(this);
@@ -49,20 +46,20 @@ package de.rutscheschobel.shareyourfilter.view
 		}
 		
 		private function processBitmap():void {
-			_bitmap = ApplicationManager.getInstance().bitmap;
+			var bitmap:Bitmap = new Bitmap(ApplicationManager.getInstance().bitmap.bitmapData.clone());
 			var width:int = int(resizeWidth.text);
 			var height:int = int(resizeHeight.text);
-			var isLandscape:Boolean = _bitmap.width >= _bitmap.height;
-			if (width < _bitmap.width && isLandscape) {
-				_scaleFactor = _bitmap.width / width;
-				_bitmap.width = width;
-				_bitmap.height = _bitmap.height / _scaleFactor;
+			var isLandscape:Boolean = bitmap.width >= bitmap.height;
+			if (width < bitmap.width && isLandscape) {
+				_scaleFactor = bitmap.width / width;
+				bitmap.width = width;
+				bitmap.height = bitmap.height / _scaleFactor;
 			} else {
-				_scaleFactor = _bitmap.bitmapData.height / height;
-				_bitmap.width = _bitmap.width / _scaleFactor;
-				_bitmap.height =height;
+				_scaleFactor = bitmap.bitmapData.height / height;
+				bitmap.width = bitmap.width / _scaleFactor;
+				bitmap.height =height;
 			}
-			_batchBitmaps.push(_bitmap);
+			_batchBitmaps.push(bitmap);
 			ApplicationManager.getInstance().batchSave(_batchBitmaps);
 		}
 	}

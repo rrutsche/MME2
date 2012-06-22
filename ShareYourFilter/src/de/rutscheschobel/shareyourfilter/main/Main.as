@@ -5,7 +5,6 @@ package de.rutscheschobel.shareyourfilter.main{
 	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
 	import de.rutscheschobel.shareyourfilter.view.components.BatchJobComponent;
 	import de.rutscheschobel.shareyourfilter.view.components.FileWindowComponent;
-	import de.rutscheschobel.shareyourfilter.view.components.ProgressBox;
 	import de.rutscheschobel.shareyourfilter.view.components.Splashscreen;
 	
 	import flash.desktop.ClipboardFormats;
@@ -13,7 +12,6 @@ package de.rutscheschobel.shareyourfilter.main{
 	import flash.desktop.NativeDragManager;
 	import flash.display.NativeWindow;
 	import flash.events.NativeDragEvent;
-	import flash.events.ProgressEvent;
 	import flash.events.TimerEvent;
 	import flash.filesystem.File;
 	import flash.system.Capabilities;
@@ -33,7 +31,6 @@ package de.rutscheschobel.shareyourfilter.main{
 		public var fileWindow:FileWindowComponent;
 		public var menuBar:MenuBar;
 		public var fileTree:FileSystemTree;
-		public var progressBox:ProgressBox;
 		public var request:HttpRESTService;
 		public var splash:Splashscreen;
 		public var mainWindow:NativeWindow;
@@ -75,7 +72,6 @@ package de.rutscheschobel.shareyourfilter.main{
 					break;
 				case "menuSave": 
 					ApplicationManager.getInstance().saveImage();
-//					setProgressBox();
 					break;
 				case "menuClose":
 					NativeApplication.nativeApplication.exit();
@@ -125,20 +121,6 @@ package de.rutscheschobel.shareyourfilter.main{
 				}
 			}
 			ApplicationManager.getInstance().batchFiles = _imageFiles;
-		}
-		
-		private function setProgressBox():void{
-			progressBox = PopUpManager.createPopUp(this, ProgressBox) as ProgressBox;
-			PopUpManager.centerPopUp(progressBox);
-			ApplicationManager.getInstance().encoder.addEventListener(ProgressEvent.PROGRESS, encodeProgress);
-		}
-		
-		private function encodeProgress(event:ProgressEvent):void {
-			progressBox.progBar.setProgress(event.bytesLoaded, event.bytesTotal);
-			progressBox.progBar.label = (event.bytesLoaded / event.bytesTotal * 100).toFixed() + "%" + " Complete";
-			if(event.bytesLoaded / event.bytesTotal * 100 >= 100){
-				PopUpManager.removePopUp(progressBox);
-			}
 		}
 	}
 		
