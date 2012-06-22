@@ -3,7 +3,7 @@
 							   xmlns:fx="http://ns.adobe.com/mxml/2009"
 							   xmlns:s="library://ns.adobe.com/flex/spark"
 							   xmlns:mx="library://ns.adobe.com/flex/mx"
-							   right="10" top="30" width="160" height="506" backgroundAlpha="0.5"
+							   width="160" height="572" backgroundAlpha="0.5"
 							   backgroundColor="#CCCCCC"
 							   contentBackgroundColor="#CCCCCC" title="Basic Filter">
 
@@ -37,8 +37,9 @@
 		<mx:HRule width="100"/>
 		<s:Button id="filterRandomButton" width="127" label="Randomize"/>
 		<s:Button id="filterRandomButtonBack" width="127" label="RandomizeBack"/>
-		<s:Button id="filterButtonShare" width="127" label="Share Filter"/>
 		<s:Button id="resizeButtonControlWindow" width="126" label="Resize Image"/>
+		<s:Button id="filterButtonShare" width="126" height="95" label="Share Filter"
+				  icon="assets/syfsymbol-01(1).png"/>
 		
 	</s:VGroup>
 </view:BasicFilterControlWindow>

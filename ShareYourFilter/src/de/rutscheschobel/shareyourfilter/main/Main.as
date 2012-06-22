@@ -49,7 +49,7 @@ package de.rutscheschobel.shareyourfilter.main{
 			splash = PopUpManager.createPopUp(this,Splashscreen, true) as Splashscreen;
 			splash.x = (Capabilities.screenResolutionX - splash.width) / 2;
 			splash.y = (Capabilities.screenResolutionY - splash.height) / 2;
-			var splashTimer:Timer = new Timer(1000, 4);
+			var splashTimer:Timer = new Timer(1000, 3);
 			splashTimer.addEventListener(TimerEvent.TIMER_COMPLETE, init);
 			splashTimer.start();
 		}

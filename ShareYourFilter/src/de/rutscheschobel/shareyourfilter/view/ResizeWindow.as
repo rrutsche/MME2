@@ -2,16 +2,12 @@ package de.rutscheschobel.shareyourfilter.view
 {
 	
 	import de.rutscheschobel.shareyourfilter.main.ApplicationManager;
-	import de.rutscheschobel.shareyourfilter.main.Main;
 	import de.rutscheschobel.shareyourfilter.view.components.ProgressBox;
 	
 	import flash.display.Bitmap;
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.events.ProgressEvent;
-	import flash.filesystem.File;
-	import flash.net.URLRequest;
 	
 	import mx.controls.Button;
 	import mx.controls.TextInput;

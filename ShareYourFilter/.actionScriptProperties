@@ -25,7 +25,7 @@
   <flashCatalyst validateFlashCatalystCompatibility="false"/>
   <buildTargets>
     <buildTarget buildTargetName="default">
-      <airSettings airCertificatePath="" airTimestamp="true" anePathSet="false" version="1">
+      <airSettings airCertificatePath="C:/Users/herrrutsche/Studium/Semester5/MME2/air_zertifikat.p12" airTimestamp="false" anePathSet="true" version="1">
         <airExcludes/>
         <anePaths/>
       </airSettings>
