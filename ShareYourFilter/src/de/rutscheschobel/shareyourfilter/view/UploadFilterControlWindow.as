@@ -13,14 +13,14 @@ package de.rutscheschobel.shareyourfilter.view
 	import spark.components.Label;
 	import spark.components.TextInput;
 	
-	public class UploadFilterControl extends AbstractWindow
+	public class UploadFilterControlWindow extends AbstractWindow
 	{
 		public var uploadFilterButton:Button;
 		public var uploadFilterName:spark.components.TextInput;
 		public var nameTakenLabel:Label;
 		public var noNameLabel:Label;
 		
-		public function UploadFilterControl()
+		public function UploadFilterControlWindow()
 		{
 			super();
 			addEventListener(FlexEvent.CREATION_COMPLETE, init);

@@ -191,9 +191,6 @@ package de.rutscheschobel.shareyourfilter.view
 		private function onBlueFilterControlChange(event:Event):void{
 			filter.setBlue((event.target as HSlider).value);
 		}
-		private function onBlueSliderSetDefault(event:NativeDragEvent):void{
-			trace("BLUE");
-		}
 		private function onBrightnessFilterControlChange(event:Event):void{
 			filter.setBrightness((event.target as HSlider).value);
 		}

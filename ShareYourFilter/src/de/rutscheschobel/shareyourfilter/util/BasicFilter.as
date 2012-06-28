@@ -4,14 +4,8 @@ package de.rutscheschobel.shareyourfilter.util{
 	import de.rutscheschobel.shareyourfilter.main.ApplicationManager;
 	
 	import flash.display.Bitmap;
-	import flash.filters.BlurFilter;
 	import flash.filters.ColorMatrixFilter;
 	import flash.geom.ColorTransform;
-	import flash.geom.Matrix;
-	import flash.net.FileReference;
-	import flash.utils.ByteArray;
-	
-	import mx.graphics.codec.JPEGEncoder;
 	
 	public class BasicFilter{
 		
@@ -27,7 +21,7 @@ package de.rutscheschobel.shareyourfilter.util{
 		private var cmfRed:ColorMatrixFilter;
 		private var cmfGreen:ColorMatrixFilter;
 		private var cmfBlue:ColorMatrixFilter;
-		private var filterValueObject:FilterValueObject;
+		private var _filterValueObject:FilterValueObject;
 		private var dispatcher:CustomEventDispatcher;
 		
 		public function BasicFilter(){
@@ -209,21 +203,21 @@ package de.rutscheschobel.shareyourfilter.util{
 			dispatcher.dispatchEvent(new FilterValuesChangedEvent(randomFilter));
 		}
 		
-		public function setFilterValueObject(filterValues:FilterValueObject):BasicFilter {
-			setBrightness(filterValues.brightness);
-			setContrast(filterValues.contrast);
-			setSaturation(filterValues.saturation);
-			setRandom(filterValues.random);
-			setRed(filterValues.red);
-			setGreen(filterValues.green);
-			setBlue(filterValues.blue);
-			setNegative(filterValues.negative);
-			filterValueObject = filterValues;
+		public function setFilterValueObject(filterValues:FilterValueObject, bitmap:Bitmap = null):BasicFilter {
+			setBrightness(filterValues.brightness, bitmap);
+			setContrast(filterValues.contrast, bitmap);
+			setSaturation(filterValues.saturation, bitmap);
+			setRandom(filterValues.random, bitmap);
+			setRed(filterValues.red, bitmap);
+			setGreen(filterValues.green, bitmap);
+			setBlue(filterValues.blue, bitmap);
+			setNegative(filterValues.negative, bitmap);
+			_filterValueObject = filterValues;
 			return this;
 		}
 		
 		public function getFilterValueObject():FilterValueObject{
-			return filterValueObject;
+			return _filterValueObject;
 		}
 		
 	}

@@ -37,12 +37,10 @@ package de.rutscheschobel.shareyourfilter.view {
 		public var buttonStartBatchJob:Button;
 		private var dispatcher:CustomEventDispatcher;
 		private var _bitmap:Bitmap;
-		private var _bitmapData:BitmapData
 		private var _batchBitmaps:Array;
 		private var _scaleFactor:Number;
 		private var _filter:FilterValueObject;
 		private var _loader:Loader;
-		private var _name:String;
 		private var _counter:int;
 		
 		public function BatchJobWindow() {
@@ -87,6 +85,7 @@ package de.rutscheschobel.shareyourfilter.view {
 		
 		private function processBitmap(e:Event):void {
 			_bitmap = Bitmap(_loader.content);
+			ApplicationManager.getInstance().basicFilter.setFilterValueObject(_filter, _bitmap);
 			var width:int = int(textWidth.text);
 			var height:int = int(textHeight.text);
 			var isLandscape:Boolean = _bitmap.width >= _bitmap.height;

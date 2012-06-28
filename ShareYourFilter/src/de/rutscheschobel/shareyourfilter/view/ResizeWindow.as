@@ -47,7 +47,8 @@ package de.rutscheschobel.shareyourfilter.view
 		
 		private function processBitmap():void {
 			var bitmap:Bitmap = new Bitmap(ApplicationManager.getInstance().bitmap.bitmapData.clone());
-			applyFilterValues(bitmap);
+			_basicFilter = ApplicationManager.getInstance().basicFilter;
+			_basicFilter.setFilterValueObject(_fvo, bitmap);
 			var width:int = int(resizeWidth.text);
 			var height:int = int(resizeHeight.text);
 			var isLandscape:Boolean = bitmap.width >= bitmap.height;
@@ -65,18 +66,6 @@ package de.rutscheschobel.shareyourfilter.view
 		}
 		public function setFilterValueObject(fvo:FilterValueObject):void{
 			_fvo = fvo;
-		}
-		
-		private function applyFilterValues(bitmap:Bitmap):void{
-			_basicFilter = ApplicationManager.getInstance().basicFilter;
-			_basicFilter.setBrightness(_fvo.brightness, bitmap);
-			_basicFilter.setBlue(_fvo.blue, bitmap);
-			_basicFilter.setGreen(_fvo.green, bitmap);
-			_basicFilter.setRed(_fvo.red, bitmap);
-			_basicFilter.setContrast(_fvo.contrast, bitmap);
-			_basicFilter.setNegative(_fvo.negative, bitmap);
-			_basicFilter.setSaturation(_fvo.saturation, bitmap);
-			_basicFilter.setRandom(_fvo.random, bitmap);
 		}
 	}
 }
