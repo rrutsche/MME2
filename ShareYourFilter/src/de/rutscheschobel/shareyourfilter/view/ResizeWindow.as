@@ -2,6 +2,8 @@ package de.rutscheschobel.shareyourfilter.view
 {
 	
 	import de.rutscheschobel.shareyourfilter.main.ApplicationManager;
+	import de.rutscheschobel.shareyourfilter.util.BasicFilter;
+	import de.rutscheschobel.shareyourfilter.util.FilterValueObject;
 	import de.rutscheschobel.shareyourfilter.view.components.ProgressBox;
 	
 	import flash.display.Bitmap;
@@ -28,6 +30,8 @@ package de.rutscheschobel.shareyourfilter.view
 		private var _scaleFactor:Number;
 		public var progressBox:ProgressBox;
 		private var _batchBitmaps:Array;
+		private var _fvo:FilterValueObject;
+		private var _basicFilter:BasicFilter;
 		
 		private function init(event:FlexEvent):void{
 			_batchBitmaps = new Array();
@@ -43,6 +47,7 @@ package de.rutscheschobel.shareyourfilter.view
 		
 		private function processBitmap():void {
 			var bitmap:Bitmap = new Bitmap(ApplicationManager.getInstance().bitmap.bitmapData.clone());
+			applyFilterValues(bitmap);
 			var width:int = int(resizeWidth.text);
 			var height:int = int(resizeHeight.text);
 			var isLandscape:Boolean = bitmap.width >= bitmap.height;
@@ -57,6 +62,21 @@ package de.rutscheschobel.shareyourfilter.view
 			}
 			_batchBitmaps.push(bitmap);
 			ApplicationManager.getInstance().batchSave(_batchBitmaps);
+		}
+		public function setFilterValueObject(fvo:FilterValueObject):void{
+			_fvo = fvo;
+		}
+		
+		private function applyFilterValues(bitmap:Bitmap):void{
+			_basicFilter = ApplicationManager.getInstance().basicFilter;
+			_basicFilter.setBrightness(_fvo.brightness, bitmap);
+			_basicFilter.setBlue(_fvo.blue, bitmap);
+			_basicFilter.setGreen(_fvo.green, bitmap);
+			_basicFilter.setRed(_fvo.red, bitmap);
+			_basicFilter.setContrast(_fvo.contrast, bitmap);
+			_basicFilter.setNegative(_fvo.negative, bitmap);
+			_basicFilter.setSaturation(_fvo.saturation, bitmap);
+			_basicFilter.setRandom(_fvo.random, bitmap);
 		}
 	}
 }

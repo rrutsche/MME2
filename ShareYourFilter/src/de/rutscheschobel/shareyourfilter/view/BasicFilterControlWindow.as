@@ -46,6 +46,7 @@ package de.rutscheschobel.shareyourfilter.view
 		private var dispatcher:CustomEventDispatcher;
 		public var randomArray:Array
 		public var resizeWindow:ResizeWindow; 
+		public var filterValuesResize:FilterValueObject;
 		
 		public function BasicFilterControlWindow(){
 			super();
@@ -97,8 +98,8 @@ package de.rutscheschobel.shareyourfilter.view
 		}
 		
 		private function onResizeButtonChange(event:Event):void{
-			trace("mein name ist hase");
 			resizeWindow = PopUpManager.createPopUp(this.parent, ResizeComponent, true) as ResizeComponent;
+			resizeWindow.setFilterValueObject(getFilterValueObjectResize());
 			PopUpManager.centerPopUp(resizeWindow);
 		}
 		
@@ -131,6 +132,19 @@ package de.rutscheschobel.shareyourfilter.view
 				var uploadFilter:UploadFilter = PopUpManager.createPopUp(FlexGlobals.topLevelApplication as DisplayObject, 
 					UploadFilter, true) as UploadFilter;
 				PopUpManager.centerPopUp(uploadFilter);
+		}
+		
+		public function getFilterValueObjectResize():FilterValueObject{
+			var filterValuesResize:FilterValueObject = new FilterValueObject();
+			filterValuesResize.brightness = filterBrightnessSlider.value;
+			filterValuesResize.saturation = filterSaturationSlider.value;
+			filterValuesResize.contrast = filterContrastSlider.value;
+			filterValuesResize.red = filterRedSlider.value;
+			filterValuesResize.green = filterGreenSlider.value;
+			filterValuesResize.blue = filterBlueSlider.value;
+			filterValuesResize.negative = filterNegativeCheckBox.selected;
+			filterValuesResize.random = randomArray;
+			return filterValuesResize;
 		}
 		
 		private function onRandomFilterBackControlChange(event:Event):void{

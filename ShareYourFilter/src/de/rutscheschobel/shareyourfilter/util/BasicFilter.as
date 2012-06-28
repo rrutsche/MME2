@@ -34,8 +34,12 @@ package de.rutscheschobel.shareyourfilter.util{
 		}
 		
 		
-		public function setBrightness(value:Number):void{
-			_bitmap = ApplicationManager.getInstance().bitmap;
+		public function setBrightness(value:Number, bitmap:Bitmap = null):void{
+			if(bitmap == null){
+				_bitmap = ApplicationManager.getInstance().bitmap;
+			}else{
+				_bitmap = bitmap;
+			}
 			if(_bitmap != null){
 				_colorTransform = new ColorTransform();
 				_colorTransform.redOffset = value;
@@ -45,8 +49,12 @@ package de.rutscheschobel.shareyourfilter.util{
 			}
 		}
 		
-		public function setContrast(value:Number):void {
-			_bitmap = ApplicationManager.getInstance().bitmap;
+		public function setContrast(value:Number, bitmap:Bitmap = null):void {
+			if(bitmap == null){
+				_bitmap = ApplicationManager.getInstance().bitmap;
+			}else{
+				_bitmap = bitmap;
+			}
 			var factor:Number = value / 500;
 			//Formula taken from the Actionscript 3 Cookbook by Joey Lott, Darron Schall and Keith Peters
 			if(_bitmap != null){
@@ -57,9 +65,13 @@ package de.rutscheschobel.shareyourfilter.util{
 			}
 		}
 		
-		public function setSaturation(value:Number):void{
+		public function setSaturation(value:Number, bitmap:Bitmap = null):void{
 			var contrast_factor:Number = value / 100;
-			_bitmap = ApplicationManager.getInstance().bitmap;
+			if(bitmap == null){
+				_bitmap = ApplicationManager.getInstance().bitmap;
+			}else{
+				_bitmap = bitmap;
+			}
 			if(_bitmap != null){
 				var red:Number = 0.3086; // luminance contrast value for red
 				var green:Number = 0.694; // luminance contrast value for green
@@ -78,16 +90,24 @@ package de.rutscheschobel.shareyourfilter.util{
 			}
 		}
 			
-		public function setRandom(random:Array):void{
-			_bitmap = ApplicationManager.getInstance().bitmap;
+		public function setRandom(random:Array, bitmap:Bitmap = null):void{
+			if(bitmap == null){
+				_bitmap = ApplicationManager.getInstance().bitmap;
+			}else{
+				_bitmap = bitmap;
+			}
 			if(_bitmap != null){
 				cmfRandom = new ColorMatrixFilter(random);
 				applyFilter();
 			}
 		}
 		
-		public function setRed(value:Number):void{
-			_bitmap = ApplicationManager.getInstance().bitmap;
+		public function setRed(value:Number, bitmap:Bitmap = null):void{
+			if(bitmap == null){
+				_bitmap = ApplicationManager.getInstance().bitmap;
+			}else{
+				_bitmap = bitmap;
+			}
 			if(_bitmap != null){
 				cmfRed = new ColorMatrixFilter([value/10, 0, 0, 0, 0, 
 												0, 1, 0, 0, 0, 
@@ -97,8 +117,12 @@ package de.rutscheschobel.shareyourfilter.util{
 			applyFilter();
 		}
 		
-		public function setGreen(value:Number):void{
-			_bitmap = ApplicationManager.getInstance().bitmap;
+		public function setGreen(value:Number, bitmap:Bitmap = null):void{
+			if(bitmap == null){
+				_bitmap = ApplicationManager.getInstance().bitmap;
+			}else{
+				_bitmap = bitmap;
+			}
 			if(_bitmap != null){
 				cmfGreen = new ColorMatrixFilter([1, 0, 0, 0, 0, 
 												0, value/10, 0, 0, 0, 
@@ -108,8 +132,12 @@ package de.rutscheschobel.shareyourfilter.util{
 			applyFilter();
 		}
 		
-		public function setBlue(value:Number):void{
-			_bitmap = ApplicationManager.getInstance().bitmap;
+		public function setBlue(value:Number, bitmap:Bitmap = null):void{
+			if(bitmap == null){
+				_bitmap = ApplicationManager.getInstance().bitmap;
+			}else{
+				_bitmap = bitmap;
+			}
 			if(_bitmap != null){
 				cmfBlue = new ColorMatrixFilter([1, 0, 0, 0, 0, 
 												0, 1, 0, 0, 0, 
@@ -119,8 +147,12 @@ package de.rutscheschobel.shareyourfilter.util{
 			applyFilter();
 		}
 		
-		public function setNegative(value:Boolean):void{
-			_bitmap = ApplicationManager.getInstance().bitmap;
+		public function setNegative(value:Boolean, bitmap:Bitmap = null):void{
+			if(bitmap == null){
+				_bitmap = ApplicationManager.getInstance().bitmap;
+			}else{
+				_bitmap = bitmap;
+			}
 			if(value){
 				trace("true");
 				cmfNegative = new ColorMatrixFilter([-1, 0, 0, 0, 255, 0, -1, 0, 0, 255, 0, 0, -1, 0, 255, 0, 0, 0, 1, 0]);	
