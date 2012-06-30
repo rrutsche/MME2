@@ -2,6 +2,7 @@ package de.rutscheschobel.shareyourfilter.main{
 	import de.rutscheschobel.shareyourfilter.service.HttpRESTService;
 	import de.rutscheschobel.shareyourfilter.service.ServiceManager;
 	import de.rutscheschobel.shareyourfilter.util.*;
+	import de.rutscheschobel.shareyourfilter.util.FileExplorer;
 	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
 	import de.rutscheschobel.shareyourfilter.view.components.BatchJobComponent;
 	import de.rutscheschobel.shareyourfilter.view.components.FileWindowComponent;
@@ -67,8 +68,8 @@ package de.rutscheschobel.shareyourfilter.main{
 			var id:String = event.item.@id;
 			switch(id) {
 				case "menuOpen": 
-					fileWindow = PopUpManager.createPopUp(this, FileWindowComponent, true) as FileWindowComponent;
-					PopUpManager.centerPopUp(fileWindow);
+					var fileExplorer:FileExplorer = new FileExplorer();
+					fileExplorer.openFile();
 					break;
 				case "menuSave": 
 					ApplicationManager.getInstance().saveImage();

@@ -19,18 +19,20 @@ package de.rutscheschobel.shareyourfilter.util {
 	import mx.core.FlexGlobals;
 	import mx.managers.PopUpManager;
 
-	public class ImageSaveHelperClass {
+	public class ImageSaveHelper {
 		
 		private var _fileName:String;
 		private var _encoder:JPEGAsyncEncoder;
 		private var _bitmap:Bitmap;
+		private var _bitmapData:BitmapData;
 		private var _batchBitmaps:Array;
 		private var _folder:File;
+		private var _file:File;
 		
 		public var progressBox:ProgressBox;
 		
 		
-		public function ImageSaveHelperClass() {	
+		public function ImageSaveHelper() {	
 			_bitmap = ApplicationManager.getInstance().bitmap;
 		}
 		
@@ -40,12 +42,20 @@ package de.rutscheschobel.shareyourfilter.util {
 		 * @param bitmapData 
 		 */
 		public function saveImage(name:String = "untitled.jpg", bitmapData:BitmapData = null):void {
-			bitmapData = processScaling(bitmapData);
+			trace("saveImage");
+			_bitmapData = processScaling(bitmapData);
 			_fileName = name;
+			_file = new File();
+			_file.addEventListener(Event.SELECT, onFileSelected);
+			_file.browseForSave("Choose a directoy to save the image");
+		}
+		
+		private function onFileSelected(e:Event):void {
+			_fileName = (e.target as File).nativePath;
 			_encoder = new JPEGAsyncEncoder(90);
 			_encoder.PixelsPerIteration = 1500;
 			_encoder.addEventListener(JPEGAsyncCompleteEvent.JPEGASYNC_COMPLETE, onEncodeDone);
-			_encoder.encode(bitmapData);
+			_encoder.encode(_bitmapData);
 			setProgressBox();
 		}
 		
@@ -55,8 +65,15 @@ package de.rutscheschobel.shareyourfilter.util {
 		 */
 		private function onEncodeDone(event:JPEGAsyncCompleteEvent):void {
 			var ba:ByteArray = event.ImageData;
-			var fileReference:FileReference = new FileReference();
-			fileReference.save(ba,_fileName);
+			var fl:File = _file.resolvePath(_fileName+".jpg");
+			var fs:FileStream = new FileStream();
+			try{
+				fs.open(fl,FileMode.WRITE);
+				fs.writeBytes(ba);
+				fs.close();
+			}catch(e:Error){
+				trace(e.message);
+			}
 		}
 		
 		/**

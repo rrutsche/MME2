@@ -3,7 +3,8 @@ package de.rutscheschobel.shareyourfilter.main
 	import de.rutscheschobel.shareyourfilter.event.CustomEventDispatcher;
 	import de.rutscheschobel.shareyourfilter.event.FilterValuesChangedEvent;
 	import de.rutscheschobel.shareyourfilter.util.BasicFilter;
-	import de.rutscheschobel.shareyourfilter.util.ImageSaveHelperClass;
+	import de.rutscheschobel.shareyourfilter.util.FileExplorer;
+	import de.rutscheschobel.shareyourfilter.util.ImageSaveHelper;
 	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
 	
 	import flash.display.Bitmap;
@@ -22,6 +23,7 @@ package de.rutscheschobel.shareyourfilter.main
 		private var _basicFilter:BasicFilter = new BasicFilter();
 		private var _batchFiles:ArrayCollection;
 		private var _dispatcher:CustomEventDispatcher;
+		private var _fileExplorer:FileExplorer;
 		
 		public function ApplicationManager(){
 		}
@@ -56,8 +58,8 @@ package de.rutscheschobel.shareyourfilter.main
 		 * 
 		 */
 		public function saveImage(name:String = "untitled.jpg", bitmapData:BitmapData = null):void {
-			var imageSaver:ImageSaveHelperClass = new ImageSaveHelperClass();
-			imageSaver.saveImage(name,bitmapData);
+			_fileExplorer = new FileExplorer();
+			_fileExplorer.saveFile(name, bitmapData);
 		}
 		
 		/**
@@ -66,8 +68,8 @@ package de.rutscheschobel.shareyourfilter.main
 		 * 
 		 */
 		public function batchSave(array:Array):void {
-			var imageSaver:ImageSaveHelperClass = new ImageSaveHelperClass();
-			imageSaver.batchSave(array);
+			_fileExplorer = new FileExplorer();
+			_fileExplorer.batchSave(array);
 		}
 		
 		/**
