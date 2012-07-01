@@ -50,6 +50,12 @@ package de.rutscheschobel.shareyourfilter.service
 				}
 				ServiceManager.getInstance().filterList = filters;
 			};
+			client.listener.onError = function(event:ErrorEvent):void {
+				var errorMessage:String = event.text;
+				trace(errorMessage);
+				filters.addItem("no connection to server");
+				ServiceManager.getInstance().filterList = filters;
+			}; 
 			
 			var uri:URI = new URI(uri);
 			client.get(uri);

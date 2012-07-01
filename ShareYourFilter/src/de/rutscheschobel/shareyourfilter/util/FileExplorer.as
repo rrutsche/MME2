@@ -7,6 +7,9 @@ package de.rutscheschobel.shareyourfilter.util
 	import flash.filesystem.File;
 	import flash.net.FileFilter;
 	import flash.net.FileReference;
+	
+	import mx.controls.Alert;
+	import mx.managers.PopUpManager;
 
 	public class FileExplorer
 	{

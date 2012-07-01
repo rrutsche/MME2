@@ -1,15 +1,19 @@
 package de.rutscheschobel.shareyourfilter.view
 {
 	import de.rutscheschobel.shareyourfilter.main.ApplicationManager;
+	import de.rutscheschobel.shareyourfilter.view.components.CloseAlertComponent;
 	
 	import flash.display.Bitmap;
+	import flash.display.DisplayObject;
 	import flash.display.Loader;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.filesystem.File;
 	import flash.net.URLRequest;
 	
 	import mx.containers.Canvas;
 	import mx.controls.Image;
+	import mx.core.FlexGlobals;
 	import mx.events.FlexEvent;
 	import mx.managers.PopUpManager;
 	
@@ -29,6 +33,7 @@ package de.rutscheschobel.shareyourfilter.view
 		}
 		
 		private function init(event:FlexEvent):void{
+			this.closeButton.addEventListener(MouseEvent.CLICK, closeWindow);
 			this.parent.addEventListener(Event.RESIZE, onApplicationResize);
 			addCanvas();
 			addImage();	
@@ -77,6 +82,12 @@ package de.rutscheschobel.shareyourfilter.view
 		
 		private function onApplicationResize(event:Event):void {
 			setWindowSize();
+		}
+		
+		private function closeWindow(event:MouseEvent):void {
+			var closeAlert:CloseAlertWindow = PopUpManager.createPopUp(this.parent, CloseAlertComponent, true) as CloseAlertComponent;
+			PopUpManager.centerPopUp(closeAlert);
+			this.visible = false;
 		}
 		
 	}

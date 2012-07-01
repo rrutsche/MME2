@@ -75,7 +75,7 @@ package de.rutscheschobel.shareyourfilter.main{
 					ApplicationManager.getInstance().saveImage();
 					break;
 				case "menuClose":
-					NativeApplication.nativeApplication.exit();
+					ApplicationManager.getInstance().closeApplication();
 					break;
 				case "menuAbout":
 					splash = PopUpManager.createPopUp(this,Splashscreen, true) as Splashscreen;

@@ -16,6 +16,7 @@ package de.rutscheschobel.shareyourfilter.util {
 	import flash.net.FileReference;
 	import flash.utils.ByteArray;
 	
+	import mx.controls.Alert;
 	import mx.core.FlexGlobals;
 	import mx.managers.PopUpManager;
 
@@ -44,6 +45,10 @@ package de.rutscheschobel.shareyourfilter.util {
 		public function saveImage(name:String = "untitled.jpg", bitmapData:BitmapData = null):void {
 			trace("saveImage");
 			_bitmapData = processScaling(bitmapData);
+			if (_bitmapData == null) {
+				Alert.show("no file selected");
+				return;
+			}
 			_fileName = name;
 			_file = new File();
 			_file.addEventListener(Event.SELECT, onFileSelected);
@@ -115,6 +120,9 @@ package de.rutscheschobel.shareyourfilter.util {
 		 */
 		private function processScaling(bitmapData:BitmapData):BitmapData {
 			if (bitmapData == null) {
+				if (_bitmap == null) {
+					return null;
+				}
 				bitmapData = new BitmapData(_bitmap.bitmapData.width, _bitmap.bitmapData.height);
 			}
 			var scaleFactor:Number = bitmapData.width / _bitmap.bitmapData.width;

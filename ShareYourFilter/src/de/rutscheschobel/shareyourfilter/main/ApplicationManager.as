@@ -4,9 +4,9 @@ package de.rutscheschobel.shareyourfilter.main
 	import de.rutscheschobel.shareyourfilter.event.FilterValuesChangedEvent;
 	import de.rutscheschobel.shareyourfilter.util.BasicFilter;
 	import de.rutscheschobel.shareyourfilter.util.FileExplorer;
-	import de.rutscheschobel.shareyourfilter.util.ImageSaveHelper;
 	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
 	
+	import flash.desktop.NativeApplication;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.filesystem.File;
@@ -82,6 +82,10 @@ package de.rutscheschobel.shareyourfilter.main
 			if(imageWindow != null){
 				FlexGlobals.topLevelApplication.addChild(imageWindow);
 			}	
+		}
+		
+		public function closeApplication():void {
+			NativeApplication.nativeApplication.exit();
 		}
 		
 		/**

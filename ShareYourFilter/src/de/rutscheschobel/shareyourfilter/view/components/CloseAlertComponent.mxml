@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:CloseAlertWindow xmlns:components="de.rutscheschobel.shareyourfilter.view.*"
+							 xmlns:fx="http://ns.adobe.com/mxml/2009"
+							 xmlns:s="library://ns.adobe.com/flex/spark"
+							 xmlns:mx="library://ns.adobe.com/flex/mx"
+							 width="188" height="80" contentBackgroundAlpha="0.3"
+							 title="Save your changes?">
+	<s:Button id="saveButton" x="14" y="10" label="Save"/>
+	<s:Button id="closeButton" x="99" y="10" label="Close"/>
+</components:CloseAlertWindow>
