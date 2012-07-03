@@ -70,6 +70,7 @@ package de.rutscheschobel.shareyourfilter.view
 		private function setWindowSize():void {
 			
 			var bitmap:Bitmap = ApplicationManager.getInstance().bitmap;
+			if(bitmap == null) return;
 			if(bitmap.width > bitmap.height) {
 				_image.width = parentApplication.width * 0.6;
 				_image.height = (_image.width / bitmap.width ) * bitmap.height;
