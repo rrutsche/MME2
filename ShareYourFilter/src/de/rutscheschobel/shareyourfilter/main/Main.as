@@ -5,7 +5,6 @@ package de.rutscheschobel.shareyourfilter.main{
 	import de.rutscheschobel.shareyourfilter.util.FileExplorer;
 	import de.rutscheschobel.shareyourfilter.view.ImageWindow;
 	import de.rutscheschobel.shareyourfilter.view.components.BatchJobComponent;
-	import de.rutscheschobel.shareyourfilter.view.components.FileWindowComponent;
 	import de.rutscheschobel.shareyourfilter.view.components.Splashscreen;
 	
 	import flash.desktop.ClipboardFormats;
@@ -29,7 +28,6 @@ package de.rutscheschobel.shareyourfilter.main{
 	public class Main extends WindowedApplication{
 		
 		public var imageWindow:ImageWindow;
-		public var fileWindow:FileWindowComponent;
 		public var menuBar:MenuBar;
 		public var fileTree:FileSystemTree;
 		public var request:HttpRESTService;

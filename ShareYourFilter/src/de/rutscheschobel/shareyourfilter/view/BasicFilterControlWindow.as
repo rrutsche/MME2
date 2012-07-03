@@ -82,6 +82,7 @@ package de.rutscheschobel.shareyourfilter.view
 		* FILTER CONTROL
 		*/
 		private function onDefaultChange(event:Event):void{
+			if(history.length == 0) return;
 			var oldValue:FilterValueObject = history.getItemAt(0) as FilterValueObject;
 			filter.setFilterValueObject(oldValue);
 			updateSliderPositions(defaultValues);

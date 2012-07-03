@@ -13,6 +13,7 @@ package de.rutscheschobel.shareyourfilter.view
 	
 	import mx.containers.Canvas;
 	import mx.controls.Image;
+	import mx.core.Application;
 	import mx.core.FlexGlobals;
 	import mx.events.FlexEvent;
 	import mx.managers.PopUpManager;
@@ -87,6 +88,7 @@ package de.rutscheschobel.shareyourfilter.view
 		private function closeWindow(event:MouseEvent):void {
 			var closeAlert:CloseAlertWindow = PopUpManager.createPopUp(this.parent, CloseAlertComponent, true) as CloseAlertComponent;
 			PopUpManager.centerPopUp(closeAlert);
+			ApplicationManager.getInstance().bitmap = null;
 			this.visible = false;
 		}
 		

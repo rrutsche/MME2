@@ -42,6 +42,7 @@ package de.rutscheschobel.shareyourfilter.view
 		}
 		
 		private function onFilterClick(event:Event):void {
+			if(!event.currentTarget.isPrototypeOf(FilterValueObject)) return;
 			var filter:FilterValueObject = List(event.currentTarget).selectedItem;
 			ApplicationManager.getInstance().basicFilter.setFilterValueObject(filter);
 			var dispatcher:CustomEventDispatcher = CustomEventDispatcher.getInstance();

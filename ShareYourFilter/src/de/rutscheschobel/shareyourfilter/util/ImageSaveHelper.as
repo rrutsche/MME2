@@ -45,14 +45,13 @@ package de.rutscheschobel.shareyourfilter.util {
 		public function saveImage(name:String = "untitled.jpg", bitmapData:BitmapData = null):void {
 			trace("saveImage");
 			_bitmapData = processScaling(bitmapData);
-			if (_bitmapData == null) {
-				Alert.show("no file selected");
-				return;
+			if (_bitmapData != null) {
+				_fileName = name;
+				_file = new File();
+				_file.addEventListener(Event.SELECT, onFileSelected);
+				_file.browseForSave("Choose a directoy to save the image");
 			}
-			_fileName = name;
-			_file = new File();
-			_file.addEventListener(Event.SELECT, onFileSelected);
-			_file.browseForSave("Choose a directoy to save the image");
+			
 		}
 		
 		private function onFileSelected(e:Event):void {
@@ -121,6 +120,7 @@ package de.rutscheschobel.shareyourfilter.util {
 		private function processScaling(bitmapData:BitmapData):BitmapData {
 			if (bitmapData == null) {
 				if (_bitmap == null) {
+					Alert.show("no file selected");
 					return null;
 				}
 				bitmapData = new BitmapData(_bitmap.bitmapData.width, _bitmap.bitmapData.height);

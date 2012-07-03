@@ -14,10 +14,6 @@
 				<menuitem label="Save" id="menuSave"/>
 				<menuitem label="Close" id="menuClose"/>
 			</menuitem>
-			<menuitem label="Window" id="menuWindow">
-				<menuitem label="Filter Control Window" id="filterControlWindow" type="check" toggled="true"/>
-				<menuitem label="Image Window" id="imageWindow" type="check"/>
-			</menuitem>
 			<menuitem label="Help">
 				<menuitem label="About" id="menuAbout"/>
 			</menuitem>
