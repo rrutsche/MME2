@@ -53,7 +53,7 @@ package de.rutscheschobel.shareyourfilter.service
 			client.listener.onError = function(event:ErrorEvent):void {
 				var errorMessage:String = event.text;
 				trace(errorMessage);
-				filters.addItem("no connection to server");
+				filters.addItem(new FilterValueObject("no connection to server"));
 				ServiceManager.getInstance().filterList = filters;
 			}; 
 			
